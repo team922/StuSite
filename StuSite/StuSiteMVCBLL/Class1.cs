@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StuSiteMVCBLL
+namespace StuSiteMVC.BLL
 {
     public class Class1
     {
