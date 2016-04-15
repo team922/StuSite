@@ -15,7 +15,7 @@ namespace StuSiteMVC.Models
         public string NewsMain { get; set; }           //新闻主题
         public DateTime NewsDate { get; set; }         //发布日期
         public DateTime NewsDatetime { get; set; }     //发布日期+时间
-        public Admin NewsPublisher { get; set; }      //发布者
+        public Admin NewsPublisher { get; set; }       //发布者
         public NState NState { get; set; }             //新闻状态
     }
 }
