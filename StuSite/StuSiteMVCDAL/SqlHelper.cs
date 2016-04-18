@@ -16,7 +16,7 @@ namespace StuSiteMVC.DAL
         #region ExecuteNonQuery 执行SQL语句或存储过程后，返回受影响的行数。
 
         /// <summary>
-        /// 执行sql命令
+        /// 执行SQL语句或存储过程后，返回受影响的行数。
         /// </summary>
         /// <param name="connectionString">sql连接字符串</param>
         /// <param name="commandType">命令类型</param>
@@ -56,7 +56,7 @@ namespace StuSiteMVC.DAL
         #region ExcuteScalar 执行SQL语句或者存储过程后，如插入一条新记录的时候返回自增的ID。
 
         /// <summary>
-        /// 执行sql命令
+        /// 执行SQL语句或者存储过程后，如插入一条新记录的时候返回自增的ID。
         /// </summary>
         /// <param name="connectionString">连接字符串</param>
         /// <param name="commandType">命令类型</param>
@@ -96,7 +96,7 @@ namespace StuSiteMVC.DAL
         #region ExecuteReader 执行SQL语句或存储过程后，返回一个DateReader。
 
         /// <summary>
-        /// 执行sql命令
+        /// 执行SQL语句或存储过程后，返回一个DateReader。
         /// </summary>
         /// <param name="connectionString">sql连接字符串</param>
         /// <param name="commandType">命令类型</param>
@@ -148,7 +148,7 @@ namespace StuSiteMVC.DAL
         #region ExecuteDataset 执行SQL语句或者存储过程后，返回一个Dataset。
 
         /// <summary>
-        /// 执行sql命令
+        /// 执行SQL语句或者存储过程后，返回一个Dataset。
         /// </summary>
         /// <param name="connectionString">sql连接字符串</param>
         /// <param name="commandType">命令类型</param>
@@ -196,7 +196,7 @@ namespace StuSiteMVC.DAL
         #region PrepareCommand 构建一个Command对象供内部方法进行调用，两个重载方法。
 
         /// <summary>
-        /// 
+        /// 构建一个Command对象供内部方法进行调用，两个重载方法。
         /// </summary>
         /// <param name="cmd">SqlCommand对象，不允许为空对象</param>
         /// <param name="commandType">命令类型</param>
