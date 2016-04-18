@@ -43,8 +43,12 @@
   <ItemGroup>
     <Compile Include="AdminService.cs" />
     <Compile Include="CollegeService.cs" />
+    <Compile Include="DepartmentService.cs" />
     <Compile Include="IPService.cs" />
     <Compile Include="MajorService.cs" />
+    <Compile Include="NewsService.cs" />
+    <Compile Include="NoticesService.cs" />
+    <Compile Include="NStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleService.cs" />
     <Compile Include="SBasicService.cs" />
