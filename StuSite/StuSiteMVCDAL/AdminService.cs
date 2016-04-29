@@ -80,6 +80,19 @@ namespace StuSiteMVC.DAL
             return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, para) > 0;
         }
 
+        //修改登录时间
+        public bool UpsetAdminIPandTime(string loginid,string IP,DateTime datetime)
+        {
+            string sql = "update Admin set LastIP=@lastip,LastTime=@lasttime where AdminId=@loginid";
+            SqlParameter[] para = new SqlParameter[]
+            {
+                new SqlParameter("@loginid",loginid),
+                new SqlParameter("@lastip",IP),
+                new SqlParameter("@lasttime",datetime),
+            };
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, para) > 0;
+        }
+
         //获取admin by id
         public Admin GetAdminById(int id)
         {

@@ -1,0 +1,84 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/main_login.css")" rel="stylesheet" />
+    <title>学生信息管理系统</title>
+    <script type="text/javascript">
+        function login() {
+            var number = document.getElementById("number").value;
+            var password = document.getElementById("password").value;
+            if (number == "" || password == "") {
+                alert("请填写全部信息后再试！");
+            }
+            else {
+                var Expression = /^(t[\0-9]{9})|([\0-9]{11})$/;
+                var objExp = new RegExp(Expression);
+                if (objExp.test(number)) {
+                    //alert("用户名格式正确！");
+                    document.getElementById("form1").submit();
+                }
+                else {
+                    alert("用户名格式错误！");
+                    document.getElementById("number").focus;
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    @{
+        string id = Request.Cookies["id"] != null ? Request.Cookies["id"].Value : "";
+        string pwd = Request.Cookies["pwd"] != null ? Request.Cookies["pwd"].Value : "";
+    }
+    <div id="top">
+        <div id="logo">
+            logo
+        </div>
+        <div id="admin">
+            <a href="@Url.Content("~/Account/Admin")">【管理员登陆】</a>
+        </div>
+    </div>
+    <div id="main">
+        <div id="login">
+            <form action="@Url.Action("UserLogin","Account")" method="post" id="form1" class="form_login1">
+                <h2>用户登录</h2>
+                <p>
+                    <text>用户名：</text>
+                    <input name="number" type="text" maxlength="20" placeholder="请输入学号或教师号" value="@id" id="number" class="input_txt" />
+
+                </p>
+                <p>
+                    <text>密　码：</text>
+                    <input name="password" type="password" maxlength="16" placeholder="请输入密码" value="@pwd" id="password" class="input_txt" />
+
+                </p>
+                <p>
+                    <text>验证码：</text>
+                    <input name="code" type="text" maxlength="4" placeholder="请输入验证码" id="code" class="input_chack" />
+                    <img class="valiCode" src=" alt=" 验证码" />
+
+                </p>
+                <p class="form_sub">
+                    <input name="RecordMe" type="checkbox" checked="checked" />
+                    <text>记住账号信息</text>
+                </p>
+                <p class="form_sub">
+                    <input class="button_login" name="Login" type="button" onclick="login()" value="登录" />
+                    <a href="#">忘记密码?</a>
+                </p>
+            </form>
+        </div>
+    </div>
+    <div id="footer">
+        Copyright 2016 华信软件学院 All rights reserved.
+    </div>
+</body>
+</html>

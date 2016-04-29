@@ -1,0 +1,54 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/admin_login.css")" rel="stylesheet" />
+    <title>管理中心</title>
+    <script type="text/javascript">
+        function login() {
+            var adminid = document.getElementById("adminid").value;
+            var adminpwd = document.getElementById("adminpwd").value;
+            if (adminid == "") {
+                alert("用户名不能为空！");
+                document.getElementById("adminid").focus();
+            }
+            else if (adminpwd == "") {
+                alert("密码不能为空！");
+                document.getElementById("adminpwd").focus();
+            }
+            else {
+                document.getElementById("form1").submit();
+            }
+        }
+    </script>
+</head>
+<body>
+    @{
+        string adminid = Request.Cookies["adminid"] != null ? Request.Cookies["adminid"].Value : "";
+        string adminpwd = Request.Cookies["adminpwd"] != null ? Request.Cookies["adminpwd"].Value : "";
+    }
+    <div class="container">
+        <section id="content">
+            <form action="@Url.Action("AdminLogin","Account")" method="post" id="form1">
+                <h1>管理登录</h1>
+                <div>
+                    <input name="adminid" type="text" placeholder="请输入账号" value="@adminid" id="adminid" />
+                </div>
+                <div>
+                    <input name="adminpwd" type="password" placeholder="请输入密码" value="@adminpwd" id="adminpwd" />
+                </div>
+                <div>
+                    <input type="button" value="登录" onclick="login()" id="btn_login" />
+                    <a href="#">忘记密码</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+﻿@charset"utf-8";
+/*CSSDocument*/
+
+*{margin:0;padding:0;}
+body,input,select{font:12px/25px 宋体;}
+table{border-collapse:collapse;}
+img{border:0;vertical-align:middle;}
+ul{list-style:none;}
+a{color:#0072A7;text-decoration:underline;}
+a:hover{color:#f00;}
+
+#head,#nav,#main,#footer{clear:both;margin:0 auto;width:1000px;}
+
+/*母版页*/
+#head{height:200px;background:url(../Images/main_head.jpg) round;}
+	#top{float:left;height:25px;}
+		#top_left{float:left;text-align:left;height:25px;width:600px;}
+		#top_right{float:right;height:25px;width:150px;}
+		#top_right li{float:left;height:25px;padding-left:0px;}
+
+#nav{height:35px;width:1000px;background:url(../Images/user_main_nav.jpg) repeat-x;}
+	#mainnav li{float:left;font:14px/25px Tahoma;text-align:center;padding:10px;}
+	#mainnav li a{text-decoration:none;}
+
+#main{width:1000px;margin-top:5px;}
+	#main_left{float:left;width:345px;margin-right:5px;}
+	/*leftcontent*/
+	#main_right{float:left;width:645px;margin-left:5px;}
+	/*rightcontent*/
+		
+#footer{width:1000px;height:50px;text-align:center;line-height:50px;}

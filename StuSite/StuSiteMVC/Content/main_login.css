@@ -1,0 +1,78 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+*{margin:0;padding:0;}
+#top,#main,#footer{width:1000px; clear:both; margin:0 auto;}
+
+#top{height:100px;}
+    #logo{width:500px;height:100px;float:left;}
+    #admin{float:right;}
+
+#main{height:400px;background:url(../Images/main_login.jpg)}
+    #login {
+        background: #f9f9f9;
+        background: -moz-linear-gradient(top, rgba(248,248,248,1) 0%, rgba(249,249,249,1) 100%);
+        background: -webkit-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(249,249,249,1) 100%);
+        background: -o-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(249,249,249,1) 100%);
+        background: linear-gradient(top, rgba(248,248,248,1) 0%,rgba(249,249,249,1) 100%);
+        -webkit-box-shadow: 0 1px 0 #fff inset;
+        -moz-box-shadow: 0 1px 0 #fff inset;
+        box-shadow: 0 1px 0 #fff inset;
+        border: 1px solid #c4c6ca;
+        float:left;
+        margin: 10px;
+        padding: 25px 0 0;
+        position: relative;
+        text-shadow: 0 1px 0 #fff;
+        width: 400px;
+}
+
+    #login h2 {
+        color: #7E7E7E;
+        font: bold 25px Helvetica, Arial, sans-serif;
+        letter-spacing: -0.05em;
+        line-height: 20px;
+        text-align: center;
+        margin: 10px 0 30px;
+    }
+
+        #login h2:before, #login h2:after {
+            content: "";
+            height: 1px;
+            position: absolute;
+            top: 10px;
+            width: 27%;
+        }
+
+        #login h2:after {
+            background: rgb(126,126,126);
+            background: -moz-linear-gradient(left, rgba(126,126,126,1) 0%, rgba(255,255,255,1) 100%);
+            background: -webkit-linear-gradient(left, rgba(126,126,126,1) 0%,rgba(255,255,255,1) 100%);
+            background: -o-linear-gradient(left, rgba(126,126,126,1) 0%,rgba(255,255,255,1) 100%);
+            background: linear-gradient(left, rgba(126,126,126,1) 0%,rgba(255,255,255,1) 100%);
+            right: 0;
+        }
+
+        #login h2:before {
+            background: rgb(126,126,126);
+            background: -moz-linear-gradient(right, rgba(126,126,126,1) 0%, rgba(255,255,255,1) 100%);
+            background: -webkit-linear-gradient(right, rgba(126,126,126,1) 0%,rgba(255,255,255,1) 100%);
+            background: -o-linear-gradient(right, rgba(126,126,126,1) 0%,rgba(255,255,255,1) 100%);
+            background: linear-gradient(right, rgba(126,126,126,1) 0%,rgba(255,255,255,1) 100%);
+            left: 0;
+        }
+
+    #login form {
+        margin: 0 20px;
+        position: relative;
+    }
+
+    #login form .input_txt{width:250px;border:solid 1px #ccc;box-shadow:0 1px 10px rgba(0,0,0,0.1) inset;height:35px;text-indent:10px;}
+    #login form .input_chack{width:100px;border:solid 1px #ccc;box-shadow:0 1px 10px rgba(0,0,0,0.1) inset;	height:35px;text-indent:10px;}
+    #login form .valiCode{}
+    #login form .button_login{width:100px;height:35px;}
+    #login form p{display:block;height:40px;position:relative;margin:15px 10px;}
+    #login form p.form_sub{padding-left: 90px;margin: 0px;}
+    #login form p.form_sub a {color: #004a80;float: right;margin-top: 10px;text-decoration: underline;}
+
+#footer{ width:1000px; height:50px; text-align:center;  line-height:50px;}

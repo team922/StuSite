@@ -89,12 +89,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin_login.css" />
+    <Content Include="Images\admin_login_bg.jpg" />
+    <Content Include="Content\main_global.css" />
+    <Content Include="Content\main_login.css" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Images\main_login.jpg" />
+    <Content Include="Images\main_head.jpg" />
+    <Content Include="Images\main_nav.jpg" />
+    <Content Include="Views\Account\Admin.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Areas\Areas\AreasAreaRegistration.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -103,7 +115,11 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Areas\Areas\Views\web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shares\_LayoutPage1.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -113,13 +129,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Areas\Controllers\" />
-    <Folder Include="Areas\Areas\Models\" />
-    <Folder Include="Areas\Areas\Views\Shared\" />
-    <Folder Include="Content\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Images\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StuSiteMVCBLL\StuSiteMVCBLL.csproj">
+      <Project>{b3357e85-c360-47f2-9fe9-95bae5a30723}</Project>
+      <Name>StuSiteMVCBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StuSiteMVCModels\StuSiteMVCModels.csproj">
+      <Project>{393616fe-ab5d-4c13-b78d-8b77c4082e52}</Project>
+      <Name>StuSiteMVCModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

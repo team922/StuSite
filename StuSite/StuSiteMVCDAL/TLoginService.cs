@@ -43,11 +43,8 @@ namespace StuSiteMVC.DAL
         }
 
         //更新登录信息(IP and Time)
-        public bool UpsetTLoginIPandTime(string loginid)
+        public bool UpsetTLoginIPandTime(string loginid, string IP, DateTime datetime)
         {
-            IPService getip = new IPService();
-            string IP = getip.GetIP();
-            DateTime datetime = getip.GetDateTime();
             string sql = "update TLogin set LastIP=@lastip,LastTime=@lasttime where TNumber=@loginid";
             SqlParameter[] para = new SqlParameter[]
             {

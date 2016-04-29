@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link href="@Url.Content("~/Content/main_global.css")" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+
+<body>
+    @{
+        string name = Session["UserName"] != null ? (string)Session["UserName"] : "";
+        string college = Session["UserCollege"] != null ? (string)Session["UserCollege"] : "";
+        string major = Session["UserMajor"] != null ? (string)Session["UserMajor"] : "";
+        string role = Session["UserRole"] != null ? (string)Session["UserRole"] : "";
+        string type = "";
+        if (string.IsNullOrEmpty(role))
+        {
+            type = "学生";
+        }
+        else
+        {
+            type = role;
+        }
+    }
+    <div id="head">
+        <div id="top">
+            @{
+                if (string.IsNullOrEmpty(name))
+                {
+                    <!--未登录状态-->
+                    <a href="@Url.Content("~/Account/Index")">【用户登录】</a>
+                }
+                else
+                {
+                    <!--登录状态-->
+                    <text>来自 @college 的 @type @name 欢迎您使用本系统！</text>
+                }
+            }
+        </div>
+        <ul id="top_right">
+            @{
+                if (string.IsNullOrEmpty(name))
+                {
+                    <!--未登录状态-->
+                    <li>【请登录后再进行操作】</li>
+                }
+                else
+                {
+                    <!--登录状态-->
+                    <li><a href="#">【个人信息】</a></li>
+                    <li><a href="@Url.Content("~/Account/Logout")">【退出登录】</a></li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div id="nav">
+        <ul id="mainnav">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">首页</a></li>
+        </ul>
+    </div>
+
+    <div id="main">
+        @RenderBody()
+    </div>
+    <div id="footer">
+        Copyright 2016 华信软件学院 All rights reserved.
+    </div>
+</body>
+</html>
