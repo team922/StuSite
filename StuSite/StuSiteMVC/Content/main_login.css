@@ -5,7 +5,7 @@
 #top,#main,#footer{width:1000px; clear:both; margin:0 auto;}
 
 #top{height:100px;}
-    #logo{width:500px;height:100px;float:left;}
+    #logo{width:200px;height:100px;float:left;}
     #admin{float:right;}
 
 #main{height:400px;background:url(../Images/main_login.jpg)}

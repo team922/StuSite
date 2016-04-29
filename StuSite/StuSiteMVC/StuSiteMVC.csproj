@@ -94,6 +94,7 @@
     <Content Include="Content\main_global.css" />
     <Content Include="Content\main_login.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\main_top.png" />
     <Content Include="Images\main_login.jpg" />
     <Content Include="Images\main_head.jpg" />
     <Content Include="Images\main_nav.jpg" />
