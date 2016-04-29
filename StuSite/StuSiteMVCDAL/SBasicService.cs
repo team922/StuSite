@@ -33,13 +33,13 @@ namespace StuSiteMVC.DAL
                 sBasic.SNumber = (string)reader["SNumber"];
                 sBasic.SName = (string)reader["SName"];
                 sBasic.SIDNumber = (string)reader["SIDNumber"];
-                sBasic.SCollede = collegeService.GetCollegeByCollegeId((int)reader["SCollede"]);
+                sBasic.SCollege = collegeService.GetCollegeByCollegeId((string)reader["SCollege"]);
                 sBasic.SMajor = majorService.GetMajorByMajorId((int)reader["SMajor"]);
                 sBasic.SPhone = (string)reader["SPhone"];
                 sBasic.SEmail = (string)reader["SEmail"];
                 sBasic.SBirthday = reader["SBirthday"] != DBNull.Value ? (DateTime?)reader["SBirthday"] : null;
                 sBasic.SAddress = (string)reader["SAddress"];
-                sBasic.SPicture = (string)reader["SPicture"];
+                sBasic.SPicAddress = (string)reader["SPicAddress"];
             }
             return sBasic;
         }

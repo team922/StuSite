@@ -29,9 +29,9 @@ namespace StuSiteMVC.DAL
                 CollegeService collegeService = new CollegeService();
 
                 major = new Major();
-                major.MajorId = (int)reader["MajorId"];
+                major.MajorId = (string)reader["MajorId"];
                 major.MajorName = (string)reader["MajorName"];
-                major.Belong = collegeService.GetCollegeByCollegeId((int)reader["Belong"]);
+                major.Belong = collegeService.GetCollegeByCollegeId((string)reader["Belong"]);
             }
             return major;
         }

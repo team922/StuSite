@@ -12,7 +12,7 @@ namespace StuSiteMVC.DAL
     public class SLoginService
     {
         //获取登录信息 by SNumber
-        public SLogin LoginBySNumber(int loginid)
+        public SLogin LoginBySNumber(string loginid)
         {
             //sql连接字符串
             string sql = "select * from SLogin where SNumber=@loginid";
@@ -34,14 +34,14 @@ namespace StuSiteMVC.DAL
                 slogin.SNumber = sBasicService.GetStudentBsaicBySNumber((string)reader["SNumber"]);
                 slogin.SPassword = (string)reader["SPassword"];
                 slogin.State = stateServer.GetStateById((int)reader["State"]);
-                slogin.LastIP = (string)reader["LastIP"];
+                slogin.LastIP = reader["LastIP"] != DBNull.Value ? (string)reader["LastIP"] : null;
                 slogin.LastTime = reader["LastTime"] != DBNull.Value ? (DateTime?)reader["LastTime"] : null;
             }
             return slogin;
         }
 
         //更新登录信息(IP and Time)
-        public bool UpsetSLoginIPandTime(int loginid)
+        public bool UpsetSLoginIPandTime(string loginid)
         {
             IPService getip = new IPService();
             string IP = getip.GetIP();

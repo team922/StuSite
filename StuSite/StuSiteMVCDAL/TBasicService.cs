@@ -29,15 +29,15 @@ namespace StuSiteMVC.DAL
                 CollegeService collegeService = new CollegeService();
 
                 tBasic = new TBasic();
-                tBasic.TNumber = (string)reader["SNumber"];
-                tBasic.TName = (string)reader["SName"];
-                tBasic.TIDNumber = (string)reader["SIDNumber"];
-                tBasic.TCollede = collegeService.GetCollegeByCollegeId((int)reader["TCollede"]);
-                tBasic.TPhone = (string)reader["SPhone"];
-                tBasic.TEmail = (string)reader["SEmail"];
+                tBasic.TNumber = (string)reader["TNumber"];
+                tBasic.TName = (string)reader["TName"];
+                tBasic.TIDNumber = (string)reader["TIDNumber"];
+                tBasic.TCollege = collegeService.GetCollegeByCollegeId((string)reader["TCollege"]);
+                tBasic.TPhone = (string)reader["TPhone"];
+                tBasic.TEmail = (string)reader["TEmail"];
                 tBasic.TBirthday = reader["TBirthday"] != DBNull.Value ? (DateTime?)reader["TBirthday"] : null;
-                tBasic.TAddress = (string)reader["SAddress"];
-                tBasic.TPicture = (string)reader["SPicture"];
+                tBasic.TAddress = (string)reader["TAddress"];
+                tBasic.TPicAddress = (string)reader["TPicAddress"];
             }
             return tBasic;
         }

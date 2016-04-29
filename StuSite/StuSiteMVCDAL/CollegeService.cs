@@ -12,7 +12,7 @@ namespace StuSiteMVC.DAL
     public class CollegeService
     {
         //获取学院信息 by collegeid
-        public College GetCollegeByCollegeId(int collegeid)
+        public College GetCollegeByCollegeId(string collegeid)
         {
             //sql连接字符串
             string sql = "select * from College where CollegeId=@collegeid";
@@ -27,7 +27,7 @@ namespace StuSiteMVC.DAL
             if (reader.Read())
             {
                 college = new College();
-                college.CollegeId = (int)reader["CollegeId"];
+                college.CollegeId = (string)reader["CollegeId"];
                 college.CollegeName = (string)reader["CollegeName"];
             }
             return college;
