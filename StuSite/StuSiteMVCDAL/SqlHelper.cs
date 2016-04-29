@@ -11,7 +11,7 @@ namespace StuSiteMVC.DAL
 {
     public static class SqlHelper
     {
-        public static readonly string ConnString = ConfigurationManager.ConnectionStrings["LocalConnection"].ConnectionString;
+        public static readonly string ConnString = ConfigurationManager.ConnectionStrings["WebConnection"].ConnectionString;
 
         #region ExecuteNonQuery 执行SQL语句或存储过程后，返回受影响的行数。
 
