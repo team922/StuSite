@@ -34,7 +34,7 @@ namespace StuSiteMVC.DAL
                 sBasic.SName = (string)reader["SName"];
                 sBasic.SIDNumber = (string)reader["SIDNumber"];
                 sBasic.SCollege = collegeService.GetCollegeByCollegeId((string)reader["SCollege"]);
-                sBasic.SMajor = majorService.GetMajorByMajorId((int)reader["SMajor"]);
+                sBasic.SMajor = majorService.GetMajorByMajorId((string)reader["SMajor"]);
                 sBasic.SPhone = (string)reader["SPhone"];
                 sBasic.SEmail = (string)reader["SEmail"];
                 sBasic.SBirthday = reader["SBirthday"] != DBNull.Value ? (DateTime?)reader["SBirthday"] : null;

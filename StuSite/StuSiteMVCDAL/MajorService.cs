@@ -12,7 +12,7 @@ namespace StuSiteMVC.DAL
     public class MajorService
     {
         //获取专业信息 by majorid
-        public Major GetMajorByMajorId(int majorid)
+        public Major GetMajorByMajorId(string majorid)
         {
             //sql连接字符串
             string sql = "select * from Major,College where Major.Belong=College.CollegeId and MajorId=@majorid";

@@ -205,6 +205,7 @@ namespace StuSiteMVC.DAL
         /// <param name="cmdParms">参数数组，允许为空</param>
         private static void PrepareCommand(SqlCommand cmd, CommandType commandType, SqlConnection conn, string commandText, SqlParameter[] cmdParms)
         {
+            conn.Close();
             //打开连接
             if (conn.State != ConnectionState.Open)
             {
