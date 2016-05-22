@@ -1,5 +1,5 @@
-﻿@charset"utf-8";
-/*CSSDocument*/
+﻿@charset "utf-8";
+/* CSS Document */
 
 *{margin:0;padding:0;}
 body,input,select{font:12px/25px 宋体;}
@@ -12,15 +12,14 @@ a:hover{color:#f00;}
 #head,#nav,#main,#footer{clear:both;margin:0 auto;width:1000px;}
 
 /*母版页*/
-#head{height:200px;background:url(../Images/main_head.jpg) round;}
-	#top{float:left;height:25px;}
-		#top_left{float:left;text-align:left;height:25px;width:600px;}
-		#top_right{float:right;height:25px;width:150px;}
-		#top_right li{float:left;height:25px;padding-left:0px;}
+#head{height:200px;margin-bottom:2px;background:url(../Images/main_head.jpg) round;}
+    #top_left{float:left;text-align:left;height:25px;width:600px;}
+    #top_right{float:right;height:25px;width:150px;}
+    #top_right li{float:left;height:25px;padding-left:0px;}
 
-#nav{height:35px;width:1000px;background:url(../Images/user_main_nav.jpg) repeat-x;}
-	#mainnav li{float:left;font:14px/25px Tahoma;text-align:center;padding:10px;}
-	#mainnav li a{text-decoration:none;}
+#nav{height:35px;width:950px;padding-left:50px;background:url(../Images/main_nav.jpg) repeat-x;}
+	#mainnav li{float:left;font:20px/25px Tahoma;text-align:center;padding:5px;}
+	#mainnav li a{text-decoration:none;margin-left:20px;}
 
 #main{width:1000px;margin-top:5px;}
 	#main_left{float:left;width:345px;margin-right:5px;}
@@ -28,4 +27,4 @@ a:hover{color:#f00;}
 	#main_right{float:left;width:645px;margin-left:5px;}
 	/*rightcontent*/
 		
-#footer{width:1000px;height:50px;text-align:center;line-height:50px;}
+#footer{width:1000px;height:50px;text-align:center;}

@@ -1,0 +1,26 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+*{margin:0;padding:0;}
+body{font:15px/25px 宋体;background:url(../Images/admin_bg.jpg) repeat-x;}
+ul{list-style:none;}
+a{text-decoration:none;}
+
+#head,#nav,#main,#footer{clear:both;margin:0 auto;width:1000px;}
+#head{height:225px;margin-bottom:2px;background:url(../Images/admin_top.jpg) no-repeat;color:#e043f2}
+    #head a{color:wheat;}
+    #head a:hover{color:greenyellow;}
+    #top_left{float:left;text-align:left;height:25px;width:600px;}
+    #top_right{float:right;height:25px;width:200px;}
+    #top_right li{float:left;height:25px;padding-left:0px;}
+#main{width:1000px;margin-top:5px;}
+	#main_left{float:left;width:200px;text-align:center;font:30px/30px 华文行楷;}
+        #main_left .first_ul{margin:15px;padding:25px 0;border:solid 10px #dedede;border-image:url(../Images/admin_border.png) 10 10 10 10/2 1 2 1 round;}
+        #main_left .first_ul h1{color:blue;margin:10px 0px;font:30px/30px 华文行楷;}
+        #main_left .second_ul{margin-left:10px;font:25px/25px 华文行楷;display: none;}
+        #main_left .second_ul img{margin-top:2px;}
+        #main_left a{color:blue;}
+        #main_left a:hover{color:greenyellow;}
+	#main_right{float:left;width:auto;margin-left:5px;}
+
+#footer{width:1000px;height:50px;text-align:center;}

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Url.Content("~/Content/admin_global.css")" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    @{
+        StuSiteMVC.Models.Admin A = new StuSiteMVC.Models.Admin();
+        A = Session["Admin"] != null ? (StuSiteMVC.Models.Admin)Session["Admin"] : null;
+        string name = A.Name;
+    }
+    <div id="head">
+        <div id="top_left">
+            <text>管理员 @name 欢迎您使用本系统！</text>
+        </div>
+        <ul id="top_right">
+            <li><a href="#">【个人信息】</a></li>
+            <li><a href="@Url.Content("~/Account/Logout")">【退出登录】</a></li>
+        </ul>
+    </div>
+    <div id="main">
+        <div id="main_left">
+            <ul class="first_ul">
+                <li>
+                    <h1><img src="~/Images/admin_home.png" />学生管理</h1>
+                    <ul class="second_ul">
+                        <li><img src="~/Images/admin_li.png" /><a href="@Url.Content("~/Admin/StuManage1")">信息管理</a></li>
+                        <li><img src="~/Images/admin_li.png" /><a href="@Url.Content("~/Admin/StuManage2")">新生注册</a></li>
+                        <li><img src="~/Images/admin_li.png" /><a href="@Url.Content("~/Admin/StuManage3")">状态管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <h1><img src="~/Images/admin_home.png" />教师管理</h1>
+                    <ul class="second_ul">
+                        <li><img src="~/Images/admin_li.png" /><a href="@Url.Content("~/Admin/TeaManage1")">教师信息</a></li>
+                        <li><img src="~/Images/admin_li.png" /><a href="@Url.Content("~/Admin/TeaManage2")">权限管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <h1><img src="~/Images/admin_home.png" />公告管理</h1>
+                    <ul class="second_ul">
+                        <li><img src="~/Images/admin_li.png" /><a href="@Url.Content("~/Admin/NoticeManage1")">发布公告</a></li>
+                        <li><img src="~/Images/admin_li.png" /><a href="@Url.Content("~/Admin/NoticeManage2")">公告管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <h1><img src="~/Images/admin_home.png" />新闻管理</h1>
+                    <ul class="second_ul">
+                        <li><img src="~/Images/admin_li.png" /><a href="@Url.Content("~/Admin/NewsManage1")">发布新闻</a></li>
+                        <li><img src="~/Images/admin_li.png" /><a href="@Url.Content("~/Admin/NewsManage2")">新闻管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <h1><img src="~/Images/admin_home.png" />功能列表</h1>
+                    <ul class="second_ul">
+                        <li><img src="~/Images/admin_li.png" /><a href="#">功能列表</a></li>
+                        <li><img src="~/Images/admin_li.png" /><a href="#">功能列表</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="main_right">
+            @RenderBody()
+        </div>
+    </div>
+    <div id="footer">
+        <span>Copyright© 2015-2016 <a target="_blank" href="http://tianyu666.net">tianyu666.net</a>. All Rights Reserved.<a target="_blank" href="http://www.miitbeian.gov.cn/" rel="nofollow">辽ICP备15016458号</a></span><br />
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1258928019'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1258928019%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+</body>
+</html>
+<script src="~/Javascript/jquery-2.1.4.min.js"></script>
+<script src="~/Javascript/admin_home.js"></script>

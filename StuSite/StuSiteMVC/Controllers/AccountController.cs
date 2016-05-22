@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
+using System.IO;
 using StuSiteMVC.BLL;
 using StuSiteMVC.Models;
 
@@ -14,8 +18,7 @@ namespace StuSiteMVC.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            string username = Session["UserName"] != null ? (string)Session["UserName"] : "";
-            if (username == "")
+            if (Session["user"] == null)
             {
                 return View();
             }
@@ -27,8 +30,7 @@ namespace StuSiteMVC.Controllers
 
         public ActionResult Admin()
         {
-            string adminname = Session["AdminName"] != null ? (string)Session["AdminName"] : "";
-            if (adminname == "")
+            if (Convert.ToString(Session["Admin"]) == "")
             {
                 return View();
             }
@@ -75,9 +77,7 @@ namespace StuSiteMVC.Controllers
                     if (T.State.StateName == "正常")
                     {
                         //保存用户的状态（sesion）
-                        Session["UserName"] = T.TNumber.TName;
-                        Session["UserCollege"] = T.TNumber.TCollege.CollegeName;
-                        Session["UserRole"] = T.Role.RoleName;
+                        Session["user"] = T;
 
                         new IPManager().AddTIP(T.TNumber.TNumber);
 
@@ -121,9 +121,7 @@ namespace StuSiteMVC.Controllers
                     if (S.State.StateName == "正常")
                     {
                         //保存用户的状态（sesion）
-                        Session["UserName"] = S.SNumber.SName;
-                        Session["UserCollege"] = S.SNumber.SCollege.CollegeName;
-                        Session["UserMajor"] = S.SNumber.SMajor.MajorName;
+                        Session["user"] = S;
 
                         new IPManager().AddSIP(S.SNumber.SNumber);
 
@@ -155,7 +153,7 @@ namespace StuSiteMVC.Controllers
                 if (A.State.StateName == "正常")
                 {
                     //保存用户的状态（sesion）
-                    Session["AdminName"] = A.Name;
+                    Session["Admin"] = A;
 
                     new IPManager().AddAIP(A.AdminId);
 
@@ -178,6 +176,83 @@ namespace StuSiteMVC.Controllers
         {
             Session.RemoveAll();
             return View("Index");
+        }
+
+        private string CreateRandomCode(int codeCount)
+        {
+            string allChar = "0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
+            string[] allCharArray = allChar.Split(',');
+            string randomCode = "";
+            int temp = -1;
+            Random random = new Random();
+            for(int i=0; i < codeCount; i++)
+            {
+                if(temp!=-1)
+                {
+                    random = new Random(i * temp * ((int)DateTime.Now.Ticks));
+                }
+                int t = random.Next(36);
+                if (temp == t)
+                {
+                    return CreateRandomCode(codeCount);
+                }
+                temp = t;
+                randomCode += allCharArray[t];
+            }
+            return randomCode;
+        }
+
+        public byte[] CreateValidateGraphic(string validateCode)
+        {
+            Bitmap image = new Bitmap((int)Math.Ceiling(validateCode.Length * 16.0), 30);
+            Graphics g = Graphics.FromImage(image);
+            try
+            {
+                Random random = new Random();
+                g.Clear(Color.White);
+                //1、画验证码干扰线【背景】
+                for(int i = 0; i < 25; i++)
+                {
+                    int x1 = random.Next(image.Width);
+                    int x2 = random.Next(image.Width);
+                    int y1 = random.Next(image.Width);
+                    int y2 = random.Next(image.Width);
+
+                    g.DrawLine(new Pen(Color.Silver), x1, y1, x2, y2);
+                }
+                //2、画验证码干扰点【前景】
+                for (int i = 0; i < 100; i++)
+                {
+                    int x = random.Next(image.Width);
+                    int y = random.Next(image.Height);
+
+                    image.SetPixel(x, y, Color.FromArgb(random.Next()));
+                }
+                //3、验证的字符串画到图片
+                Font font = new Font("Arial", 13, (FontStyle.Bold));
+                LinearGradientBrush burth = new LinearGradientBrush(new Rectangle(0, 0, image.Width, image.Height), Color.Blue, Color.Red, 1.2f, true);
+                g.DrawString(validateCode, font, burth, 3, 2);
+                //4、画图片的边框线
+                g.DrawRectangle(new Pen(Color.Silver), 0, 0, image.Width-1, image.Height-1);
+                //5、保存图片数据
+                MemoryStream stream = new MemoryStream();
+                image.Save(stream, ImageFormat.Jpeg);
+                //6、输出图片流
+                return stream.ToArray();
+            }
+            finally
+            {
+                g.Dispose();
+                image.Dispose();
+            }
+        }
+
+        public ActionResult SecurityCode()
+        {
+            string oldcode = TempData["SecurityCode"] as string;
+            string code = CreateRandomCode(5);
+            TempData["SecurityCode"] = code;
+            return File(CreateValidateGraphic(code), "image/jpeg");
         }
     }
 }

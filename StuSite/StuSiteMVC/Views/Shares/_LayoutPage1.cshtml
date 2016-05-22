@@ -10,27 +10,43 @@
 
 <body>
     @{
-        string name = Session["UserName"] != null ? (string)Session["UserName"] : "";
-        string college = Session["UserCollege"] != null ? (string)Session["UserCollege"] : "";
-        string major = Session["UserMajor"] != null ? (string)Session["UserMajor"] : "";
-        string role = Session["UserRole"] != null ? (string)Session["UserRole"] : "";
+        StuSiteMVC.Models.SLogin S = new StuSiteMVC.Models.SLogin();
+        StuSiteMVC.Models.TLogin T = new StuSiteMVC.Models.TLogin();
+        S = null;
+        T = null;
+        string college = "";
         string type = "";
-        if (string.IsNullOrEmpty(role))
+        string name = "";
+        if (Session["user"] != null)
         {
-            type = "学生";
-        }
-        else
-        {
-            type = role;
+            try
+            {
+                S = Session["user"] != null ? (StuSiteMVC.Models.SLogin)Session["user"] : null;
+            }
+            catch
+            {
+                T = Session["user"] != null ? (StuSiteMVC.Models.TLogin)Session["user"] : null;
+            }
+            if (S != null)
+            {
+                college = S.SNumber.SCollege.CollegeName;
+                type = "学生";
+                name = S.SNumber.SName;
+            }
+            else if (T == null)
+            {
+                college = T.TNumber.TCollege.CollegeName;
+                type = T.Role.RoleName;
+                name = T.TNumber.TName;
+            }
         }
     }
     <div id="head">
-        <div id="top">
+        <div id="top_left">
             @{
-                if (string.IsNullOrEmpty(name))
+                if (S == null && T == null)
                 {
                     <!--未登录状态-->
-                    <a href="@Url.Content("~/Account/Index")">【用户登录】</a>
                 }
                 else
                 {
@@ -41,10 +57,10 @@
         </div>
         <ul id="top_right">
             @{
-                if (string.IsNullOrEmpty(name))
+                if (S == null && T == null)
                 {
                     <!--未登录状态-->
-                    <li>【请登录后再进行操作】</li>
+                    <li>【请<a href="@Url.Content("~/Account/Index")">登录</a>后再进行操作】</li>
                 }
                 else
                 {
@@ -69,7 +85,8 @@
         @RenderBody()
     </div>
     <div id="footer">
-        Copyright 2016 华信软件学院 All rights reserved.
+        <span>Copyright© 2015-2016 <a target="_blank" href="http://tianyu666.net">tianyu666.net</a>. All Rights Reserved.<a target="_blank" href="http://www.miitbeian.gov.cn/" rel="nofollow">辽ICP备15016458号</a></span><br />
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1258928019'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1258928019%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
     </div>
 </body>
 </html>

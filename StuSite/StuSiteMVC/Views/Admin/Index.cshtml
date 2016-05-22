@@ -1,17 +1,10 @@
 ﻿
 @{
-    Layout = null;
+    ViewBag.Title = "学生信息后台";
+    Layout = "~/Views/Shares/_LayoutPage2.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AdminIndex</title>
-</head>
-<body>
-    <div> 
+<div id="main_right">
+    <div id="top_link">
+        <p>当前位置：<a href="@Url.Content("~/Admin/Index")">后台管理</a></p>
     </div>
-</body>
-</html>
+</div>

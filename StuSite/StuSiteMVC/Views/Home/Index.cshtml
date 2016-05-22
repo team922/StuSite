@@ -3,11 +3,207 @@
     ViewBag.Title = "学生信息管理系统";
     Layout = "~/Views/Shares/_LayoutPage1.cshtml";
 }
-
+<link href="@Url.Content("~/Content/main_index.css")" rel="stylesheet" />
+<script type="text/javascript">
+    function small(o) {
+        var id = o.parentNode.parentNode.id
+        //alert(id);
+        id = id + "_display";
+        //alert(id);
+        if (document.getElementById(id).style.display == "") {
+            document.getElementById(id).style.display = "none";
+        }
+        else {
+            document.getElementById(id).style.display = ""
+        }
+    }
+</script>
+@{
+    StuSiteMVC.Models.SLogin S = new StuSiteMVC.Models.SLogin();
+    StuSiteMVC.Models.TLogin T = new StuSiteMVC.Models.TLogin();
+    string name = "";
+    string number = "";
+    string type = "";
+    string college = "";
+    DateTime dt;
+    string lastdate = "";
+    string lasttime = "";
+    string lastip = "";
+    string url = "";
+    if (Session["user"] != null)
+    {
+        try
+        {
+            S = Session["user"] != null ? (StuSiteMVC.Models.SLogin)Session["user"] : null;
+        }
+        catch
+        {
+            T = Session["user"] != null ? (StuSiteMVC.Models.TLogin)Session["user"] : null;
+        }
+        if (S != null)
+        {
+            name = S.SNumber.SName;
+            number = S.SNumber.SNumber;
+            type = "学生";
+            college = S.SNumber.SCollege.CollegeName;
+            dt = Convert.ToDateTime(S.LastTime);
+            lastdate = dt.ToShortDateString().ToString();
+            lasttime = dt.ToShortTimeString().ToString();
+            lastip = S.LastIP;
+            url = "/Images/Personal/" + S.SNumber.SPicAddress.Trim() + ".jpg";
+        }
+        else if (T != null)
+        {
+            name = T.TNumber.TName;
+            number = T.TNumber.TNumber;
+            type = T.Role.RoleName;
+            college = T.TNumber.TCollege.CollegeName;
+            dt = Convert.ToDateTime(T.LastTime);
+            lastdate = dt.ToShortDateString().ToString();
+            lasttime = dt.ToShortTimeString().ToString();
+            lastip = T.LastIP;
+            url = "/Images/Personal/" + T.TNumber.TPicAddress.Trim() + ".jpg";
+        }
+    }
+}
 <div id="main_left">
-    <text>main_left</text>
+    <div id="pi">
+        <div id="left_nav">个人信息</div>
+        @{
+            if (@name == "")
+            {
+                <div id="pi_pic"><img src="~/Images/Personal/default.jpg" /></div>
+                <div id="pi_detail">
+                    <text>尚未登录</text>
+                </div>
+            }
+            else
+            {
+                <div id="pi_pic"><img src="@url" /></div>
+                <div id="pi_detail">
+                    <text>姓名：@name</text><br />
+                    <text>工号：@number</text><br />
+                    <text>身份：@type</text><br />
+                    <text>部门：@college</text><br />
+                    <text>上次登录信息</text><br />
+                    <text>日期：@lastdate</text><br />
+                    <text>时间：@lasttime</text><br />
+                    <text>ＩＰ：@lastip</text><br />
+                </div>
+            }
+        }
+    </div>
+    <div id="app">
+        <div id="left_nav">学生应用</div>
+        <div id="app_list">
+            <img src="~/Images/app_1.jpg" />
+            <h3>学工系统</h3>
+        </div>
+        <div id="app_list">
+            <img src="~/Images/app_2.jpg" />
+            <h3>师生服务</h3>
+        </div>
+        <div id="app_list">
+            <img src="~/Images/app_3.jpg" />
+            <h3>学生评教</h3>
+        </div>
+        <div id="app_list">
+            <img src="~/Images/app_4.jpg" />
+            <h3>选课系统</h3>
+        </div>
+    </div>
 </div>
 <div id="main_right">
-    <text>main_right</text>
+    <div id="weather">
+        <div id="right_nav"><img src="~/Images/main_small.png" onclick="small(this)" />天气预报</div>
+        <div id="weather_display">
+            <h2>暂无您所在城市天气预报！</h2>
+        </div>
+    </div>
+    <div id="notice">
+        <div id="right_nav"><img src="~/Images/main_small.png" onclick="small(this)" />学校公告</div>
+        <div id="notice_display">
+            <div id="select">
+                请选择分类：
+                <select id="select1" name="select1">
+                    <option value="0">全部公告</option>
+                </select>
+            </div>
+            <div id="top_notice">
+                <img class="a_img" src="~/Images/main_istop.png" /><a class="a_main" href="#">top_notice</a><a class="a_top" onclick="settop(this)">取消置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_notice">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_notice">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_notice">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_notice">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_notice">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_notice">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_notice">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_notice">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_notice">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_notice">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="notice_bottom">
+                <img class="notice_more" onclick="" src="~/Images/main_more.png" />
+            </div>
+        </div>
+    </div>
+    <div id="news">
+        <div id="right_nav"><img src="~/Images/main_small.png" onclick="small(this)" />学校新闻</div>
+        <div id="news_display">
+            <div id="top_news">
+                <img class="a_img" src="~/Images/main_istop.png" /><a class="a_main" href="#">top_news</a><a class="a_top" onclick="settop(this)">取消置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_news">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_news">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_news">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_news">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_news">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_news">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_news">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_news">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_news">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+            <div id="normal_news">
+                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            </div>
+        </div>
+    </div>
 </div>
 
