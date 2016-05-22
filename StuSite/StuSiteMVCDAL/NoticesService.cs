@@ -67,6 +67,34 @@ namespace StuSiteMVC.DAL
             return topnotices;
         }
 
+        //获取前10条Notices
+        public List<Notices> GetTop10Notices()
+        {
+            List<Notices> noticeslist = new List<Notices>();
+            //sql语句
+            string sql = "select top 5 * from Notices,NState where Notices.NState=NState.NStateId and NState.NStateId=1 order by NoticeDatetime desc";
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.Text, sql);
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                foreach (DataRow row in dt.Rows)
+                {
+                    Notices notices = new Notices();
+                    notices.id = (int)row["id"];
+                    notices.NoticeTittle = (string)row["NoticeTittle"];
+                    notices.NoticeMain = (string)row["NoticeMain"];
+                    notices.NoticeDate = row["NoticeDate"] != DBNull.Value ? (DateTime?)row["NoticeDate"] : null;
+                    notices.NoticeDatetime = row["NoticeDatetime"] != DBNull.Value ? (DateTime?)row["NoticeDatetime"] : null;
+                    notices.NoticePublisher = new TBasicService().GetTeacherBsaicByTNumber((string)row["NoticePublisher"]);
+                    notices.NoticeBelong = new DepartmentService().GetDepartmentById((int)row["NoticeBelong"]);
+                    notices.NState = new NStateService().GetNStateById((int)row["NState"]);
+
+                    noticeslist.Add(notices);
+                }
+            }
+            return noticeslist;
+        }
+
         //添加Notices
         public void AddNotices(Notices notices)
         {

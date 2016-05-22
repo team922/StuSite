@@ -13,7 +13,7 @@ namespace StuSiteMVC.BLL
         //获取IP
         public string GetIP()
         {
-            return new IPService().GetIP();
+            return new IPService().GetIPAddress();
         }
 
         //获取省份

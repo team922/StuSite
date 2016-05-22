@@ -15,6 +15,7 @@ namespace StuSiteMVC.Models
         public College SCollege { get; set; }          //学生所属学院
         public Major SMajor { get; set; }              //学生所属专业
         public DateTime? SErollment { get; set; }      //学生入学日期
+        public Status SStatus { get; set; }            //学生学业状态
         public string SPhone { get; set; }             //学生电话
         public string SEmail { get; set; }             //学生E-Mail
         public DateTime? SBirthday { get; set; }       //学生出生日期
