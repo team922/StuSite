@@ -38,6 +38,7 @@
         }
         catch
         {
+            S = null;
             T = Session["user"] != null ? (StuSiteMVC.Models.TLogin)Session["user"] : null;
         }
         if (S != null)

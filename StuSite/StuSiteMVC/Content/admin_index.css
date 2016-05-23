@@ -1,3 +1,27 @@
 ﻿@charset "utf-8";
 /* CSS Document */
 
+/*admin style*/
+
+/*index*/
+#index_main {
+    width: 750px;
+    margin: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+    #index_main span {
+        font-size: 30px;
+        filter: glow(color=gary,strength=6);
+        width: 100%;
+        color: #ff00ff;
+        line-height: 150%;
+        font-family: 华文行楷;
+    }
+
+    #index_main font {
+        margin-top: 5px;
+        font-family: 隶书;
+        font-size: 50px;
+    }

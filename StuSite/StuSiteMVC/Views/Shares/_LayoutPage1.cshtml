@@ -25,6 +25,7 @@
             }
             catch
             {
+                S = null;
                 T = Session["user"] != null ? (StuSiteMVC.Models.TLogin)Session["user"] : null;
             }
             if (S != null)
@@ -33,7 +34,7 @@
                 type = "学生";
                 name = S.SNumber.SName;
             }
-            else if (T == null)
+            else if (T != null)
             {
                 college = T.TNumber.TCollege.CollegeName;
                 type = T.Role.RoleName;

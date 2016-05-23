@@ -52,7 +52,7 @@ namespace StuSiteMVC.Controllers
                 record = true;
             }
 
-            if (Regex.IsMatch(loginid, @"^t"))
+            if (Regex.IsMatch(loginid, @"^t|T"))
             {
                 #region 教师登录
                 TLogin T = new TLogin();

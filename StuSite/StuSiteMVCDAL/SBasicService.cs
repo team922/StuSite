@@ -36,7 +36,7 @@ namespace StuSiteMVC.DAL
                 sBasic.SIDNumber = (string)reader["SIDNumber"];
                 sBasic.SCollege = collegeService.GetCollegeByCollegeId((string)reader["SCollege"]);
                 sBasic.SMajor = majorService.GetMajorByMajorId((string)reader["SMajor"]);
-                sBasic.SErollment = reader["SErollment"] != DBNull.Value ? (DateTime?)reader["SErollment"] : null;
+                sBasic.SEnrollment = reader["SEnrollment"] != DBNull.Value ? (DateTime?)reader["SEnrollment"] : null;
                 sBasic.SStatus = status.GetStatusById((int)reader["SStatus"]);
                 sBasic.SPhone = (string)reader["SPhone"];
                 sBasic.SEmail = (string)reader["SEmail"];
