@@ -15,5 +15,61 @@ namespace StuSiteMVC.Controllers
         {
             return View();
         }
+
+        public ActionResult SetTopNews()
+        {
+            //json += "\"name\":\"name\",";
+            News news = new News();
+            news = new NewsManager().GetTopNews();
+
+            if (news == null)
+            {
+                return Content("false");
+            }
+            else
+            {
+                string json = "{";
+
+                json += "\"id\":\"" + news.id + "\",";
+                json += "\"title\":\"" + news.NewsTitle + "\",";
+                json += "\"date\":\"" + Convert.ToDateTime(news.NewsDate).ToShortDateString().ToString() + "\",";
+                json += "\"publisher\":\"" + news.NewsPublisher.Name + "\",";
+                json += "\"hits\":\"" + news.NewsHits + "\"";
+                
+                json += "}";
+                return Content(json);
+            }
+        }
+
+        public ActionResult SetNews()
+        {
+            //json += "\"name\":\"name\",";
+            List<News> listnews = new List<News>();
+            listnews = new NewsManager().GetTop10News();
+
+            if (listnews == null)
+            {
+                return Content("false");
+            }
+            else
+            {
+                int i = 0;
+                string json = "{\"listnews\":[";
+                foreach (var news in listnews)
+                {
+                    i++;
+                    json += "{";
+                    json += "\"id\":\"" + news.id + "\",";
+                    json += "\"title\":\"" + news.NewsTitle + "\",";
+                    json += "\"date\":\"" + Convert.ToDateTime(news.NewsDate).ToShortDateString().ToString() + "\",";
+                    json += "\"publisher\":\"" + news.NewsPublisher.Name + "\",";
+                    json += "\"hits\":\"" + news.NewsHits + "\"";
+                    json += "},";
+                }
+                json = json.Substring(0, json.Length - 1);
+                json += "],\"number\":\""+i+"\"}";
+                return Content(json);
+            }
+        }
     }
 }
