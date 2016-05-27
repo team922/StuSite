@@ -32,6 +32,7 @@ namespace StuSiteMVC.DAL
                     notices.NoticePublisher = new TBasicService().GetTeacherBsaicByTNumber((string)row["NoticePublisher"]);
                     notices.NoticeBelong = new DepartmentService().GetDepartmentById((int)row["NoticeBelong"]);
                     notices.NState = new NStateService().GetNStateById((int)row["NState"]);
+                    notices.NoticeHits = (int)row["NoticeHits"];
 
                     noticeslist.Add(notices);
                 }
@@ -62,6 +63,7 @@ namespace StuSiteMVC.DAL
                     topnotices.NoticePublisher = tBasicService.GetTeacherBsaicByTNumber((string)reader["NoticePublisher"]);
                     topnotices.NoticeBelong = departmentService.GetDepartmentById((int)reader["NoticeBelong"]);
                     topnotices.NState = nstateService.GetNStateById((int)reader["NState"]);
+                    topnotices.NoticeHits = (int)reader["NoticeHits"];
                 }
             }
             return topnotices;
@@ -95,12 +97,19 @@ namespace StuSiteMVC.DAL
             return noticeslist;
         }
 
+        //添加点击次数（浏览量）
+        public bool AddNoticesHits(Notices notice)
+        {
+            string sql = "update Notices set NoticeHits=(NoticeHits+1) where id=@id";
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", notice.id)) > 0;
+        }
+
         //添加Notices
         public void AddNotices(Notices notices)
         {
             //1.sql语句
-            string sql = "insert into Notices(NoticeTitle,NoticeMain,NoticeDate,NoticeDatetime,NoticePublisher,NoticeBelong,NState)"
-                         + " values(@NoticeTitle,@NoticeMain,@NoticeDate,@NoticeDatetime,@NoticePublisher,@NoticeBelong,@NState)";
+            string sql = "insert into Notices(NoticeTitle,NoticeMain,NoticeDate,NoticeDatetime,NoticePublisher,NoticeBelong,NState,NoticeHits)"
+                         + " values(@NoticeTitle,@NoticeMain,@NoticeDate,@NoticeDatetime,@NoticePublisher,@NoticeBelong,@NState,@NoticeHits)";
             sql += " select @@identity";
             //2.参数赋值
             SqlParameter[] para = new SqlParameter[]
@@ -112,6 +121,7 @@ namespace StuSiteMVC.DAL
                 new SqlParameter("@NoticePublisher",notices.NoticePublisher.TNumber),
                 new SqlParameter("@NoticeBelong",notices.NoticeBelong.Did),
                 new SqlParameter("@NState",notices.NState.NStateId),
+                new SqlParameter("@NoticeHits",notices.NoticeHits),
               };
             //3、执行sql语句
             notices.id = Convert.ToInt32(SqlHelper.ExecuteScalar(SqlHelper.ConnString, CommandType.Text, sql, para));

@@ -30,6 +30,7 @@ namespace StuSiteMVC.DAL
                     news.NewsDate = row["NewsDate"] != DBNull.Value ? (DateTime?)row["NewsDate"] : null;
                     news.NewsPublisher = new AdminService().GetAdminById((int)row["NewsPublisher"]);
                     news.NState = new NStateService().GetNStateById((int)row["NState"]);
+                    news.NewsHits = (int)row["NewsHits"];
 
                     newslist.Add(news);
                 }
@@ -57,17 +58,25 @@ namespace StuSiteMVC.DAL
                     topnews.NewsDate = reader["NewsDate"] != DBNull.Value ? (DateTime?)reader["NewsDate"] : null;
                     topnews.NewsPublisher = adminService.GetAdminById((int)reader["NewsPublisher"]);
                     topnews.NState = nstateService.GetNStateById((int)reader["NState"]);
+                    topnews.NewsHits = (int)reader["NewsHits"];
                 }
             }
             return topnews;
+        }
+
+        //添加点击次数（浏览量）
+        public bool AddNewsHits(News news)
+        {
+            string sql = "update News set NewsHits=(NewsHits+1) where id=@id";
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", news.id)) > 0;
         }
 
         //添加News
         public bool AddNews(News news)
         {
             //1.sql语句
-            string sql = "insert into News(NewsTitle,NewsMain,NewsDate,NewsPublisher,NState)"
-                         + " values(@NewsTitle,@NewsMain,@NewsDate,@NewsPublisher,@NState)";
+            string sql = "insert into News(NewsTitle,NewsMain,NewsDate,NewsPublisher,NState,NewsHits)"
+                         + " values(@NewsTitle,@NewsMain,@NewsDate,@NewsPublisher,@NState,@NewsHits)";
             sql += " select @@identity";
             //2.参数赋值
             SqlParameter[] para = new SqlParameter[]
@@ -77,6 +86,7 @@ namespace StuSiteMVC.DAL
                 new SqlParameter("@NewsDate",news.NewsDate),
                 new SqlParameter("@NewsPublisher",news.NewsPublisher.id),
                 new SqlParameter("@NState",news.NState.NStateId),
+                new SqlParameter("@NewsHits",news.NewsHits),
               };
             //3、执行sql语句
             news.id = Convert.ToInt32(SqlHelper.ExecuteScalar(SqlHelper.ConnString, CommandType.Text, sql, para));

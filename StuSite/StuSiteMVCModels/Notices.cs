@@ -17,6 +17,6 @@ namespace StuSiteMVC.Models
         public TBasic NoticePublisher { get; set; }      //发布者
         public Department NoticeBelong { get; set; }     //公告类别
         public NState NState { get; set; }               //公告状态
-        public int NewsHits { get; set; }                //浏览次数
+        public int NoticeHits { get; set; }                //浏览次数
     }
 }
