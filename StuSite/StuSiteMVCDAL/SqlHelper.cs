@@ -116,6 +116,7 @@ namespace StuSiteMVC.DAL
             catch (Exception)
             {
                 conn.Close();
+                conn.Dispose();
                 throw;
             }
         }
@@ -140,6 +141,7 @@ namespace StuSiteMVC.DAL
             catch (Exception)
             {
                 conn.Close();
+                conn.Dispose();
                 throw;
             }
         }
@@ -206,6 +208,7 @@ namespace StuSiteMVC.DAL
         private static void PrepareCommand(SqlCommand cmd, CommandType commandType, SqlConnection conn, string commandText, SqlParameter[] cmdParms)
         {
             conn.Close();
+            conn.Dispose();
             //打开连接
             if (conn.State != ConnectionState.Open)
             {
