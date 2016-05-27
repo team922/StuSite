@@ -25,12 +25,11 @@ namespace StuSiteMVC.DAL
                 {
                     News news = new News();
                     news.id = (int)row["id"];
-                    news.NewsTittle = (string)row["NewsTittle"];
+                    news.NewsTitle = (string)row["NewsTitle"];
                     news.NewsMain = (string)row["NewsMain"];
                     news.NewsDate = row["NewsDate"] != DBNull.Value ? (DateTime?)row["NewsDate"] : null;
-                    news.NewsDatetime = row["NewsDatetime"] != DBNull.Value ? (DateTime?)row["NewsDatetime"] : null;
-                    news.NewsPublisher =new AdminService().GetAdminById((int)row["NewsPublisher"]);
-                    news.NState =new NStateService().GetNStateById((int)row["NState"]);
+                    news.NewsPublisher = new AdminService().GetAdminById((int)row["NewsPublisher"]);
+                    news.NState = new NStateService().GetNStateById((int)row["NState"]);
 
                     newslist.Add(news);
                 }
@@ -53,10 +52,9 @@ namespace StuSiteMVC.DAL
 
                     topnews = new News();
                     topnews.id = (int)reader["id"];
-                    topnews.NewsTittle = (string)reader["NewsTittle"];
+                    topnews.NewsTitle = (string)reader["NewsTitle"];
                     topnews.NewsMain = (string)reader["NewsMain"];
                     topnews.NewsDate = reader["NewsDate"] != DBNull.Value ? (DateTime?)reader["NewsDate"] : null;
-                    topnews.NewsDatetime = reader["NewsDatetime"] != DBNull.Value ? (DateTime?)reader["NewsDatetime"] : null;
                     topnews.NewsPublisher = adminService.GetAdminById((int)reader["NewsPublisher"]);
                     topnews.NState = nstateService.GetNStateById((int)reader["NState"]);
                 }
@@ -65,24 +63,31 @@ namespace StuSiteMVC.DAL
         }
 
         //添加News
-        public void AddNews(News news)
+        public bool AddNews(News news)
         {
             //1.sql语句
-            string sql = "insert into News(NewsTittle,NewsMain,NewsDate,NewsDatetime,NewsPublisher,NState)"
-                         + " values(@NewsTittle,@NewsMain,@NewsDate,@NewsDatetime,@NewsPublisher,@NState)";
+            string sql = "insert into News(NewsTitle,NewsMain,NewsDate,NewsPublisher,NState)"
+                         + " values(@NewsTitle,@NewsMain,@NewsDate,@NewsPublisher,@NState)";
             sql += " select @@identity";
             //2.参数赋值
             SqlParameter[] para = new SqlParameter[]
             {
-                new SqlParameter("@NewsTittle",news.NewsTittle),
+                new SqlParameter("@NewsTitle",news.NewsTitle),
                 new SqlParameter("@NewsMain",news.NewsMain),
                 new SqlParameter("@NewsDate",news.NewsDate),
-                new SqlParameter("@NewsDatetime",news.NewsDatetime),
-                new SqlParameter("@NewsPublisher",news.NewsPublisher.AdminId),
+                new SqlParameter("@NewsPublisher",news.NewsPublisher.id),
                 new SqlParameter("@NState",news.NState.NStateId),
               };
             //3、执行sql语句
             news.id = Convert.ToInt32(SqlHelper.ExecuteScalar(SqlHelper.ConnString, CommandType.Text, sql, para));
+            if (news.id != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         //设置置顶

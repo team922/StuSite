@@ -9,6 +9,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link href="@Url.Content("~/Content/main_login.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Javascript/jquery-2.1.4.min.js")"></script>
     <title>学生信息管理系统登录</title>
     <script type="text/javascript">
         function login() {
@@ -53,18 +54,15 @@
                 <p>
                     <text>用户名：</text>
                     <input name="number" type="text" maxlength="20" placeholder="请输入学号或教师号" value="@id" id="number" class="input_txt" />
-
                 </p>
                 <p>
                     <text>密　码：</text>
                     <input name="password" type="password" maxlength="16" placeholder="请输入密码" value="@pwd" id="password" class="input_txt" />
-
                 </p>
                 <p>
                     <text>验证码：</text>
                     <input name="code" type="text" maxlength="4" placeholder="请输入验证码" id="code" class="input_chack" />
                     <img class="valiCode" src=" alt=" 验证码" />
-
                 </p>
                 <p class="form_sub">
                     <input name="RecordMe" type="checkbox" checked="checked" />

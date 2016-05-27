@@ -25,7 +25,7 @@ namespace StuSiteMVC.DAL
                 {
                     Notices notices = new Notices();
                     notices.id = (int)row["id"];
-                    notices.NoticeTittle = (string)row["NoticeTittle"];
+                    notices.NoticeTitle = (string)row["NoticeTitle"];
                     notices.NoticeMain = (string)row["NoticeMain"];
                     notices.NoticeDate = row["NoticeDate"] != DBNull.Value ? (DateTime?)row["NoticeDate"] : null;
                     notices.NoticeDatetime = row["NoticeDatetime"] != DBNull.Value ? (DateTime?)row["NoticeDatetime"] : null;
@@ -55,7 +55,7 @@ namespace StuSiteMVC.DAL
 
                     topnotices = new Notices();
                     topnotices.id = (int)reader["id"];
-                    topnotices.NoticeTittle = (string)reader["NoticeTittle"];
+                    topnotices.NoticeTitle = (string)reader["NoticeTitle"];
                     topnotices.NoticeMain = (string)reader["NoticeMain"];
                     topnotices.NoticeDate = reader["NoticeDate"] != DBNull.Value ? (DateTime?)reader["NoticeDate"] : null;
                     topnotices.NoticeDatetime = reader["NoticeDatetime"] != DBNull.Value ? (DateTime?)reader["NoticeDatetime"] : null;
@@ -81,7 +81,7 @@ namespace StuSiteMVC.DAL
                 {
                     Notices notices = new Notices();
                     notices.id = (int)row["id"];
-                    notices.NoticeTittle = (string)row["NoticeTittle"];
+                    notices.NoticeTitle = (string)row["NoticeTitle"];
                     notices.NoticeMain = (string)row["NoticeMain"];
                     notices.NoticeDate = row["NoticeDate"] != DBNull.Value ? (DateTime?)row["NoticeDate"] : null;
                     notices.NoticeDatetime = row["NoticeDatetime"] != DBNull.Value ? (DateTime?)row["NoticeDatetime"] : null;
@@ -99,13 +99,13 @@ namespace StuSiteMVC.DAL
         public void AddNotices(Notices notices)
         {
             //1.sql语句
-            string sql = "insert into Notices(NoticeTittle,NoticeMain,NoticeDate,NoticeDatetime,NoticePublisher,NoticeBelong,NState)"
-                         + " values(@NoticeTittle,@NoticeMain,@NoticeDate,@NoticeDatetime,@NoticePublisher,@NoticeBelong,@NState)";
+            string sql = "insert into Notices(NoticeTitle,NoticeMain,NoticeDate,NoticeDatetime,NoticePublisher,NoticeBelong,NState)"
+                         + " values(@NoticeTitle,@NoticeMain,@NoticeDate,@NoticeDatetime,@NoticePublisher,@NoticeBelong,@NState)";
             sql += " select @@identity";
             //2.参数赋值
             SqlParameter[] para = new SqlParameter[]
             {
-                new SqlParameter("@NoticeTittle",notices.NoticeTittle),
+                new SqlParameter("@NoticeTitle",notices.NoticeTitle),
                 new SqlParameter("@NoticeMain",notices.NoticeMain),
                 new SqlParameter("@NoticeDate",notices.NoticeDate),
                 new SqlParameter("@NoticeDatetime",notices.NoticeDatetime),

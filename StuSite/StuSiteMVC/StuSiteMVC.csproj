@@ -438,6 +438,7 @@
     <Content Include="Images\main_head.jpg" />
     <Content Include="Images\main_nav.jpg" />
     <Content Include="Javascript\admin_home.js" />
+    <Content Include="Javascript\htmlcode.js" />
     <Content Include="Javascript\jquery-2.1.4.js" />
     <Content Include="Javascript\jquery-2.1.4.min.js" />
     <Content Include="Views\Account\Admin.cshtml" />

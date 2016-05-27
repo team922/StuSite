@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using StuSiteMVC.BLL;
+using StuSiteMVC.Models;
 
 namespace StuSiteMVC.Controllers
 {
@@ -11,7 +13,22 @@ namespace StuSiteMVC.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            try
+            {
+                Admin A = Session["Admin"] != null ? (Admin)Session["Admin"] : null;
+                if (A == null)
+                {
+                    return View("../Account/Admin");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch
+            {
+                return View("../Account/Admin");
+            }
         }
     }
 }
