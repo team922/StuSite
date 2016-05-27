@@ -8,24 +8,31 @@
         #pic_detail{width:193px;float:right;}
     #app{width:343px;height:auto;float:left;border:solid 1px #72B3EE;margin-bottom:5px;}
         #app_list{width:60px;height:auto;margin:12.5px;float:left;}
-            #app_list h3{font:15px/15px 楷体;text-align:center;}
+            #app_list h3{font:14px/14px 楷体;text-align:center;}
 #main_right{float:left;width:645px;height:auto;margin-left:5px;}
         #right_nav{width:633px;height:25px;padding-left:10px;font:18px/25px 华文行楷;background:url(../Images/main_nav_top.jpg) repeat-x;}
     #weather{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
         #weather_display{float:left;width:600px;margin:20px;}
     #notice{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
-        #select{margin-left:10px;}
         #notice_display{float:left;width:643px;height:auto;}
+            #select{margin-left:10px;}
             #notice_display img{float:left;margin-left:6px;margin-top:6px;}
-            #notice_display a{float:left;margin-left:10px;}
             #top_notice{float:left;width:643px;height:auto;}
-            #normal_notice{float:left;width:643px;}
-                .a_main{width:515px;}
+                #top_notice a{float:left;margin-left:10px;}
+                #top_notice span{float:right;margin-right:15px;}
+            #normal_notice_list{float:left;width:643px;}
+                #normal_notice{float:left;width:643px;}
+                    #normal_notice a{float:left;margin-left:10px;}
+                    #normal_notice span{float:right;margin-right:15px;}
             #notice_bottom{float:right;margin-right:15px;margin-bottom:5px;}
     #news{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
         #news_display{float:left;width:643px;height:auto;}
             #news_display img{float:left;margin-left:6px;margin-top:6px;}
-            #news_display a{float:left;margin-left:10px;}
             #top_news{float:left;width:643px;height:auto;}
-            #normal_news{float:left;width:643px;}
+                #top_news a{float:left;margin-left:10px;}
+                #top_news span{float:right;margin-right:15px;}
+            #normal_news_list{float:left;width:643px;}
+                #normal_news{float:left;width:643px;}
+                    #normal_news a{float:left;margin-left:10px;}
+                    #normal_news span{float:right;margin-right:15px;}
                 

@@ -38,6 +38,33 @@ namespace StuSiteMVC.DAL
             return newslist;
         }
 
+        //获取最新10条新闻
+        public List<News> GetTop10News()
+        {
+            List<News> newslist = new List<News>();
+            //sql语句
+            string sql = "select top 10 * from News,NState where News.NState=NState.NStateId and NState.NStateId=1 order by NewsDate desc";
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.Text, sql);
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                foreach (DataRow row in dt.Rows)
+                {
+                    News news = new News();
+                    news.id = (int)row["id"];
+                    news.NewsTitle = (string)row["NewsTitle"];
+                    news.NewsMain = (string)row["NewsMain"];
+                    news.NewsDate = row["NewsDate"] != DBNull.Value ? (DateTime?)row["NewsDate"] : null;
+                    news.NewsPublisher = new AdminService().GetAdminById((int)row["NewsPublisher"]);
+                    news.NState = new NStateService().GetNStateById((int)row["NState"]);
+                    news.NewsHits = (int)row["NewsHits"];
+
+                    newslist.Add(news);
+                }
+            }
+            return newslist;
+        }
+
         //获取置顶News
         public News GetTopNews()
         {
@@ -108,10 +135,10 @@ namespace StuSiteMVC.DAL
         }
 
         //取消置顶
-        public bool RemoveTopNews(News news)
+        public bool RemoveTopNews()
         {
-            string sql = "update News set Nstate=1 where id=@id";
-            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", news.id)) > 0;
+            string sql = "update News set Nstate=1";
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql) > 0;
         }
 
         //删除News（逻辑删除）

@@ -13,6 +13,17 @@ namespace StuSiteMVC.BLL
         //添加新闻
         public bool AddNews(News news)
         {
+            if (news.NState.NStateId==2)
+            {
+                if (new NewsService().RemoveTopNews())
+                {
+                    return new NewsService().AddNews(news);
+                }
+                else
+                {
+                    return false;
+                }
+            }
             return new NewsService().AddNews(news);
         }
 
@@ -20,6 +31,12 @@ namespace StuSiteMVC.BLL
         public News GetTopNews()
         {
             return new NewsService().GetTopNews();
+        }
+
+        //获取最新10条新闻
+        public List<News> GetTop10News()
+        {
+            return new NewsService().GetTop10News();
         }
     }
 }

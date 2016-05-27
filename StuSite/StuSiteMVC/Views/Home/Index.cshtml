@@ -5,6 +5,7 @@
 }
 <link href="@Url.Content("~/Content/main_index.css")" rel="stylesheet" />
 <script type="text/javascript">
+    //菜单拉起
     function small(o) {
         var id = o.parentNode.parentNode.id
         //alert(id);
@@ -17,8 +18,60 @@
             document.getElementById(id).style.display = ""
         }
     }
+
+    function gettopnews() {
+        //alert("gettopnews_start");
+        $.ajax({
+            url: '/Home/SetTopNews',
+            success: function (data) {
+                //alert(data);
+                if (data == "false") {
+                    document.getElementById("top_news").style.display = "none";
+                }
+                else {
+                    document.getElementById("top_news").style.display = "";
+                    var news = $.parseJSON(data);
+                    //alert("id" + news.id);
+                    //alert("title" + news.title);
+                    //alert("date" + news.date);
+                    //alert("publisher" + news.publisher);
+                    //alert("hits" + news.hits);
+                    addtopnews(news.title, news.date);
+                }
+            }
+        });
+    }
+
+    function getnews() {
+        //alert("getnews_start");
+        $.ajax({
+            url: '/Home/SetNews',
+            success: function (data) {
+                //alert(data);
+                var news = $.parseJSON(data);
+                //alert(news.number);
+                for (var i = 0; i < news.number && i < 10 ; i++) {
+                    //alert(news.listnews[i].title);
+                    //alert(news.listnews[i].date);
+                    addnews(news.listnews[i].title, news.listnews[i].date);
+                }
+            }
+        });
+    }
+
+    function addtopnews(title, date) {
+        var topnews = "<img class='a_img' src='@Url.Content("~/Images/main_istop.png")' /><a class='news_title' href='#'>" + title + "</a><span class='news_time'>" + date + "</span>";
+        $("#top_news").append(topnews);
+    }
+
+    function addnews(title, date) {
+        var news = "<div id='normal_news'><img class='a_img' src='@Url.Content("~/Images/main_right.png")' /><a class='news_title' href='#'>" + title + "</a><span class='news_time'>" + date + "</span></div>";
+        $("#normal_news_list").append(news);
+    }
 </script>
+
 @{
+    #region  个人信息显示
     StuSiteMVC.Models.SLogin S = new StuSiteMVC.Models.SLogin();
     StuSiteMVC.Models.TLogin T = new StuSiteMVC.Models.TLogin();
     string name = "";
@@ -66,6 +119,7 @@
             url = "/Images/Personal/" + T.TNumber.TPicAddress.Trim() + ".jpg";
         }
     }
+    #endregion
 }
 <div id="main_left">
     <div id="pi">
@@ -122,7 +176,7 @@
         </div>
     </div>
     <div id="notice">
-        <div id="right_nav"><img src="~/Images/main_small.png" onclick="small(this)" />学校公告</div>
+        <div id="right_nav"><img src="@Url.Content("~/Images/main_small.png")" onclick="small(this)" />学校公告</div>
         <div id="notice_display">
             <div id="select">
                 请选择分类：
@@ -131,37 +185,15 @@
                 </select>
             </div>
             <div id="top_notice">
-                <img class="a_img" src="~/Images/main_istop.png" /><a class="a_main" href="#">top_notice</a><a class="a_top" onclick="settop(this)">取消置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+                <img class="a_img" src="@Url.Content("~/Images/main_istop.png")" /><a class="notice_title" href="#">top_notice</a><span class="notice_date">2016-01-01</span>
             </div>
-            <div id="normal_notice">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_notice">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_notice">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_notice">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_notice">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_notice">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_notice">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_notice">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_notice">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_notice">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_notice</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            <div id="normal_notice_list">
+                <div id="normal_notice">
+                    <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="notice_title" href="#">normal_notice</a><span class="notice_date">2016-01-01</span>
+                </div>
+                <div id="normal_notice">
+                    <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="notice_title" href="#">normal_notice</a><span class="notice_date">2016-01-01</span>
+                </div>
             </div>
             <div id="notice_bottom">
                 <img class="notice_more" onclick="" src="~/Images/main_more.png" />
@@ -169,42 +201,19 @@
         </div>
     </div>
     <div id="news">
-        <div id="right_nav"><img src="~/Images/main_small.png" onclick="small(this)" />学校新闻</div>
+        <div id="right_nav"><img src="@Url.Content("~/Images/main_small.png")" onclick="small(this)" />学校新闻</div>
         <div id="news_display">
             <div id="top_news">
-                <img class="a_img" src="~/Images/main_istop.png" /><a class="a_main" href="#">top_news</a><a class="a_top" onclick="settop(this)">取消置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+                <!--<img class="a_img" src="@Url.Content("~/Images/main_istop.png")" /><a class="news_title" href="#">top_news</a><span class="news_time">2016-01-01</span>-->
             </div>
-            <div id="normal_news">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_news">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_news">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_news">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_news">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_news">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_news">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_news">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_news">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
-            </div>
-            <div id="normal_news">
-                <img class="a_img" src="~/Images/main_right.png" /><a class="a_main" href="#">normal_news</a><a class="a_top" onclick="deltop(this)">设为置顶</a><a class="a_del" onclick="delete(this)">删除</a>
+            <div id="normal_news_list">
+                <!--<div id="normal_news">
+                    <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="news_title" href="#">normal_news</a><span class="news_time">2016-01-01</span>
+                </div>-->
             </div>
         </div>
     </div>
 </div>
+<script>gettopnews();</script>
+<script>getnews();</script>
 
