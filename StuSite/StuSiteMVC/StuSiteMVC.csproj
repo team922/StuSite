@@ -427,6 +427,7 @@
     <Content Include="Images\app_2.jpg" />
     <Content Include="Images\app_4.jpg" />
     <Content Include="Images\app_3.jpg" />
+    <Content Include="Images\button_addnews.png" />
     <Content Include="Images\main_istop.png" />
     <Content Include="Images\main_more.png" />
     <Content Include="Images\main_right.png" />

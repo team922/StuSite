@@ -28,7 +28,7 @@
     </div>
     <div id="news1_main">
         <div id="news1_top">
-            新闻发布系统
+            <span style="text-align:center;font-size:30px;color:darkmagenta;"><b><u>新闻发布系统</u></b></span>
         </div>
         <div id="news1_body">
             <form action="@Url.Action("AddNews","Admin")" method="post" id="form1">
@@ -73,7 +73,9 @@
                         }
                     }
                 </script>
-                <input type="button" onclick="loginchack()" value="发布新闻" id="button_submit" />
+                <div id="news1_bottom">
+                    <input type="button" onclick="loginchack()" value="发布新闻" id="button_addnews" onmouseover="this.style.backgroundPosition='left -37px'" onmouseout="this.style.backgroundPosition='left top'" />
+                </div>
             </form>
         </div>
     </div>
