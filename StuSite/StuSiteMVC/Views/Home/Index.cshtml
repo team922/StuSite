@@ -20,8 +20,33 @@
     }
 
     function getmessage() {
+        getdepartment()
         gettopnews();
         getnormalnews();
+    }
+
+    function getdepartment() {
+        //alert("getnews_start");
+        $.ajax({
+            url: '/Home/GetDepartment',
+            success: function (data) {
+                //alert(data);
+                var department = $.parseJSON(data);
+                //alert(news.number);
+                for (var i = 0; i < department.number ; i++) {
+                    //alert(news.listnews[i].title);
+                    //alert(news.listnews[i].date);
+                    adddepartment(department.departmentlist[i].id, department.departmentlist[i].name);
+                }
+                document.getElementById("department_loading").text = "加载完成";
+                document.getElementById("department_loading").style.display = "none";
+            }
+        });
+    }
+
+    function adddepartment(id, name) {
+        var department = "<option value='" + id + "'>" + name + "</option>";
+        $("#select1").append(department);
     }
 
     function gettopnews() {

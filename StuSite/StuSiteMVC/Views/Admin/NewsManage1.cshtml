@@ -9,7 +9,7 @@
 <script>
     function loginchack() {
         $.ajax({
-            url: '/Admin/LoginChack',
+            url: '/Home/LoginChack',
             success: function (data) {
                 if (data=="false") {
                     alert("会话已失效，请重新登录！！");

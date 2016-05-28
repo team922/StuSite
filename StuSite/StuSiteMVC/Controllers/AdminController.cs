@@ -31,39 +31,6 @@ namespace StuSiteMVC.Controllers
             }
         }
 
-        //ajax
-        public ActionResult LoginChack()
-        {
-            if (Session["Admin"] == null)
-            {
-                return Content("false");
-            }
-            else
-            {
-                return Content("true");
-            }
-        }
-
-        public ActionResult GetDepartment()
-        {
-            List<Department> departmentlist = new List<Department>();
-            departmentlist = new NoticeManager().GetAllDepartment();
-
-            int i = 0;
-            string json = "{\"departmentlist\":[";
-            foreach (var department in departmentlist)
-            {
-                i++;
-                json += "{";
-                json += "\"id\":\"" + department.Did + "\",";
-                json += "\"name\":\"" + department.DName + "\"";
-                json += "},";
-            }
-            json = json.Substring(0, json.Length - 1);
-            json += "],\"number\":\"" + i + "\"}";
-            return Content(json);
-        }
-
         public ActionResult StuManage1()
         {
             return View();

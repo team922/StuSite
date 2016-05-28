@@ -9,7 +9,7 @@
 <script>
     function loginchack() {
         $.ajax({
-            url: '/Admin/LoginChack',
+            url: '/Home/LoginChack',
             asyn:false,
             success: function (data) {
                 if (data=="false") {
@@ -25,7 +25,7 @@
     function getdepartment() {
         //alert("getnews_start");
         $.ajax({
-            url: '/Admin/GetDepartment',
+            url: '/Home/GetDepartment',
             success: function (data) {
                 //alert(data);
                 var department = $.parseJSON(data);
