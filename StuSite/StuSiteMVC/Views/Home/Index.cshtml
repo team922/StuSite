@@ -20,9 +20,18 @@
     }
 
     function getmessage() {
+        //alert("start");
+        //alert("getdepartment");
         getdepartment()
+        //alert("gettopnotice");
+        gettopnotice();
+        //alert("getnormalnotice");
+        getnormalnotice();
+        //alert("gettopnews");
         gettopnews();
+        //alert("getnormalnews");
         getnormalnews();
+        //alert("end");
     }
 
     function getdepartment() {
@@ -49,24 +58,62 @@
         $("#select1").append(department);
     }
 
+    function gettopnotice() {
+        $.ajax({
+            url: '/Home/GetTopNotice',
+            success: function (data) {
+                //alert(data);
+                if (data == "false") {
+                    //alert("false");
+                    document.getElementById("top_notice").style.display = "none";
+                }
+                else {
+                    //alert("true");
+                    document.getElementById("top_notice").style.display = "";
+                    var notice = $.parseJSON(data);
+                    //alert("top");
+                    addtopnotice(notice.title, notice.belong, notice.date);
+                }
+            }
+        });
+    }
+
+    function getnormalnotice() {
+        //alert("getnormalnotice")
+        $.ajax({
+            url: '/Home/GetNotice',
+            success: function (data) {
+                //alert(data);
+                var notice = $.parseJSON(data);
+                for (var i = 0; i < notice.number && i < 10 ; i++) {
+                    addnormalnotice(notice.listnotice[i].title,notice.listnotice[i].belong, notice.listnotice[i].date);
+                }
+                document.getElementById("notice_loading").style.display = "none";
+            }
+        });
+    }
+
     function gettopnews() {
         //alert("gettopnews_start");
         $.ajax({
-            url: '/Home/SetTopNews',
+            url: '/Home/GetTopNews',
             success: function (data) {
                 //alert(data);
                 if (data == "false") {
                     document.getElementById("top_news").style.display = "none";
                 }
                 else {
+                    //alert("true1");
                     document.getElementById("top_news").style.display = "";
+                    //alert("true2");
                     var news = $.parseJSON(data);
+                    //alert("true3");
                     //alert("id" + news.id);
                     //alert("title" + news.title);
                     //alert("date" + news.date);
                     //alert("publisher" + news.publisher);
                     //alert("hits" + news.hits);
-                    return addtopnews(news.title, news.date);
+                    addtopnews(news.title, news.date);
                 }
             }
         });
@@ -75,7 +122,7 @@
     function getnormalnews() {
         //alert("getnews_start");
         $.ajax({
-            url: '/Home/SetNews',
+            url: '/Home/GetNews',
             success: function (data) {
                 //alert(data);
                 var news = $.parseJSON(data);
@@ -88,6 +135,16 @@
                 document.getElementById("news_loading").style.display = "none";
             }
         });
+    }
+
+    function addtopnotice(title, belong, date) {
+        var topnotice = "<img class='a_img' src='@Url.Content("~/Images/main_istop.png")' /><a class='notice_title' href='#'>" + title + "</a><div id='notice_date'>" + date + "</div><div id='notice_belong'>" + belong + "</div>";
+        $("#top_notice").append(topnotice);
+    }
+
+    function addnormalnotice(title, belong, date) {
+        var notice = "<div id='normal_notice'><img class='a_img' src='@Url.Content("~/Images/main_right.png")' /><a class='notice_title' href='#'>" + title + "</a><div id='notice_date'>" + date + "</div><div id='notice_belong'>" + belong + "</div></div>";
+        $("#normal_notice_list").append(notice);
     }
 
     function addtopnews(title, date) {
@@ -202,7 +259,7 @@
 <div id="main_right">
     <div id="weather">
         <div id="right_nav"><img src="~/Images/main_small.png" onclick="small(this)" />天气预报</div>
-        <div id="weather_loading"><img src="~/Images/loading_1.gif" /></div>
+        <!--<div id="weather_loading"><img src="~/Images/loading_1.gif" /></div>-->
         <div id="weather_display">
             <h2>暂无您所在城市天气预报！</h2>
         </div>
@@ -218,15 +275,12 @@
         <div id="notice_loading"><img src="~/Images/loading_1.gif" /></div>
         <div id="notice_display">
             <div id="top_notice">
-                <img class="a_img" src="@Url.Content("~/Images/main_istop.png")" /><a class="notice_title" href="#">top_notice</a><span class="notice_date">2016-01-01</span>
+                <!--<img class="a_img" src="@Url.Content("~/Images/main_istop.png")" /><a class="notice_title" href="#">top_notice</a><div id="notice_date">2016-01-01</div><div id="notice_belong">公告类别</div>-->
             </div>
             <div id="normal_notice_list">
-                <div id="normal_notice">
-                    <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="notice_title" href="#">normal_notice</a><span class="notice_date">2016-01-01</span>
-                </div>
-                <div id="normal_notice">
-                    <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="notice_title" href="#">normal_notice</a><span class="notice_date">2016-01-01</span>
-                </div>
+                <!--<div id="normal_notice">
+                    <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="notice_title" href="#">normal_notice</a><div id="notice_date">2016-01-01</div><div id="notice_belong">公告类别</div>
+                </div>-->
             </div>
             <div id="notice_bottom">
                 <img class="notice_more" onclick="" src="~/Images/main_more.png" />
@@ -238,11 +292,11 @@
         <div id="news_loading"><img src="~/Images/loading_1.gif" /></div>
         <div id="news_display">
             <div id="top_news">
-                <!--<img class="a_img" src="@Url.Content("~/Images/main_istop.png")" /><a class="news_title" href="#">top_news</a><span class="news_time">2016-01-01</span>-->
+                <!--<img class="a_img" src="@Url.Content("~/Images/main_istop.png")" /><a class="news_title" href="#">top_news</a><span class="news_time">2016/01/01</span>-->
             </div>
             <div id="normal_news_list">
                 <!--<div id="normal_news">
-                    <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="news_title" href="#">normal_news</a><span class="news_time">2016-01-01</span>
+                    <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="news_title" href="#">normal_news</a><span class="news_time">2016/01/01</span>
                 </div>-->
             </div>
         </div>

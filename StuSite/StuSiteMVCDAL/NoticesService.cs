@@ -72,7 +72,7 @@ namespace StuSiteMVC.DAL
         {
             List<Notices> noticeslist = new List<Notices>();
             //sql语句
-            string sql = "select top 10 * from Notices,NState where Notices.NState=NState.NStateId and NState.NStateId=1 order by NoticeDatetime desc";
+            string sql = "select top 10 * from Notices,NState where Notices.NState=NState.NStateId and NState.NStateId=1 order by NoticeDate desc";
             DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.Text, sql);
             if (ds.Tables.Count > 0)
             {

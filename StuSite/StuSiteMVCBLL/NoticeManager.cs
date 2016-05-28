@@ -40,17 +40,15 @@ namespace StuSiteMVC.BLL
         }
 
         //获取top公告
-        public void GetTopNotice(out Notices topnotice)
+        public Notices GetTopNotice()
         {
-            topnotice = new NoticesService().GetTopNotices();
+            return new NoticesService().GetTopNotices();
         }
 
         //获取top10公告
-        public void GetTop10Notice(out List<Notices> top10notice)
+        public List<Notices> GetTop10Notice()
         {
-            top10notice = new NoticesService().GetTop10Notices();
+            return new NoticesService().GetTop10Notices();
         }
-
-
     }
 }

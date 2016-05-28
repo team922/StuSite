@@ -21,11 +21,11 @@
             #notice_display img{float:left;margin-left:6px;margin-top:6px;}
             #top_notice{float:left;width:643px;height:auto;}
                 #top_notice a{float:left;margin-left:10px;}
-                #top_notice span{float:right;margin-right:15px;}
+                #notice_belong{float:right;margin-right:5px;overflow: hidden;white-space:nowrap;text-overflow:ellipsis;width:75px;}
+                #notice_date{float:right;margin-right:10px;}
             #normal_notice_list{float:left;width:643px;}
                 #normal_notice{float:left;width:643px;}
                     #normal_notice a{float:left;margin-left:10px;}
-                    #normal_notice span{float:right;margin-right:15px;}
             #notice_bottom{float:right;margin-right:15px;margin-bottom:5px;}
     #news{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
         #news_loading{float:left;width:643px;}
