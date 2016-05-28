@@ -11,7 +11,28 @@ namespace StuSiteMVC.DAL
 {
     public class DepartmentService
     {
-        //获取部门信息
+        //获取全部部门
+        public List<Department> GetDepartment()
+        {
+            List<Department> departmentlist = new List<Department>();
+            string sql = "select * from Department";
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.Text, sql);
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                foreach (DataRow row in dt.Rows)
+                {
+                    Department department = new Department();
+                    department.Did = (int)row["Did"];
+                    department.DName = (string)row["DName"];
+
+                    departmentlist.Add(department);
+                }
+            }
+            return departmentlist;
+        }
+
+        //获取部门信息byid
         public Department GetDepartmentById(int departmentid)
         {
             //sql连接字符串

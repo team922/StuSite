@@ -31,6 +31,7 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        //ajax
         public ActionResult LoginChack()
         {
             if (Session["Admin"] == null)
@@ -41,6 +42,26 @@ namespace StuSiteMVC.Controllers
             {
                 return Content("true");
             }
+        }
+
+        public ActionResult GetDepartment()
+        {
+            List<Department> departmentlist = new List<Department>();
+            departmentlist = new NoticeManager().GetAllDepartment();
+
+            int i = 0;
+            string json = "{\"departmentlist\":[";
+            foreach (var department in departmentlist)
+            {
+                i++;
+                json += "{";
+                json += "\"id\":\"" + department.Did + "\",";
+                json += "\"name\":\"" + department.DName + "\"";
+                json += "},";
+            }
+            json = json.Substring(0, json.Length - 1);
+            json += "],\"number\":\"" + i + "\"}";
+            return Content(json);
         }
 
         public ActionResult StuManage1()
@@ -114,6 +135,36 @@ namespace StuSiteMVC.Controllers
                 Response.Write("<script>alert('添加新闻失败！')</script>");
             }
             return View("NewsManage1");
+        }
+
+        public ActionResult AddNotice()
+        {
+            string notice_title = Request.Form["title"];//获取标题
+            string notice_belong = Request.Form["select1_text"];//获取分类
+            string notice_state = Request.Form["select2_text"];//获取状态
+            string notice_main = Server.HtmlEncode(Request.Form["ckeditor_html"]);//获取内容
+
+            Admin A = new Admin();
+            A = Session["Admin"] != null ? (Admin)Session["Admin"] : null;
+
+            Notices notice = new Notices();
+            notice.NoticeTitle = notice_title;
+            notice.NoticeMain = notice_main;
+            notice.NoticeDate = new IPManager().GetDateTime();
+            notice.NoticePublisher = A;
+            notice.NoticeBelong = new NoticeManager().GetDepartment(Convert.ToInt16(notice_belong));
+            notice.NState = new StateManager().GetNStateById(Convert.ToInt16(notice_state));
+            notice.NoticeHits = 0;
+
+            if (new NoticeManager().AddNotice(notice))
+            {
+                Response.Write("<script>alert('添加公告成功！')</script>");
+            }
+            else
+            {
+                Response.Write("<script>alert('添加公告失败！')</script>");
+            }
+            return View("NoticeManage1");
         }
     }
 }

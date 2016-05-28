@@ -12,8 +12,10 @@
 #main_right{float:left;width:645px;height:auto;margin-left:5px;}
         #right_nav{width:633px;height:25px;padding-left:10px;font:18px/25px 华文行楷;background:url(../Images/main_nav_top.jpg) repeat-x;}
     #weather{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
+        #weather_loading{float:left;width:643px;}
         #weather_display{float:left;width:600px;margin:20px;}
     #notice{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
+        #notice_loading{float:left;width:643px;}
         #notice_display{float:left;width:643px;height:auto;}
             #select{margin-left:10px;}
             #notice_display img{float:left;margin-left:6px;margin-top:6px;}
@@ -26,6 +28,7 @@
                     #normal_notice span{float:right;margin-right:15px;}
             #notice_bottom{float:right;margin-right:15px;margin-bottom:5px;}
     #news{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
+        #news_loading{float:left;width:643px;}
         #news_display{float:left;width:643px;height:auto;}
             #news_display img{float:left;margin-left:6px;margin-top:6px;}
             #top_news{float:left;width:643px;height:auto;}

@@ -28,8 +28,7 @@ namespace StuSiteMVC.DAL
                     notices.NoticeTitle = (string)row["NoticeTitle"];
                     notices.NoticeMain = (string)row["NoticeMain"];
                     notices.NoticeDate = row["NoticeDate"] != DBNull.Value ? (DateTime?)row["NoticeDate"] : null;
-                    notices.NoticeDatetime = row["NoticeDatetime"] != DBNull.Value ? (DateTime?)row["NoticeDatetime"] : null;
-                    notices.NoticePublisher = new TBasicService().GetTeacherBsaicByTNumber((string)row["NoticePublisher"]);
+                    notices.NoticePublisher = new AdminService().GetAdminById((int)row["NoticePublisher"]);
                     notices.NoticeBelong = new DepartmentService().GetDepartmentById((int)row["NoticeBelong"]);
                     notices.NState = new NStateService().GetNStateById((int)row["NState"]);
                     notices.NoticeHits = (int)row["NoticeHits"];
@@ -50,7 +49,7 @@ namespace StuSiteMVC.DAL
             {
                 if (reader.Read())
                 {
-                    TBasicService tBasicService = new TBasicService();
+                    AdminService adminService = new AdminService();
                     DepartmentService departmentService = new DepartmentService();
                     NStateService nstateService = new NStateService();
 
@@ -59,8 +58,7 @@ namespace StuSiteMVC.DAL
                     topnotices.NoticeTitle = (string)reader["NoticeTitle"];
                     topnotices.NoticeMain = (string)reader["NoticeMain"];
                     topnotices.NoticeDate = reader["NoticeDate"] != DBNull.Value ? (DateTime?)reader["NoticeDate"] : null;
-                    topnotices.NoticeDatetime = reader["NoticeDatetime"] != DBNull.Value ? (DateTime?)reader["NoticeDatetime"] : null;
-                    topnotices.NoticePublisher = tBasicService.GetTeacherBsaicByTNumber((string)reader["NoticePublisher"]);
+                    topnotices.NoticePublisher = adminService.GetAdminById((int)reader["NoticePublisher"]);
                     topnotices.NoticeBelong = departmentService.GetDepartmentById((int)reader["NoticeBelong"]);
                     topnotices.NState = nstateService.GetNStateById((int)reader["NState"]);
                     topnotices.NoticeHits = (int)reader["NoticeHits"];
@@ -74,7 +72,7 @@ namespace StuSiteMVC.DAL
         {
             List<Notices> noticeslist = new List<Notices>();
             //sql语句
-            string sql = "select top 5 * from Notices,NState where Notices.NState=NState.NStateId and NState.NStateId=1 order by NoticeDatetime desc";
+            string sql = "select top 10 * from Notices,NState where Notices.NState=NState.NStateId and NState.NStateId=1 order by NoticeDatetime desc";
             DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.Text, sql);
             if (ds.Tables.Count > 0)
             {
@@ -86,8 +84,7 @@ namespace StuSiteMVC.DAL
                     notices.NoticeTitle = (string)row["NoticeTitle"];
                     notices.NoticeMain = (string)row["NoticeMain"];
                     notices.NoticeDate = row["NoticeDate"] != DBNull.Value ? (DateTime?)row["NoticeDate"] : null;
-                    notices.NoticeDatetime = row["NoticeDatetime"] != DBNull.Value ? (DateTime?)row["NoticeDatetime"] : null;
-                    notices.NoticePublisher = new TBasicService().GetTeacherBsaicByTNumber((string)row["NoticePublisher"]);
+                    notices.NoticePublisher = new AdminService().GetAdminById((int)row["NoticePublisher"]);
                     notices.NoticeBelong = new DepartmentService().GetDepartmentById((int)row["NoticeBelong"]);
                     notices.NState = new NStateService().GetNStateById((int)row["NState"]);
 
@@ -105,11 +102,11 @@ namespace StuSiteMVC.DAL
         }
 
         //添加Notices
-        public void AddNotices(Notices notices)
+        public bool AddNotices(Notices notices)
         {
             //1.sql语句
-            string sql = "insert into Notices(NoticeTitle,NoticeMain,NoticeDate,NoticeDatetime,NoticePublisher,NoticeBelong,NState,NoticeHits)"
-                         + " values(@NoticeTitle,@NoticeMain,@NoticeDate,@NoticeDatetime,@NoticePublisher,@NoticeBelong,@NState,@NoticeHits)";
+            string sql = "insert into Notices(NoticeTitle,NoticeMain,NoticeDate,NoticePublisher,NoticeBelong,NState,NoticeHits)"
+                         + " values(@NoticeTitle,@NoticeMain,@NoticeDate,@NoticePublisher,@NoticeBelong,@NState,@NoticeHits)";
             sql += " select @@identity";
             //2.参数赋值
             SqlParameter[] para = new SqlParameter[]
@@ -117,14 +114,21 @@ namespace StuSiteMVC.DAL
                 new SqlParameter("@NoticeTitle",notices.NoticeTitle),
                 new SqlParameter("@NoticeMain",notices.NoticeMain),
                 new SqlParameter("@NoticeDate",notices.NoticeDate),
-                new SqlParameter("@NoticeDatetime",notices.NoticeDatetime),
-                new SqlParameter("@NoticePublisher",notices.NoticePublisher.TNumber),
+                new SqlParameter("@NoticePublisher",notices.NoticePublisher.id),
                 new SqlParameter("@NoticeBelong",notices.NoticeBelong.Did),
                 new SqlParameter("@NState",notices.NState.NStateId),
                 new SqlParameter("@NoticeHits",notices.NoticeHits),
               };
             //3、执行sql语句
             notices.id = Convert.ToInt32(SqlHelper.ExecuteScalar(SqlHelper.ConnString, CommandType.Text, sql, para));
+            if (notices.id != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         //设置置顶
@@ -135,10 +139,10 @@ namespace StuSiteMVC.DAL
         }
 
         //取消置顶
-        public bool RemoveTopNotices(Notices notices)
+        public bool RemoveTopNotices()
         {
-            string sql = "update Notices set Nstate=1 where id=@id";
-            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", notices.id)) > 0;
+            string sql = "update Notices set Nstate=1";
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql) > 0;
         }
 
         //删除News（逻辑删除）

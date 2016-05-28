@@ -13,10 +13,9 @@ namespace StuSiteMVC.Models
         public string NoticeTitle { get; set; }          //公告标题
         public string NoticeMain { get; set; }           //公告主题
         public DateTime? NoticeDate { get; set; }        //发布日期
-        public DateTime? NoticeDatetime { get; set; }    //发布日期+时间
-        public TBasic NoticePublisher { get; set; }      //发布者
+        public Admin NoticePublisher { get; set; }       //发布者
         public Department NoticeBelong { get; set; }     //公告类别
         public NState NState { get; set; }               //公告状态
-        public int NoticeHits { get; set; }                //浏览次数
+        public int NoticeHits { get; set; }              //浏览次数
     }
 }

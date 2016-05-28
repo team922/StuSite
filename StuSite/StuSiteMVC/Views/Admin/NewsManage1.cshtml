@@ -26,11 +26,11 @@
     <div id="top_link">
         <p>当前位置：<a href="@Url.Content("~/Admin/Index")">后台管理</a>>>发布新闻</p>
     </div>
-    <div id="news1_main">
-        <div id="news1_top">
+    <div id="addmessage_main">
+        <div id="addmessage_top">
             <span style="text-align:center;font-size:30px;color:darkmagenta;"><b><u>新闻发布系统</u></b></span>
         </div>
-        <div id="news1_body">
+        <div id="addmessage_body">
             <form action="@Url.Action("AddNews","Admin")" method="post" id="form1">
                 <h2>新闻标题</h2>
                 <input type="text" id="title" name="title" maxlength="45" placeholder="请输入标题" />
@@ -39,8 +39,8 @@
                     <option value="1">正常</option>
                     <option value="2">置顶</option>
                 </select>
-                <input type="hidden" id="ckeditor_html" name="ckeditor_html" />
                 <input type="hidden" id="select_text" name="select_text" />
+                <input type="hidden" id="ckeditor_html" name="ckeditor_html" />
 
                 <textarea id="ckeditor" cols="20" rows="2" name="ckeditor"></textarea>
                 <script type="text/javascript">
@@ -73,8 +73,8 @@
                         }
                     }
                 </script>
-                <div id="news1_bottom">
-                    <input type="button" onclick="loginchack()" value="发布新闻" id="button_addnews" onmouseover="this.style.backgroundPosition='left -37px'" onmouseout="this.style.backgroundPosition='left top'" />
+                <div id="addmessage_bottom">
+                    <input type="button" onclick="loginchack()" value="发布新闻" id="addmessage_button" onmouseover="this.style.backgroundPosition='left -37px'" onmouseout="this.style.backgroundPosition='left top'" />
                 </div>
             </form>
         </div>
