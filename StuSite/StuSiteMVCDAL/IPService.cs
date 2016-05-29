@@ -29,8 +29,7 @@ namespace StuSiteMVC.DAL
             {
                 return ip;
             }
-            //return "127.0.0.1";
-            return "103.226.133.233";
+            return "127.0.0.1";
         }
 
         // 检查IP地址格式
