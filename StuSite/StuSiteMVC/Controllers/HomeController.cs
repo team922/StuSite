@@ -29,6 +29,21 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        public ActionResult GetIPMessage()
+        {
+            return Content(new IPManager().GetAddress());
+        }
+
+        public ActionResult GetAreaid(string district)
+        {
+            return Content(new IPManager().GetAreaid(district));
+        }
+
+        public ActionResult GetWeather(string id)
+        {
+            return Content(new IPManager().GetWeather(id));
+        }
+
         public ActionResult GetDepartment()
         {
             List<Department> departmentlist = new List<Department>();
@@ -76,11 +91,18 @@ namespace StuSiteMVC.Controllers
             }
         }
 
-        public ActionResult GetNotice()
+        public ActionResult GetSelectNotice(string department)
         {
-            //json += "\"name\":\"name\",";
+            int id = Convert.ToInt16(department);
             List<Notices> listnotice = new List<Notices>();
-            listnotice = new NoticeManager().GetTop10Notice();
+            if (id==0)
+            {
+                listnotice = new NoticeManager().GetTop10Notice();
+            }
+            else
+            {
+                listnotice = new NoticeManager().GetSelectNotice(id);
+            }
 
             if (listnotice == null)
             {
@@ -104,7 +126,14 @@ namespace StuSiteMVC.Controllers
                     json += "},";
                 }
                 json = json.Substring(0, json.Length - 1);
-                json += "],\"number\":\"" + i + "\"}";
+                if (i==0)
+                {
+                    json += "\"\",\"number\":\"" + i + "\"}";
+                }
+                else
+                {
+                    json += "],\"number\":\"" + i + "\"}";
+                }
                 return Content(json);
             }
         }

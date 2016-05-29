@@ -50,5 +50,11 @@ namespace StuSiteMVC.BLL
         {
             return new NoticesService().GetTop10Notices();
         }
+
+        //获取公告by分类
+        public List<Notices> GetSelectNotice(int department)
+        {
+            return new NoticesService().GetSelectNotice(department);
+        }
     }
 }

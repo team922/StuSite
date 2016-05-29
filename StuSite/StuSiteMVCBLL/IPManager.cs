@@ -16,16 +16,22 @@ namespace StuSiteMVC.BLL
             return new IPService().GetIPAddress();
         }
 
-        //获取省份
+        //获取地址
         public string GetAddress()
         {
-            return new IPService().GetAddress();
+            return new IPService().GetAddress(GetIP());
         }
 
-        //获取运营商
-        public string GetProvider()
+        //获取地区代码
+        public string GetAreaid(string district)
         {
-            return new IPService().GetProvider();
+            return new IPService().GetAreaid(district);
+        }
+
+        //获取天气
+        public string GetWeather(string id)
+        {
+            return new IPService().GetWeather(id);
         }
 
         //获取系统时间

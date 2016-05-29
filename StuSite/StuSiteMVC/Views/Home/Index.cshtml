@@ -21,8 +21,10 @@
 
     function getmessage() {
         //alert("start");
+        //alert("getipmessage");
+        getipmessage();
         //alert("getdepartment");
-        getdepartment()
+        getdepartment();
         //alert("gettopnotice");
         gettopnotice();
         //alert("getnormalnotice");
@@ -32,6 +34,88 @@
         //alert("getnormalnews");
         getnormalnews();
         //alert("end");
+    }
+
+    function getipmessage() {
+        $.ajax({
+            url: '/Home/GetIPMessage',
+            success: function (data) {
+                //alert(data);
+                var ipmessage = $.parseJSON(data);
+                //alert(ipmessage.errMsg);
+                if (ipmessage.errMsg == "success") {
+                    //alert(ipmessage.retData.ip);
+                    //alert(ipmessage.retData.country);
+                    //alert(ipmessage.retData.province);
+                    //alert(ipmessage.retData.district);
+                    //alert(ipmessage.retData.carrier);
+                    addipmessage(ipmessage.retData.ip, ipmessage.retData.country, ipmessage.retData.province, ipmessage.retData.city, ipmessage.retData.district, ipmessage.retData.carrier);
+                    getareaid(ipmessage.retData.province, ipmessage.retData.city, ipmessage.retData.district);
+                }
+                else {
+                    document.getElementById("weather_loading").style.display = "none";
+                    $("#ipmessage_display").append("IPMessage加载失败");
+                }
+            }
+        });
+    }
+
+    function getareaid(province, city, district) {
+        //alert("getareaid_start");
+        var area_id;
+        $.ajax({
+            url: '/Home/GetAreaid/',
+            data: { district: encodeURI(district) },
+            success: function (data) {
+                //alert(data);
+                var area = $.parseJSON(data);
+                //alert(area.errMsg);
+                if (area.errMsg == "success") {
+                    //alert(area.retData.length);
+                    for (var i = 0; i < area.retData.length; i++) {
+                        if (area.retData[i].province_cn == province && area.retData[i].district_cn == city && area.retData[i].name_cn == district) {
+                            area_id = area.retData[i].area_id;
+                        }
+                        else {
+                            area_id = "000000000";
+                        }
+                    }
+                    if (area_id == "000000000") {
+                        document.getElementById("weather_loading").style.display = "none";
+                        $("#weather_display").append("<h2>暂无该地区天津信息！</h2>");
+                    }
+                    else {
+                        getweather(area_id);
+                    }
+                }
+                else {
+                    document.getElementById("weather_loading").style.display = "none";
+                    $("#weather_display").append("<h2>" + area.errMsg + "</h2>");
+                }
+            }
+        });
+    }
+
+    function getweather(id) {
+        //alert("getweather_start");
+        $.ajax({
+            url: '/Home/GetWeather/',
+            data: { id: id },
+            success: function (data) {
+                //alert(data);
+                var weather = $.parseJSON(data);
+                //alert(weather.errMsg);
+                if (weather.errMsg == "success") {
+                    //alert(weather.retData);
+                    addweather(weather.retData.weather, weather.retData.temp, weather.retData.l_tmp, weather.retData.h_tmp, weather.retData.WD, weather.retData.WS, weather.retData.date, weather.retData.time);
+                    document.getElementById("weather_loading").style.display = "none";
+                }
+                else {
+                    document.getElementById("notice_loading").style.display = "none";
+                    $("#weather_display").append("<h2>" + weather.errMsg + "</h2>");
+                }
+            }
+        });
     }
 
     function getdepartment() {
@@ -79,14 +163,21 @@
     }
 
     function getnormalnotice() {
-        //alert("getnormalnotice")
+        for (var i = 0; i < 10; i++) {
+            $("#normal_notice").remove();
+        }
+        document.getElementById("notice_loading").style.display = "";
+        var department = document.getElementById("select1").value;
+        //alert(department);
         $.ajax({
-            url: '/Home/GetNotice',
+            url: '/Home/GetSelectNotice/',
+            data: { department: department },
             success: function (data) {
                 //alert(data);
                 var notice = $.parseJSON(data);
+                //alert(notice.number);
                 for (var i = 0; i < notice.number && i < 10 ; i++) {
-                    addnormalnotice(notice.listnotice[i].title,notice.listnotice[i].belong, notice.listnotice[i].date);
+                    addnormalnotice(notice.listnotice[i].title, notice.listnotice[i].belong, notice.listnotice[i].date);
                 }
                 document.getElementById("notice_loading").style.display = "none";
             }
@@ -135,6 +226,22 @@
                 document.getElementById("news_loading").style.display = "none";
             }
         });
+    }
+
+    function addipmessage(ip, country, province, city, district, carrier) {
+        //alert("addipmessage");
+        //var message = "ＩＰ地址：" + ip + "<br />国　　家：" + country + "<br />省　　份：" + province + "<br />城　　市：" + city + "<br />地　　区：" + district + "<br />运 营 商：" + carrier + "<br />";
+        var message = "";
+        message += "<b>ＩＰ地址：" + ip + "</b><br /><b>国　　家：" + country + "</b><br />";
+        message += "<b>省　　份：" + province + "</b><br /><b>城　　市：" + city + "</b><br />";
+        message += "<b>地　　区：" + district + "</b><br /><b>运 营 商：" + carrier + "</b><br />";
+        //alert(message);
+        $("#ipmessage_display").append(message);
+    }
+
+    function addweather(weather, temp, l_tmp, h_tmp, WD, WS, date, time) {
+        weather = "<b>天气情况：" + weather + "</b><br /><b>当前气温：" + temp + "</b><br /><b>最低气温：" + l_tmp + "</b><br /><b>最高气温：" + h_tmp + "</b><br /><b>风　　向：" + WD + "</b><br /><b>风　　力：" + WS + "</b><br /><b>发布时间：" + date + "　" + time + "</b><br />";
+        $("#weather_display").append(weather);
     }
 
     function addtopnotice(title, belong, date) {
@@ -213,9 +320,9 @@
     <div id="pi">
         <div id="left_nav">个人信息</div>
         @{
-            if (@name == "")
-            {
-                <div id="pi_pic"><img src="~/Images/Personal/default.jpg" /></div>
+    if (@name == "")
+    {
+        <div id="pi_pic"><img src="~/Images/Personal/default.jpg" /></div>
                 <div id="pi_detail">
                     <text>尚未登录</text>
                 </div>
@@ -259,16 +366,32 @@
 <div id="main_right">
     <div id="weather">
         <div id="right_nav"><img src="~/Images/main_small.png" onclick="small(this)" />天气预报</div>
-        <!--<div id="weather_loading"><img src="~/Images/loading_1.gif" /></div>-->
+        <div id="weather_loading"><img src="~/Images/loading_1.gif" /></div>
         <div id="weather_display">
-            <h2>暂无您所在城市天气预报！</h2>
+            <!--json-weather
+            天气情况：<br />
+            当前气温：<br />
+            最低气温：<br />
+            最高气温：<br />
+            风　　向：<br />
+            风　　力：<br />
+            发布时间：<br />-->
+        </div>
+        <div id="ipmessage_display">
+            <!--json-IPmessage
+            ＩＰ地址：<br />
+            国　　家：<br />
+            省　　份：<br />
+            城　　市：<br />
+            地　　区：<br />
+            运 营 商：<br />-->
         </div>
     </div>
     <div id="notice">
         <div id="right_nav"><img src="@Url.Content("~/Images/main_small.png")" onclick="small(this)" />学校公告</div>
         <div id="select">
             请选择分类：
-            <select id="select1" name="select1">
+            <select id="select1" name="select1" onchange="getnormalnotice()">
                 <option value="0">全部公告</option>
             </select>
         </div>

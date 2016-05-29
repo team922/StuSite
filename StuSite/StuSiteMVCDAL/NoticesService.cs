@@ -94,6 +94,33 @@ namespace StuSiteMVC.DAL
             return noticeslist;
         }
 
+        //获取公告by分类
+        public List<Notices> GetSelectNotice(int department)
+        {
+            List<Notices> noticeslist = new List<Notices>();
+            //sql语句
+            string sql = "select top 10 * from Notices,NState,Department where Notices.NState=NState.NStateId and NState.NStateId=1 and Notices.Noticebelong=Department.Did and Department.Did=@department order by NoticeDate desc";
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.Text, sql,new SqlParameter("@department", department));
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                foreach (DataRow row in dt.Rows)
+                {
+                    Notices notices = new Notices();
+                    notices.id = (int)row["id"];
+                    notices.NoticeTitle = (string)row["NoticeTitle"];
+                    notices.NoticeMain = (string)row["NoticeMain"];
+                    notices.NoticeDate = row["NoticeDate"] != DBNull.Value ? (DateTime?)row["NoticeDate"] : null;
+                    notices.NoticePublisher = new AdminService().GetAdminById((int)row["NoticePublisher"]);
+                    notices.NoticeBelong = new DepartmentService().GetDepartmentById((int)row["NoticeBelong"]);
+                    notices.NState = new NStateService().GetNStateById((int)row["NState"]);
+
+                    noticeslist.Add(notices);
+                }
+            }
+            return noticeslist;
+        }
+
         //添加点击次数（浏览量）
         public bool AddNoticesHits(Notices notice)
         {
