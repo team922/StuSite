@@ -13,8 +13,9 @@
         #right_nav{width:633px;height:25px;padding-left:10px;font:18px/25px 华文行楷;background:url(../Images/main_nav_top.jpg) repeat-x;}
     #weather{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
         #weather_loading{float:left;width:643px;}
-        #ipmessage_display{float:right;width:200px;margin:5px;}
-        #weather_display{float:left;width:350px;margin:10px;}
+        #weather_display{float:left;width:643px;}
+            #showipmessage{float:right;width:200px;margin:5px;margin-top:20px;}
+            #showweather{float:left;width:350px;margin:10px;margin-left:20px;}
     #notice{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
         #notice_loading{float:left;width:643px;}
         #notice_display{float:left;width:643px;height:auto;}

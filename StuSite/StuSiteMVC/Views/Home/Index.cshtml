@@ -54,7 +54,7 @@
                 }
                 else {
                     document.getElementById("weather_loading").style.display = "none";
-                    $("#ipmessage_display").append("IPMessage加载失败");
+                    $("#showipmessage").append("IPMessage加载失败");
                 }
             }
         });
@@ -82,7 +82,7 @@
                     }
                     if (area_id == "000000000") {
                         document.getElementById("weather_loading").style.display = "none";
-                        $("#weather_display").append("<h2>暂无该地区天津信息！</h2>");
+                        $("#showweather").append("<h2>暂无该地区天津信息！</h2>");
                     }
                     else {
                         getweather(area_id);
@@ -112,7 +112,7 @@
                 }
                 else {
                     document.getElementById("notice_loading").style.display = "none";
-                    $("#weather_display").append("<h2>" + weather.errMsg + "</h2>");
+                    $("#showweather").append("<h2>" + weather.errMsg + "</h2>");
                 }
             }
         });
@@ -135,11 +135,6 @@
                 document.getElementById("department_loading").style.display = "none";
             }
         });
-    }
-
-    function adddepartment(id, name) {
-        var department = "<option value='" + id + "'>" + name + "</option>";
-        $("#select1").append(department);
     }
 
     function gettopnotice() {
@@ -236,12 +231,17 @@
         message += "<b>省　　份：" + province + "</b><br /><b>城　　市：" + city + "</b><br />";
         message += "<b>地　　区：" + district + "</b><br /><b>运 营 商：" + carrier + "</b><br />";
         //alert(message);
-        $("#ipmessage_display").append(message);
+        $("#showipmessage").append(message);
     }
 
     function addweather(weather, temp, l_tmp, h_tmp, WD, WS, date, time) {
         weather = "<b>天气情况：" + weather + "</b><br /><b>当前气温：" + temp + "</b><br /><b>最低气温：" + l_tmp + "</b><br /><b>最高气温：" + h_tmp + "</b><br /><b>风　　向：" + WD + "</b><br /><b>风　　力：" + WS + "</b><br /><b>发布时间：" + date + "　" + time + "</b><br />";
-        $("#weather_display").append(weather);
+        $("#showweather").append(weather);
+    }
+
+    function adddepartment(id, name) {
+        var department = "<option value='" + id + "'>" + name + "</option>";
+        $("#select1").append(department);
     }
 
     function addtopnotice(title, belong, date) {
@@ -320,9 +320,9 @@
     <div id="pi">
         <div id="left_nav">个人信息</div>
         @{
-    if (@name == "")
-    {
-        <div id="pi_pic"><img src="~/Images/Personal/default.jpg" /></div>
+            if (@name == "")
+            {
+                <div id="pi_pic"><img src="~/Images/Personal/default.jpg" /></div>
                 <div id="pi_detail">
                     <text>尚未登录</text>
                 </div>
@@ -368,23 +368,25 @@
         <div id="right_nav"><img src="~/Images/main_small.png" onclick="small(this)" />天气预报</div>
         <div id="weather_loading"><img src="~/Images/loading_1.gif" /></div>
         <div id="weather_display">
-            <!--json-weather
-            天气情况：<br />
-            当前气温：<br />
-            最低气温：<br />
-            最高气温：<br />
-            风　　向：<br />
-            风　　力：<br />
-            发布时间：<br />-->
-        </div>
-        <div id="ipmessage_display">
-            <!--json-IPmessage
-            ＩＰ地址：<br />
-            国　　家：<br />
-            省　　份：<br />
-            城　　市：<br />
-            地　　区：<br />
-            运 营 商：<br />-->
+            <div id="showweather">
+                <!--json-weather
+                天气情况：<br />
+                当前气温：<br />
+                最低气温：<br />
+                最高气温：<br />
+                风　　向：<br />
+                风　　力：<br />
+                发布时间：<br />-->
+            </div>
+            <div id="showipmessage">
+                <!--json-IPmessage
+                ＩＰ地址：<br />
+                国　　家：<br />
+                省　　份：<br />
+                城　　市：<br />
+                地　　区：<br />
+                运 营 商：<br />-->
+            </div>
         </div>
     </div>
     <div id="notice">
