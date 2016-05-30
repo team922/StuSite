@@ -69,7 +69,6 @@
 
     #login form .input_txt{width:250px;border:solid 1px #ccc;box-shadow:0 1px 10px rgba(0,0,0,0.1) inset;height:35px;text-indent:10px;}
     #login form .input_chack{width:100px;border:solid 1px #ccc;box-shadow:0 1px 10px rgba(0,0,0,0.1) inset;	height:35px;text-indent:10px;}
-    #login form .valiCode{}
     #login form .button_login{width:100px;height:35px;}
     #login form p{display:block;height:40px;position:relative;margin:15px 10px;}
     #login form p.form_sub{padding-left: 90px;margin: 0px;}

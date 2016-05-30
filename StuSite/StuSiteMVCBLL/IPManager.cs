@@ -57,5 +57,17 @@ namespace StuSiteMVC.BLL
         {
             new AdminService().UpsetAdminIPandTime(loginid, GetIP(), GetDateTime());
         }
+
+        //生成验证码
+        public string CreateRandomCode(int codeCount)
+        {
+            return new IPService().CreateRandomCode(codeCount);
+        }
+
+        //生成图片
+        public byte[] CreateValidateGraphic(string validateCode)
+        {
+            return new IPService().CreateValidateGraphic(validateCode);
+        }
     }
 }

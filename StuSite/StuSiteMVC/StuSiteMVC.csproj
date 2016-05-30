@@ -59,7 +59,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -439,6 +438,7 @@
     <Content Include="Images\main_login.jpg" />
     <Content Include="Images\main_head.jpg" />
     <Content Include="Images\main_nav.jpg" />
+    <Content Include="Images\randomcode.png" />
     <Content Include="Javascript\admin_home.js" />
     <Content Include="Javascript\htmlcode.js" />
     <Content Include="Javascript\jquery-2.1.4.js" />

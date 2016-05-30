@@ -12,25 +12,53 @@
     <script src="@Url.Content("~/Javascript/jquery-2.1.4.min.js")"></script>
     <title>学生信息管理系统登录</title>
     <script type="text/javascript">
-        function login() {
-            var number = document.getElementById("number").value;
-            var password = document.getElementById("password").value;
-            if (number == "" || password == "") {
-                alert("请填写全部信息后再试！");
+        function getcode() {
+            //alert("getcode");
+            var getimagecode = document.getElementById("showcode");
+            getimagecode.src = "/Account/GetRandomCode?" + Math.random();
+        }
+
+        function login(number, password) {
+
+            var Expression = /^(t[\0-9]{9})|([\0-9]{11})$/;
+            var objExp = new RegExp(Expression);
+            if (objExp.test(number)) {
+                //alert("用户名格式正确！");
+                document.getElementById("form1").submit();
             }
             else {
-                var Expression = /^(t[\0-9]{9})|([\0-9]{11})$/;
-                var objExp = new RegExp(Expression);
-                if (objExp.test(number)) {
-                    //alert("用户名格式正确！");
-                    document.getElementById("form1").submit();
-                }
-                else {
-                    alert("用户名格式错误！");
-                    document.getElementById("number").focus;
-                }
+                alert("用户名格式错误！");
+                document.getElementById("number").focus;
             }
         }
+
+        function loginchack() {
+            var number = document.getElementById("number").value;
+            var password = document.getElementById("password").value;
+            var code = document.getElementById("code").value;
+            
+            if (number == "" || password == "" || code == "") {
+                alert("请填写全部信息后再试！");
+            }
+            else
+            {
+                $.ajax({
+                    url: '/Account/ChackRandomCode',
+                    data: { code: code },
+                    asyn: false,
+                    success: function (data) {
+                        //alert(data);
+                        if (data=="true") {
+                            login(number, password);
+                        }
+                        else {
+                            alert("验证码错误！！")
+                        }
+                    }
+                });
+            }
+        }
+
     </script>
 </head>
 
@@ -51,25 +79,25 @@
         <div id="login">
             <form action="@Url.Action("UserLogin","Account")" method="post" id="form1" class="form_login1">
                 <h2>用户登录</h2>
-                <p>
+                <p id="numberdiv">
                     <text>用户名：</text>
                     <input name="number" type="text" maxlength="20" placeholder="请输入学号或教师号" value="@id" id="number" class="input_txt" />
                 </p>
-                <p>
+                <p id="passworddiv">
                     <text>密　码：</text>
                     <input name="password" type="password" maxlength="16" placeholder="请输入密码" value="@pwd" id="password" class="input_txt" />
                 </p>
-                <p>
+                <p id="randomcodediv">
                     <text>验证码：</text>
-                    <input name="code" type="text" maxlength="4" placeholder="请输入验证码" id="code" class="input_chack" />
-                    <img class="valiCode" src=" alt=" 验证码" />
+                    <input name="code" type="text" maxlength="5" placeholder="请输入验证码" id="code" class="input_chack" style="text-transform:uppercase;" />
+                    <img id="showcode" src="~/Images/randomcode.png" onclick="getcode()" alt="验证码" style="vertical-align:middle;" width="80" height="30" />
                 </p>
                 <p class="form_sub">
                     <input name="RecordMe" type="checkbox" checked="checked" />
                     <text>记住账号信息</text>
                 </p>
                 <p class="form_sub">
-                    <input class="button_login" name="Login" type="button" onclick="login()" value="登录" />
+                    <input class="button_login" name="Login" type="button" onclick="loginchack()" value="登录" />
                     <a href="#">忘记密码?</a>
                 </p>
             </form>
