@@ -107,7 +107,7 @@
                 //alert(weather.errMsg);
                 if (weather.errMsg == "success") {
                     //alert(weather.retData);
-                    addweather(weather.retData.weather, weather.retData.temp, weather.retData.l_tmp, weather.retData.h_tmp, weather.retData.WD, weather.retData.WS, weather.retData.date, weather.retData.time);
+                    addweather(weather.retData.weather, weather.retData.l_tmp, weather.retData.h_tmp, weather.retData.WD, weather.retData.WS, weather.retData.date, weather.retData.time);
                     document.getElementById("weather_loading").style.display = "none";
                 }
                 else {
@@ -234,8 +234,8 @@
         $("#showipmessage").append(message);
     }
 
-    function addweather(weather, temp, l_tmp, h_tmp, WD, WS, date, time) {
-        weather = "<b>天气情况：" + weather + "</b><br /><b>当前气温：" + temp + "</b><br /><b>最低气温：" + l_tmp + "</b><br /><b>最高气温：" + h_tmp + "</b><br /><b>风　　向：" + WD + "</b><br /><b>风　　力：" + WS + "</b><br /><b>发布时间：" + date + "　" + time + "</b><br />";
+    function addweather(weather, l_tmp, h_tmp, WD, WS, date, time) {
+        weather = "<b>天气情况：" + weather + "</b><br /><b>最低气温：" + l_tmp + "</b><br /><b>最高气温：" + h_tmp + "</b><br /><b>风　　向：" + WD + "</b><br /><b>风　　力：" + WS + "</b><br /><b>发布时间：" + date + "　" + time + "</b><br />";
         $("#showweather").append(weather);
     }
 
@@ -371,7 +371,6 @@
             <div id="showweather">
                 <!--json-weather
                 天气情况：<br />
-                当前气温：<br />
                 最低气温：<br />
                 最高气温：<br />
                 风　　向：<br />
