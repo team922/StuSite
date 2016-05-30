@@ -14,7 +14,7 @@
     #weather{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
         #weather_loading{float:left;width:643px;}
         #weather_display{float:left;width:643px;}
-            #showipmessage{float:right;width:200px;margin:5px;margin-top:20px;}
+            #showipmessage{float:right;width:200px;margin:10px;}
             #showweather{float:left;width:350px;margin:10px;margin-left:20px;}
     #notice{float:left;width:643px;height:auto;border:solid 1px #72B3EE;margin-bottom:5px;}
         #notice_loading{float:left;width:643px;}
