@@ -133,5 +133,41 @@ namespace StuSiteMVC.Controllers
             }
             return View("NoticeManage1");
         }
+
+        public ActionResult ImageUpload(HttpPostedFileBase upload)
+        {
+            string name = System.IO.Path.GetFileName(upload.FileName);
+            string suffix = "";
+            if (name.EndsWith(".jpg") || name.EndsWith(".JPG") || name.EndsWith(".jpeg") || name.EndsWith(".JPEG") || name.EndsWith(".jpe") || name.EndsWith(".JPE"))
+            {
+                suffix = ".jpg";
+            }
+            else if (name.EndsWith(".png") || name.EndsWith(".PNG") || name.EndsWith(".pns") || name.EndsWith(".PNS"))
+            {
+                suffix = "png";
+            }
+            else if (name.EndsWith(".gif") || name.EndsWith(".GIF"))
+            {
+                suffix = "gif";
+            }
+            if (suffix == "")
+            {
+                return Content("<script>window.parent.CKEDITOR.tools.callFunction('文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）');</script>");
+            }
+            else
+            {
+                Guid guid = Guid.NewGuid();
+                string filename = guid + suffix;
+                string filePhysicalPath = Server.MapPath("~/Images/Info/" + filename);//将图片保存在~/Images/Info文件夹
+                Guid g = Guid.NewGuid();
+                upload.SaveAs(filePhysicalPath);
+
+                string url = "/Images/Info/" + filename;
+                string CKEditorFuncNum = System.Web.HttpContext.Current.Request["CKEditorFuncNum"];
+
+                //上传成功后，把图片返回到第一个tab选项
+                return Content("<script>window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", \"" + url + "\");</script>");
+            }
+        }
     }
 }

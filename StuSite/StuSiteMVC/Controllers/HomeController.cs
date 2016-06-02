@@ -191,7 +191,14 @@ namespace StuSiteMVC.Controllers
                     json += "},";
                 }
                 json = json.Substring(0, json.Length - 1);
-                json += "],\"number\":\""+i+"\"}";
+                if (i == 0)
+                {
+                    json += "\"\",\"number\":\"" + i + "\"}";
+                }
+                else
+                {
+                    json += "],\"number\":\"" + i + "\"}";
+                }
                 return Content(json);
             }
         }

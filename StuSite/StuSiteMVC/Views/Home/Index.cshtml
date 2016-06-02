@@ -22,17 +22,17 @@
     function getmessage() {
         //alert("start");
         //alert("getipmessage");
-        getipmessage();
+        try { getipmessage() } catch (e) { };
         //alert("getdepartment");
-        getdepartment();
+        try { getdepartment() } catch (e) { };
         //alert("gettopnotice");
-        gettopnotice();
+        try { gettopnotice() } catch (e) { };
         //alert("getnormalnotice");
-        getnormalnotice();
+        try { getnormalnotice() } catch (e) { };
         //alert("gettopnews");
-        gettopnews();
+        try { gettopnews() } catch (e) { };
         //alert("getnormalnews");
-        getnormalnews();
+        try { getnormalnews() } catch (e) { };
         //alert("end");
     }
 
@@ -82,7 +82,7 @@
                     }
                     if (area_id == "000000000") {
                         document.getElementById("weather_loading").style.display = "none";
-                        $("#showweather").append("<h2>暂无该地区天津信息！</h2>");
+                        $("#showweather").append("<h2 style='float:left'>暂无该地区信息！</h2>");
                     }
                     else {
                         getweather(area_id);
@@ -90,7 +90,7 @@
                 }
                 else {
                     document.getElementById("weather_loading").style.display = "none";
-                    $("#weather_display").append("<h2>" + area.errMsg + "</h2>");
+                    $("#weather_display").append("<h2 style='float:left'>" + area.errMsg + "</h2>");
                 }
             }
         });
@@ -111,28 +111,23 @@
                     document.getElementById("weather_loading").style.display = "none";
                 }
                 else {
-                    document.getElementById("notice_loading").style.display = "none";
-                    $("#showweather").append("<h2>" + weather.errMsg + "</h2>");
+                    document.getElementById("weather_loading").style.display = "none";
+                    $("#showweather").append("<h2 style='float:left'>" + weather.errMsg + "</h2>");
                 }
             }
         });
     }
 
     function getdepartment() {
-        //alert("getnews_start");
+        //alert("getdepartment_start");
         $.ajax({
             url: '/Home/GetDepartment',
             success: function (data) {
                 //alert(data);
                 var department = $.parseJSON(data);
-                //alert(news.number);
                 for (var i = 0; i < department.number ; i++) {
-                    //alert(news.listnews[i].title);
-                    //alert(news.listnews[i].date);
                     adddepartment(department.departmentlist[i].id, department.departmentlist[i].name);
                 }
-                document.getElementById("department_loading").text = "加载完成";
-                document.getElementById("department_loading").style.display = "none";
             }
         });
     }
@@ -141,14 +136,13 @@
         $.ajax({
             url: '/Home/GetTopNotice',
             success: function (data) {
-                //alert(data);
+                //alert("gettopnotice" + data);
                 if (data == "false") {
                     //alert("false");
-                    document.getElementById("top_notice").style.display = "none";
+                    document.getElementById("top_notice").style.display = "";
                 }
                 else {
                     //alert("true");
-                    document.getElementById("top_notice").style.display = "";
                     var notice = $.parseJSON(data);
                     //alert("top");
                     addtopnotice(notice.title, notice.belong, notice.date);
@@ -168,9 +162,13 @@
             url: '/Home/GetSelectNotice/',
             data: { department: department },
             success: function (data) {
-                //alert(data);
+                //alert("getnormalnotice" + data);
                 var notice = $.parseJSON(data);
                 //alert(notice.number);
+                if (notice.number == 0) {
+                    $("#normal_notice_list").append("<div id='normal_notice'>暂无新闻</div>");
+                    $("#notice_bottom").remove();
+                }
                 for (var i = 0; i < notice.number && i < 10 ; i++) {
                     addnormalnotice(notice.listnotice[i].title, notice.listnotice[i].belong, notice.listnotice[i].date);
                 }
@@ -184,13 +182,12 @@
         $.ajax({
             url: '/Home/GetTopNews',
             success: function (data) {
-                //alert(data);
+                //alert("gettopnews" + data);
                 if (data == "false") {
-                    document.getElementById("top_news").style.display = "none";
+                    document.getElementById("top_news").style.display = "";
                 }
                 else {
                     //alert("true1");
-                    document.getElementById("top_news").style.display = "";
                     //alert("true2");
                     var news = $.parseJSON(data);
                     //alert("true3");
@@ -207,12 +204,16 @@
 
     function getnormalnews() {
         //alert("getnews_start");
+        document.getElementById("news_loading").style.display = "";
         $.ajax({
             url: '/Home/GetNews',
             success: function (data) {
-                //alert(data);
+                //alert("getnormalnews" + data);
                 var news = $.parseJSON(data);
                 //alert(news.number);
+                if (news.number == 0) {
+                    $("#normal_news_list").append("<div id='normal_news'>暂无新闻</div>");
+                }
                 for (var i = 0; i < news.number && i < 10 ; i++) {
                     //alert(news.listnews[i].title);
                     //alert(news.listnews[i].date);
@@ -402,12 +403,14 @@
                 <!--<img class="a_img" src="@Url.Content("~/Images/main_istop.png")" /><a class="notice_title" href="#">top_notice</a><div id="notice_date">2016-01-01</div><div id="notice_belong">公告类别</div>-->
             </div>
             <div id="normal_notice_list">
-                <!--<div id="normal_notice">
-                    <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="notice_title" href="#">normal_notice</a><div id="notice_date">2016-01-01</div><div id="notice_belong">公告类别</div>
-                </div>-->
-            </div>
-            <div id="notice_bottom">
-                <img class="notice_more" onclick="" src="~/Images/main_more.png" />
+                <div id="normal_notice_list">
+                    <!--<div id="normal_notice">
+                        <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="notice_title" href="#">normal_notice</a><div id="notice_date">2016-01-01</div><div id="notice_belong">公告类别</div>
+                    </div>-->
+                </div>
+                <div id="notice_bottom">
+                    <img class="notice_more" onclick="" src="~/Images/main_more.png" />
+                </div>
             </div>
         </div>
     </div>
@@ -419,9 +422,11 @@
                 <!--<img class="a_img" src="@Url.Content("~/Images/main_istop.png")" /><a class="news_title" href="#">top_news</a><span class="news_time">2016/01/01</span>-->
             </div>
             <div id="normal_news_list">
-                <!--<div id="normal_news">
-                    <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="news_title" href="#">normal_news</a><span class="news_time">2016/01/01</span>
-                </div>-->
+                <div id="normal_news_list">
+                    <!--<div id="normal_news">
+                        <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a class="news_title" href="#">normal_news</a><span class="news_time">2016/01/01</span>
+                    </div>-->
+                </div>
             </div>
         </div>
     </div>
