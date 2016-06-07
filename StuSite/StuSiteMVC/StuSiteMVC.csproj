@@ -367,13 +367,14 @@
     <Content Include="Images\main_istop.png" />
     <Content Include="Images\main_more.png" />
     <Content Include="Images\main_right.png" />
-    <Content Include="Images\Personal\default.jpg" />
+    <Content Include="Images\Info\default.jpg" />
     <Content Include="Images\main_nav_top.jpg" />
     <Content Include="Images\main_small.png" />
     <Content Include="Images\main_top.png" />
     <Content Include="Images\main_login.jpg" />
     <Content Include="Images\main_head.jpg" />
     <Content Include="Images\main_nav.jpg" />
+    <Content Include="Images\Personal\default.jpg" />
     <Content Include="Images\randomcode.png" />
     <Content Include="Javascript\admin_home.js" />
     <Content Include="Javascript\jquery-2.1.4.js" />
@@ -433,7 +434,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\Info\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
