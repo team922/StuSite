@@ -144,11 +144,11 @@ namespace StuSiteMVC.Controllers
             }
             else if (name.EndsWith(".png") || name.EndsWith(".PNG") || name.EndsWith(".pns") || name.EndsWith(".PNS"))
             {
-                suffix = "png";
+                suffix = ".png";
             }
             else if (name.EndsWith(".gif") || name.EndsWith(".GIF"))
             {
-                suffix = "gif";
+                suffix = ".gif";
             }
             if (suffix == "")
             {

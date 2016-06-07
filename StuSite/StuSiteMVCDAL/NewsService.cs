@@ -38,6 +38,32 @@ namespace StuSiteMVC.DAL
             return newslist;
         }
 
+        //获取置顶News
+        public News GetTopNews()
+        {
+            //sql语句
+            string sql = "select * from News,NState where News.NState=NState.NStateId and NState.NStateId=2";
+            News topnews = null;
+            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnString, CommandType.Text, sql))
+            {
+                if (reader.Read())
+                {
+                    AdminService adminService = new AdminService();
+                    NStateService nstateService = new NStateService();
+
+                    topnews = new News();
+                    topnews.id = (int)reader["id"];
+                    topnews.NewsTitle = (string)reader["NewsTitle"];
+                    topnews.NewsMain = (string)reader["NewsMain"];
+                    topnews.NewsDate = reader["NewsDate"] != DBNull.Value ? (DateTime?)reader["NewsDate"] : null;
+                    topnews.NewsPublisher = adminService.GetAdminById((int)reader["NewsPublisher"]);
+                    topnews.NState = nstateService.GetNStateById((int)reader["NState"]);
+                    topnews.NewsHits = (int)reader["NewsHits"];
+                }
+            }
+            return topnews;
+        }
+
         //获取最新10条新闻
         public List<News> GetTop10News()
         {
@@ -65,37 +91,37 @@ namespace StuSiteMVC.DAL
             return newslist;
         }
 
-        //获取置顶News
-        public News GetTopNews()
+        //获取Newsbyid
+        public News GetNewsById(int id)
         {
             //sql语句
-            string sql = "select * from News,NState where News.NState=NState.NStateId and NState.NStateId=2";
-            News topnews = null;
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnString, CommandType.Text, sql))
+            string sql = "select * from News where ID=@id";
+            News news = new News();
+            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", id)))
             {
                 if (reader.Read())
                 {
                     AdminService adminService = new AdminService();
                     NStateService nstateService = new NStateService();
 
-                    topnews = new News();
-                    topnews.id = (int)reader["id"];
-                    topnews.NewsTitle = (string)reader["NewsTitle"];
-                    topnews.NewsMain = (string)reader["NewsMain"];
-                    topnews.NewsDate = reader["NewsDate"] != DBNull.Value ? (DateTime?)reader["NewsDate"] : null;
-                    topnews.NewsPublisher = adminService.GetAdminById((int)reader["NewsPublisher"]);
-                    topnews.NState = nstateService.GetNStateById((int)reader["NState"]);
-                    topnews.NewsHits = (int)reader["NewsHits"];
+                    news = new News();
+                    news.id = (int)reader["id"];
+                    news.NewsTitle = (string)reader["NewsTitle"];
+                    news.NewsMain = (string)reader["NewsMain"];
+                    news.NewsDate = reader["NewsDate"] != DBNull.Value ? (DateTime?)reader["NewsDate"] : null;
+                    news.NewsPublisher = adminService.GetAdminById((int)reader["NewsPublisher"]);
+                    news.NState = nstateService.GetNStateById((int)reader["NState"]);
+                    news.NewsHits = (int)reader["NewsHits"];
                 }
             }
-            return topnews;
+            return news;
         }
 
         //添加点击次数（浏览量）
-        public bool AddNewsHits(News news)
+        public bool AddNewsHits(int id)
         {
             string sql = "update News set NewsHits=(NewsHits+1) where id=@id";
-            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", news.id)) > 0;
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", id)) > 0;
         }
 
         //添加News

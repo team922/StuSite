@@ -39,6 +39,48 @@ namespace StuSiteMVC.DAL
             return noticeslist;
         }
 
+        //存储过程分页显示Notices
+        public List<Notices> GetNoticePage(int pagesize,int pageindex)
+        {
+            List<Notices> noticeslist = new List<Notices>();
+
+            SqlParameter para1 = new SqlParameter("@pagesize", pagesize);
+            para1.Direction = ParameterDirection.Input;
+
+            SqlParameter para2 = new SqlParameter("@pageindex", pageindex);
+            para2.Direction = ParameterDirection.Input;
+
+            SqlParameter para3 = new SqlParameter("@pagecount", SqlDbType.Int);
+            para3.Direction = ParameterDirection.Output;
+
+            SqlParameter para4 = new SqlParameter("@return_value", SqlDbType.NChar);
+            para4.Direction = ParameterDirection.ReturnValue;
+
+            SqlParameter[] paras = { para1, para2, para3, para4 };
+
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, "SP_PageNotice", paras);
+
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                foreach (DataRow row in dt.Rows)
+                {
+                    Notices notices = new Notices();
+                    notices.id = (int)row["id"];
+                    notices.NoticeTitle = (string)row["NoticeTitle"];
+                    notices.NoticeMain = (string)row["NoticeMain"];
+                    notices.NoticeDate = row["NoticeDate"] != DBNull.Value ? (DateTime?)row["NoticeDate"] : null;
+                    notices.NoticePublisher = new AdminService().GetAdminById((int)row["NoticePublisher"]);
+                    notices.NoticeBelong = new DepartmentService().GetDepartmentById((int)row["NoticeBelong"]);
+                    notices.NState = new NStateService().GetNStateById((int)row["NState"]);
+                    notices.NoticeHits = (int)row["NoticeHits"];
+
+                    noticeslist.Add(notices);
+                }
+            }
+            return noticeslist;
+        }
+
         //获取置顶Notices
         public Notices GetTopNotices()
         {
@@ -120,12 +162,40 @@ namespace StuSiteMVC.DAL
             }
             return noticeslist;
         }
+        
+        //获取公告byid
+        public Notices GetNoticeById(int id)
+        {
+            Notices notices = new Notices();
+            //sql语句
+            string sql = "select * from Notices where ID=@id";
+            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", id)))
+            {
+                if (reader.Read())
+                {
+                    AdminService adminService = new AdminService();
+                    DepartmentService departmentService = new DepartmentService();
+                    NStateService nstateService = new NStateService();
+
+                    notices = new Notices();
+                    notices.id = (int)reader["id"];
+                    notices.NoticeTitle = (string)reader["NoticeTitle"];
+                    notices.NoticeMain = (string)reader["NoticeMain"];
+                    notices.NoticeDate = reader["NoticeDate"] != DBNull.Value ? (DateTime?)reader["NoticeDate"] : null;
+                    notices.NoticePublisher = adminService.GetAdminById((int)reader["NoticePublisher"]);
+                    notices.NoticeBelong = departmentService.GetDepartmentById((int)reader["NoticeBelong"]);
+                    notices.NState = nstateService.GetNStateById((int)reader["NState"]);
+                    notices.NoticeHits = (int)reader["NoticeHits"];
+                }
+            }
+            return notices;
+        }
 
         //添加点击次数（浏览量）
-        public bool AddNoticesHits(Notices notice)
+        public bool AddNoticeHits(int id)
         {
             string sql = "update Notices set NoticeHits=(NoticeHits+1) where id=@id";
-            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", notice.id)) > 0;
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", id)) > 0;
         }
 
         //添加Notices

@@ -38,5 +38,17 @@ namespace StuSiteMVC.BLL
         {
             return new NewsService().GetTop10News();
         }
+
+        //获取新闻byid
+        public News GetNewsById(int id)
+        {
+            return new NewsService().GetNewsById(id);
+        }
+
+        //添加新闻点击数
+        public bool AddNewsHits(int id)
+        {
+            return new NewsService().AddNewsHits(id);
+        }
     }
 }

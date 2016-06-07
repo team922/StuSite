@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "学生信息管理系统";
+    Layout = "~/Views/Shares/_LayoutPage1.cshtml";
+}
+<link href="@Url.Content("~/Content/main_show.css")" rel="stylesheet" />
+
+<script type="text/javascript">
+    function getmessage() {
+        var url = "/Home/ShowSelectMessage" + location.search;
+        //alert(url);
+        $.ajax({
+            url: url,
+            success: function (data) {
+                //alert(data);
+                if (data == "false") {
+                    alert("加载失败！");
+                }
+                else {
+                    //alert("success");
+                    var message = $.parseJSON(data);
+                    //alert(message);
+                    var kind = message.kind;
+                    //alert(kind);
+                    if (kind == "notice") {
+                        var title = "<h1>" + message.title + "</h1>";
+                        //alert(title);
+                        $("#show_title").append(title);
+                        var top = "<text>时间：" + message.date + " | 作者：" + message.publisher + " | 分类：" + message.belong + " | 阅读人数：" + message.hits + "</text><br />";
+                        //alert(top);
+                        $("#show_top").append(top);
+                        $("#show_top").append("<text>------------------------------------------------------------</text>");
+                        $("#show_main").append(decodeURIComponent(message.main));
+                    }
+                    else if (kind = "news") {
+                        var title = "<h1>" + message.title + "</h1>";
+                        //alert(title);
+                        $("#show_title").append(title);
+                        var top = "<text>时间：" + message.date + " | 作者：" + message.publisher + " | 阅读人数：" + message.hits + "</text><br />";
+                        //alert(top);
+                        $("#show_top").append(top);
+                        $("#show_top").append("<text>------------------------------------------------------------</text>");
+                        $("#show_main").append(decodeURIComponent(message.main));
+                    }
+                    else {
+                        alert("加载失败！")
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+<div id="show_title">
+    <!--<h1>这里是标题这里是标题这里是标题</h1>-->
+</div>
+<div id="show_top">
+    <!--<text>发布时间：2016年06月07日 15:55 | 发布人：教务处 | 发布部门：教务处 | 阅读人数：0</text>-->
+</div>
+<div id="show_main">
+    <!--<text>这里是内容</text>-->
+</div>
+<script>getmessage();</script>

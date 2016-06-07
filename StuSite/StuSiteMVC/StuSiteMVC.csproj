@@ -346,6 +346,7 @@
     <Content Include="CKeditor\styles.js" />
     <Content Include="Content\admin_global.css" />
     <Content Include="Content\admin_index.css" />
+    <Content Include="Content\main_show.css" />
     <Content Include="Content\sendmessage.css" />
     <Content Include="Content\admin_login.css" />
     <Content Include="Content\main_index.css" />
@@ -375,9 +376,9 @@
     <Content Include="Images\main_nav.jpg" />
     <Content Include="Images\randomcode.png" />
     <Content Include="Javascript\admin_home.js" />
-    <Content Include="Javascript\htmlcode.js" />
     <Content Include="Javascript\jquery-2.1.4.js" />
     <Content Include="Javascript\jquery-2.1.4.min.js" />
+    <Content Include="Javascript\main_index.js" />
     <Content Include="Views\Account\Admin.cshtml" />
     <Content Include="Images\admin_border.png" />
     <Content Include="Web.config">
@@ -421,6 +422,8 @@
     <Content Include="Views\Admin\NoticeManage2.cshtml" />
     <Content Include="Views\Admin\NewsManage2.cshtml" />
     <Content Include="Views\SendMessage\Index.cshtml" />
+    <Content Include="Views\Home\ShowDetail.cshtml" />
+    <Content Include="Views\Home\ShowList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

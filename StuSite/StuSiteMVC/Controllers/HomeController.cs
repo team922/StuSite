@@ -16,6 +16,16 @@ namespace StuSiteMVC.Controllers
             return View();
         }
 
+        public ActionResult ShowDetail()
+        {
+            return View();
+        }
+
+        public ActionResult ShowList()
+        {
+            return View();
+        }
+
         //ajax
         public ActionResult LoginChack()
         {
@@ -81,7 +91,7 @@ namespace StuSiteMVC.Controllers
                 json += "\"id\":\"" + notice.id + "\",";
                 json += "\"title\":\"" + notice.NoticeTitle + "\",";
                 //json += "\"main\":\"" + notice.NoticeMain + "\",";
-                json += "\"date\":\"" + Convert.ToDateTime(notice.NoticeDate).ToShortDateString().ToString() + "\",";
+                json += "\"date\":\"" + Convert.ToDateTime(notice.NoticeDate).ToString("yyyy-MM-dd") + "\",";
                 json += "\"publisher\":\"" + notice.NoticePublisher.Name + "\",";
                 json += "\"belong\":\"" + notice.NoticeBelong.DName + "\",";
                 json += "\"hits\":\"" + notice.NoticeHits + "\"";
@@ -119,7 +129,7 @@ namespace StuSiteMVC.Controllers
                     json += "\"id\":\"" + notice.id + "\",";
                     json += "\"title\":\"" + notice.NoticeTitle + "\",";
                     //json += "\"main\":\"" + notice.NoticeMain + "\",";
-                    json += "\"date\":\"" + Convert.ToDateTime(notice.NoticeDate).ToShortDateString().ToString() + "\",";
+                    json += "\"date\":\"" + Convert.ToDateTime(notice.NoticeDate).ToString("yyyy-MM-dd") + "\",";
                     json += "\"publisher\":\"" + notice.NoticePublisher.Name + "\",";
                     json += "\"belong\":\"" + notice.NoticeBelong.DName + "\",";
                     json += "\"hits\":\"" + notice.NoticeHits + "\"";
@@ -155,7 +165,7 @@ namespace StuSiteMVC.Controllers
                 json += "\"id\":\"" + news.id + "\",";
                 json += "\"title\":\"" + news.NewsTitle + "\",";
                 //json += "\"main\":\"" + news.NewsMain + "\",";
-                json += "\"date\":\"" + Convert.ToDateTime(news.NewsDate).ToShortDateString().ToString() + "\",";
+                json += "\"date\":\"" + Convert.ToDateTime(news.NewsDate).ToString("yyyy-MM-dd") + "\",";
                 json += "\"publisher\":\"" + news.NewsPublisher.Name + "\",";
                 json += "\"hits\":\"" + news.NewsHits + "\"";
                 
@@ -185,7 +195,7 @@ namespace StuSiteMVC.Controllers
                     json += "\"id\":\"" + news.id + "\",";
                     json += "\"title\":\"" + news.NewsTitle + "\",";
                     //json += "\"main\":\"" + news.NewsMain + "\",";
-                    json += "\"date\":\"" + Convert.ToDateTime(news.NewsDate).ToShortDateString().ToString() + "\",";
+                    json += "\"date\":\"" + Convert.ToDateTime(news.NewsDate).ToString("yyyy-MM-dd") + "\",";
                     json += "\"publisher\":\"" + news.NewsPublisher.Name + "\",";
                     json += "\"hits\":\"" + news.NewsHits + "\"";
                     json += "},";
@@ -200,6 +210,53 @@ namespace StuSiteMVC.Controllers
                     json += "],\"number\":\"" + i + "\"}";
                 }
                 return Content(json);
+            }
+        }
+
+        public ActionResult ShowSelectMessage(string kind, int id)
+        {
+            if (kind=="notice_title")
+            {
+                Notices notice = new Notices();
+                notice = new NoticeManager().GetNoticeById(id);
+                new NoticeManager().AddNoticeHits(id);
+
+                string json = "{\"kind\":\"notice\",";
+
+                json += "\"id\":\"" + notice.id + "\",";
+                json += "\"title\":\"" + notice.NoticeTitle + "\",";
+                json += "\"main\":\"" + notice.NoticeMain + "\",";
+                json += "\"date\":\"" + Convert.ToDateTime(notice.NoticeDate).ToString("yyyy-MM-dd HH:mm") + "\",";
+                json += "\"publisher\":\"" + notice.NoticePublisher.Name + "\",";
+                json += "\"belong\":\"" + notice.NoticeBelong.DName + "\",";
+                json += "\"hits\":\"" + notice.NoticeHits + "\"";
+
+                json += "}";
+
+                return Content(json);
+            }
+            else if (kind=="news_title")
+            {
+                News news = new News();
+                news = new NewsManager().GetNewsById(id);
+                new NewsManager().AddNewsHits(id);
+
+                string json = "{\"kind\":\"news\",";
+
+                json += "\"id\":\"" + news.id + "\",";
+                json += "\"title\":\"" + news.NewsTitle + "\",";
+                json += "\"main\":\"" + news.NewsMain + "\",";
+                json += "\"date\":\"" + Convert.ToDateTime(news.NewsDate).ToString("yyyy-MM-dd HH:mm") + "\",";
+                json += "\"publisher\":\"" + news.NewsPublisher.Name + "\",";
+                json += "\"hits\":\"" + news.NewsHits + "\"";
+
+                json += "}";
+
+                return Content(json);
+            }
+            else
+            {
+                return JavaScript("alert('发生未知错误！！')");
             }
         }
     }

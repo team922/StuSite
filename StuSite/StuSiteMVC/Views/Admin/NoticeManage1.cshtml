@@ -81,7 +81,7 @@
                         var belong = document.getElementById("select1").value;
                         var state = document.getElementById("select2").value;
                         var html = CKEDITOR.instances['ckeditor'].getData();
-                        var code = htmlencode(html);
+                        var code = encodeURIComponent(html);
                         if (title == "") {
                             alert("标题不能为空！");
                         }

@@ -56,5 +56,23 @@ namespace StuSiteMVC.BLL
         {
             return new NoticesService().GetSelectNotice(department);
         }
+
+        //获取公告byid
+        public Notices GetNoticeById(int id)
+        {
+            return new NoticesService().GetNoticeById(id);
+        }
+
+        //获取公告（存储过程）
+        public List<Notices> GetNoticePage(int pagesize,int pageindex)
+        {
+            return new NoticesService().GetNoticePage(pagesize, pageindex);
+        }
+
+        //添加点击数
+        public bool AddNoticeHits(int id)
+        {
+            return new NoticesService().AddNoticeHits(id);
+        }
     }
 }
