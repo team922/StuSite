@@ -41,16 +41,19 @@
         //alert(o.id);
         if (o.id == "notice_more") {
             window.open("/Home/ShowList" + "?type=notice&pagesize=20&pageindex=1");
+            return false;
         }
         else {
             window.open("/Home/ShowList" + "?type=news&pagesize=20&pageindex=1");
+            return false;
         }
     }
 
     function opendetail(o) {
         //alert(o.id);
         //alert(o.className);
-        window.open("/Home/ShowDetail" + "?kind=" + o.className + "&id=" + o.id, "_blank");
+        window.open("/Home/ShowDetail" + "?kind=" + o.className + "&id=" + o.id);
+        return false;
     }
 
 </script>

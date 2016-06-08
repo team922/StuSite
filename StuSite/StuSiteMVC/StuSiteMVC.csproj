@@ -380,6 +380,7 @@
     <Content Include="Javascript\jquery-2.1.4.js" />
     <Content Include="Javascript\jquery-2.1.4.min.js" />
     <Content Include="Javascript\main_index.js" />
+    <Content Include="Javascript\main_list.js" />
     <Content Include="Views\Account\Admin.cshtml" />
     <Content Include="Images\admin_border.png" />
     <Content Include="Web.config">
