@@ -40,25 +40,24 @@ namespace StuSiteMVC.DAL
         }
 
         //存储过程分页显示Notices
-        public List<Notices> GetNoticePage(int pagesize,int pageindex)
+        public List<Notices> GetNoticeByPage(int pagesize, int pageindex, ref int pagecount,int datacount)
         {
             List<Notices> noticeslist = new List<Notices>();
 
-            SqlParameter para1 = new SqlParameter("@pagesize", pagesize);
-            para1.Direction = ParameterDirection.Input;
+            SqlParameter para1 = new SqlParameter("@pagecount", SqlDbType.Int);
+            para1.Direction = ParameterDirection.Output;
+            SqlParameter para2 = new SqlParameter("@datacount", SqlDbType.Int);
+            para2.Direction = ParameterDirection.Output;
 
-            SqlParameter para2 = new SqlParameter("@pageindex", pageindex);
-            para2.Direction = ParameterDirection.Input;
+            SqlParameter[] paras = new SqlParameter[]
+            {
+                new SqlParameter("@pagesize",pagesize),
+                new SqlParameter("@pageindex",pageindex),
+                para1,
+                para2
+            };
 
-            SqlParameter para3 = new SqlParameter("@pagecount", SqlDbType.Int);
-            para3.Direction = ParameterDirection.Output;
-
-            SqlParameter para4 = new SqlParameter("@return_value", SqlDbType.NChar);
-            para4.Direction = ParameterDirection.ReturnValue;
-
-            SqlParameter[] paras = { para1, para2, para3, para4 };
-
-            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, "SP_PageNotice", paras);
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.StoredProcedure, "SP_PageNotice", paras);
 
             if (ds.Tables.Count > 0)
             {
@@ -77,6 +76,8 @@ namespace StuSiteMVC.DAL
 
                     noticeslist.Add(notices);
                 }
+                pagecount = Convert.ToInt32(para1.Value);
+                datacount = Convert.ToInt32(para2.Value);
             }
             return noticeslist;
         }

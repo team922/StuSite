@@ -37,14 +37,20 @@
         //alert("end");
     }
 
-    function openlist() {
-        window.open("/Home/ShowList", "_blank");
+    function openlist(o) {
+        //alert(o.id);
+        if (o.id == "notice_more") {
+            window.open("/Home/ShowList" + "?type=notice&pagesize=20&pageindex=1");
+        }
+        else {
+            window.open("/Home/ShowList" + "?type=news&pagesize=20&pageindex=1");
+        }
     }
 
     function opendetail(o) {
         //alert(o.id);
         //alert(o.className);
-        window.open("/Home/ShowDetail" + "?kind=" + o.className + "&id=" + o.id);
+        window.open("/Home/ShowDetail" + "?kind=" + o.className + "&id=" + o.id, "_blank");
     }
 
 </script>
@@ -191,7 +197,7 @@
                 </div>-->
             </div>
             <div id="notice_bottom">
-                <img class="notice_more" onclick="openlist();" src="~/Images/main_more.png" />
+                <img id="notice_more" onclick="openlist(this);" src="~/Images/main_more.png" />
             </div>
         </div>
     </div>
@@ -206,6 +212,9 @@
                 <!--<div class="normal_news">
                     <img class="a_img" src="@Url.Content("~/Images/main_right.png")" /><a id="2" class="news_title" href="#">normal_news</a><span class="news_time">2016/01/01</span>
                 </div>-->
+            </div>
+            <div id="notice_bottom">
+                <img id="news_more" onclick="openlist(this);" src="~/Images/main_more.png" />
             </div>
         </div>
     </div>

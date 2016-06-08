@@ -64,9 +64,9 @@ namespace StuSiteMVC.BLL
         }
 
         //获取公告（存储过程）
-        public List<Notices> GetNoticePage(int pagesize,int pageindex)
+        public List<Notices> GetNoticeByPage(int pagesize, int pageindex, ref int pagecount, int datacount)
         {
-            return new NoticesService().GetNoticePage(pagesize, pageindex);
+            return new NoticesService().GetNoticeByPage(pagesize, pageindex, ref pagecount, datacount);
         }
 
         //添加点击数

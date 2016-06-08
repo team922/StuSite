@@ -45,6 +45,13 @@ namespace StuSiteMVC.BLL
             return new NewsService().GetNewsById(id);
         }
 
+
+        //获取新闻（存储过程）
+        public List<News> GetNewsByPage(int pagesize, int pageindex, ref int pagecount, int datacount)
+        {
+            return new NewsService().GetNewsByPage(pagesize, pageindex, ref pagecount, datacount);
+        }
+
         //添加新闻点击数
         public bool AddNewsHits(int id)
         {

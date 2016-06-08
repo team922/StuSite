@@ -162,7 +162,7 @@ namespace StuSiteMVC.DAL
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand();
-                PrepareCommand(cmd, CommandType.Text, conn, commandText, commandParameter);
+                PrepareCommand(cmd, commandType, conn, commandText, commandParameter);
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     DataSet ds = new DataSet();

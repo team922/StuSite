@@ -213,6 +213,66 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        public ActionResult ShowAllList(string type, int pagesize, int pageindex)
+        {
+            int pagecount = 0;
+            int datacount = 0;
+            int i = 0;
+            string json = "{";
+
+            if (type == "notice")
+            {
+                List<Notices> listnotice = new List<Notices>();
+                listnotice = new NoticeManager().GetNoticeByPage(pagesize, pageindex, ref pagecount, datacount);
+
+                json += "\"type\":\"notice\",";
+                json += "\"listnotice\":[";
+                foreach (var notice in listnotice)
+                {
+                    i++;
+                    json += "{";
+                    json += "\"id\":\"" + notice.id + "\",";
+                    json += "\"title\":\"" + notice.NoticeTitle + "\",";
+                    //json += "\"main\":\"" + notice.NoticeMain + "\",";
+                    json += "\"date\":\"" + Convert.ToDateTime(notice.NoticeDate).ToString("yyyy-MM-dd") + "\",";
+                    //json += "\"publisher\":\"" + notice.NoticePublisher.Name + "\",";
+                    json += "\"belong\":\"" + notice.NoticeBelong.DName + "\",";
+                    json += "\"hits\":\"" + notice.NoticeHits + "\"";
+                    json += "},";
+                }
+            }
+            else
+            {
+                List<News> listnews = new List<News>();
+                listnews = new NewsManager().GetNewsByPage(pagesize, pageindex, ref pagecount, datacount);
+
+                json += "\"type\":\"news\",";
+                json += "\"listnews\":[";
+                foreach (var news in listnews)
+                {
+                    i++;
+                    json += "{";
+                    json += "\"id\":\"" + news.id + "\",";
+                    json += "\"title\":\"" + news.NewsTitle + "\",";
+                    //json += "\"main\":\"" + news.NewsMain + "\",";
+                    json += "\"date\":\"" + Convert.ToDateTime(news.NewsDate).ToString("yyyy-MM-dd") + "\",";
+                    json += "\"publisher\":\"" + news.NewsPublisher.Name + "\",";
+                    json += "\"hits\":\"" + news.NewsHits + "\"";
+                    json += "},";
+                }
+            }
+
+            json = json.Substring(0, json.Length - 1);
+            json += "],\"number\":\"" + i + "\",";
+
+            json += "\"datacount\":\"" + datacount + "\",";
+            json += "\"pagesize\":\"" + pagesize + "\",";
+            json += "\"pagecount\":\"" + pagecount + "\",";
+            json += "\"pageindex\":\"" + pageindex + "\"}";
+
+            return Content(json);
+        }
+
         public ActionResult ShowSelectMessage(string kind, int id)
         {
             if (kind=="notice_title")

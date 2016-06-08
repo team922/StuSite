@@ -38,6 +38,48 @@ namespace StuSiteMVC.DAL
             return newslist;
         }
 
+        //存储过程分页显示News
+        public List<News> GetNewsByPage(int pagesize, int pageindex, ref int pagecount, int datacount)
+        {
+            List<News> newslist = new List<News>();
+
+            SqlParameter para1 = new SqlParameter("@pagecount", SqlDbType.Int);
+            para1.Direction = ParameterDirection.Output;
+            SqlParameter para2 = new SqlParameter("@datacount", SqlDbType.Int);
+            para2.Direction = ParameterDirection.Output;
+
+            SqlParameter[] paras = new SqlParameter[]
+            {
+                new SqlParameter("@pagesize",pagesize),
+                new SqlParameter("@pageindex",pageindex),
+                para1,
+                para2
+            };
+
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.StoredProcedure, "SP_PageNews", paras);
+
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                foreach (DataRow row in dt.Rows)
+                {
+                    News news = new News();
+                    news.id = (int)row["id"];
+                    news.NewsTitle = (string)row["NewsTitle"];
+                    news.NewsMain = (string)row["NewsMain"];
+                    news.NewsDate = row["NewsDate"] != DBNull.Value ? (DateTime?)row["NewsDate"] : null;
+                    news.NewsPublisher = new AdminService().GetAdminById((int)row["NewsPublisher"]);
+                    news.NState = new NStateService().GetNStateById((int)row["NState"]);
+                    news.NewsHits = (int)row["NewsHits"];
+
+                    newslist.Add(news);
+                }
+                pagecount = Convert.ToInt32(para1.Value);
+                datacount = Convert.ToInt32(para2.Value);
+            }
+            return newslist;
+        }
+
         //获取置顶News
         public News GetTopNews()
         {
