@@ -208,21 +208,21 @@ function adddepartment(id, name) {
 }
 
 function addtopnotice(id, title, belong, date) {
-    var topnotice = "<img class='a_img' src='/Images/main_istop.png' /><a id='" + id + "' class='notice_title' href='#' onclick='opendetail(this);'>" + title + "</a><div class='notice_date'>" + date + "</div><div class='notice_belong'>" + belong + "</div>";
+    var topnotice = "<img class='a_img' src='/Images/main_istop.png' /><a id='" + id + "' class='notice_title' href='###' onclick='opendetail(this);'>" + title + "</a><div class='notice_date'>" + date + "</div><div class='notice_belong'>" + belong + "</div>";
     $("#top_notice").append(topnotice);
 }
 
 function addnormalnotice(id, title, belong, date) {
-    var notice = "<div class='normal_notice'><img class='a_img' src='/Images/main_right.png' /><a id='" + id + "' class='notice_title' href='#' onclick='opendetail(this);'>" + title + "</a><div class='notice_date'>" + date + "</div><div class='notice_belong'>" + belong + "</div></div>";
+    var notice = "<div class='normal_notice'><img class='a_img' src='/Images/main_right.png' /><a id='" + id + "' class='notice_title' href='###' onclick='opendetail(this);'>" + title + "</a><div class='notice_date'>" + date + "</div><div class='notice_belong'>" + belong + "</div></div>";
     $("#normal_notice_list").append(notice);
 }
 
 function addtopnews(id, title, date) {
-    var topnews = "<img class='a_img' src='/Images/main_istop.png' /><a id='" + id + "' class='news_title' href='#' onclick='opendetail(this);'>" + title + "</a><span class='news_time'>" + date + "</span>";
+    var topnews = "<img class='a_img' src='/Images/main_istop.png' /><a id='" + id + "' class='news_title' href='###' onclick='opendetail(this);'>" + title + "</a><span class='news_time'>" + date + "</span>";
     $("#top_news").append(topnews);
 }
 
 function addnormalnews(id, title, date) {
-    var news = "<div class='normal_news'><img class='a_img' src='/Images/main_right.png' /><a id='" + id + "' class='news_title' href='#' onclick='opendetail(this);'>" + title + "</a><span class='news_time'>" + date + "</span></div>";
+    var news = "<div class='normal_news'><img class='a_img' src='/Images/main_right.png' /><a id='" + id + "' class='news_title' href='###' onclick='opendetail(this);'>" + title + "</a><span class='news_time'>" + date + "</span></div>";
     $("#normal_news_list").append(news);
 }
