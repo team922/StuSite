@@ -114,8 +114,9 @@ function gettopnotice() {
 }
 
 function getnormalnotice() {
-    for (var i = 0; i < 10; i++) {
-        $(".normal_notice").remove();
+    var div = document.getElementById("normal_notice_list");
+    while (div.hasChildNodes()) {
+        div.removeChild(div.firstChild);
     }
     document.getElementById("notice_loading").style.display = "";
     var department = document.getElementById("select1").value;
@@ -129,7 +130,6 @@ function getnormalnotice() {
             //alert(notice.number);
             if (notice.number == 0) {
                 $("#normal_notice_list").append("<div class='normal_notice'>暂无新闻</div>");
-                $("#notice_bottom").remove();
             }
             for (var i = 0; i < notice.number && i < 10 ; i++) {
                 addnormalnotice(notice.listnotice[i].id, notice.listnotice[i].title, notice.listnotice[i].belong, notice.listnotice[i].date);

@@ -2,14 +2,18 @@
 /* CSS Document */
 
 /*showdetail*/
-#show_title{width:700px;margin:0 auto;margin-bottom:10px;text-align:center;}
+#show_loading{width:640px;margin:0 auto;}
+
+#show_title{width:700px;margin:20px auto;text-align:center;}
 
 #show_top{width:700px;margin:0 auto;margin-bottom:10px;color:#ADADAD;text-align:center;}
 
 #show_main{width:700px;margin:0 auto;padding-bottom:100px;}
 
 /*showlist*/
-#list{width:800px;margin:0 auto;}
+#list_loading{width:640px;margin:0 auto;}
+
+#list{width:800px;margin:20px auto;}
     #list img{float:left;margin-left:20px;margin-top:6px;}
     #list a{float:left;margin-left:10px;}
     .list_belong{width:75px;float:right;margin-right:5px;overflow: hidden;white-space:nowrap;text-overflow:ellipsis;}
@@ -19,3 +23,5 @@
 
 #list_normal_all{width:800px;float:left;}
     .list_normal{width:800px;float:left;border:solid 2px #72B3EE;border-top:none;}
+
+#page_list{width:700px;margin:0 auto;}

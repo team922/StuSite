@@ -6,18 +6,25 @@
 <link href="@Url.Content("~/Content/main_show.css")" rel="stylesheet" />
 <script src="@Url.Content("~/Javascript/main_list.js")"></script>
 <script type="text/javascript">
-    function GetList()  {
+    function StartList() {
+        var pagesize = getQueryString("pagesize");
+        var pageindex = getQueryString("pageindex");
         //alert(getQueryString("type"));
         if (getQueryString("type") == "notice") {
             //alert("notice");
             gettopicnotice();
-            GetNoticeList();
+            GetNoticeList(pagesize, pageindex);
         }
         else {
             //alert("news");
             gettopicnews();
-            GetNewsList();
+            GetNewsList(pagesize, pageindex);
         }
+    }
+
+    function GetList(pageindex) {
+        var pagesize = getQueryString("pagesize");
+        window.location.href = "/Home/ShowList?type=notice&pagesize=" + pagesize + "&pageindex=" + pageindex;
     }
 
     function getQueryString(name) {
@@ -32,9 +39,12 @@
         window.open("/Home/ShowDetail" + "?kind=" + o.className + "&id=" + o.id);
         return false;
     }
+
 </script>
 
-
+<div id="list_loading">
+    <img src="~/Images/loading_1.gif" />
+</div>
 <div id="list">
     <div id="list_topic">
         <!--<img src="@Url.Content("~/Images/main_istop.png")" /><a id="1" class="list_title" href="#">list_topic_title</a><div class="list_date">2016-01-01</div><div class="list_belong">公告类别</div>-->
@@ -45,6 +55,9 @@
         </div>-->
     </div>
 </div>
-<script>GetList();</script>
+<div id="page_list">
+
+</div>
+<script>StartList();</script>
 
 

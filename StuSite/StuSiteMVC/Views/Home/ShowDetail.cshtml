@@ -31,6 +31,7 @@
                         $("#show_top").append(top);
                         $("#show_top").append("<text>------------------------------------------------------------</text>");
                         $("#show_main").append(decodeURIComponent(message.main));
+                        document.getElementById("show_loading").style.display = "none";
                     }
                     else if (kind = "news") {
                         var title = "<h1>" + message.title + "</h1>";
@@ -41,9 +42,11 @@
                         $("#show_top").append(top);
                         $("#show_top").append("<text>------------------------------------------------------------</text>");
                         $("#show_main").append(decodeURIComponent(message.main));
+                        document.getElementById("show_loading").style.display = "none";
                     }
                     else {
                         alert("加载失败！")
+                        document.getElementById("show_loading").style.display = "none";
                     }
                 }
             }
@@ -51,6 +54,9 @@
     }
 </script>
 
+<div id="show_loading">
+    <img src="~/Images/loading_1.gif" />
+</div>
 <div id="show_title">
     <!--<h1>这里是标题这里是标题这里是标题</h1>-->
 </div>
