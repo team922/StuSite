@@ -377,6 +377,7 @@
     <Content Include="Images\Personal\default.jpg" />
     <Content Include="Images\randomcode.png" />
     <Content Include="Javascript\admin_home.js" />
+    <Content Include="Javascript\admin_list.js" />
     <Content Include="Javascript\jquery-2.1.4.js" />
     <Content Include="Javascript\jquery-2.1.4.min.js" />
     <Content Include="Javascript\main_index.js" />

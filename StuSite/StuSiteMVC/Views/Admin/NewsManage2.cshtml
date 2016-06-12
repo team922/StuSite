@@ -3,10 +3,90 @@
     ViewBag.Title = "新闻管理-新闻管理";
     Layout = "~/Views/Shares/_LayoutPage2.cshtml";
 }
+<script src="~/Javascript/admin_list.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function news_delete(id) {
+        if (confirmchack()) {
+            var para = "type=news&id=" + id;
+            $.ajax({
+                url: '/Admin/DeleteNoticeAndNews',
+                async: false,
+                data: para,
+                success: function (data) {
+                    if (data == "false") {
+                        alert("删除失败");
+                    }
+                    else {
+                        alert("删除成功");
+                        location = location;
+                    }
+                }
+            });
+        }
+    }
+
+    function news_settopic(id) {
+        if (confirmchack()) {
+            var para = "type=news&activity=settopic&id=" + id;
+            $.ajax({
+                url: '/Admin/ChangeTopic',
+                async: false,
+                data: para,
+                success: function (data) {
+                    if (data == "false") {
+                        alert("设置失败");
+                    }
+                    else {
+                        alert("设置成功");
+                        location = location;
+                    }
+                }
+            });
+        }
+    }
+
+    function news_removetopic(id) {
+        if (confirmchack()) {
+            var para = "type=news&activity=removetopic&id=" + id;
+            $.ajax({
+                url: '/Admin/ChangeTopic',
+                async: false,
+                data: para,
+                success: function (data) {
+                    if (data == "false") {
+                        alert("取消失败");
+                    }
+                    else {
+                        alert("取消成功");
+                        location = location;
+                    }
+                }
+            });
+        }
+    }
+
+</script>
 
 <div id="main_right">
     <div id="top_link">
         <p>当前位置：<a href="@Url.Content("~/Admin/Index")">后台管理</a>>>新闻管理</p>
     </div>
+    <div id="list_loading">
+        <img src="~/Images/loading_1.gif" />
+    </div>
+    <div id="list">
+        <div id="list_topic">
+            <!--<img src="@Url.Content("~/Images/main_istop.png")" /><a id="1" class="list_title" href="#">list_topic_title</a><div class="list_date">2016-01-01</div><div class="list_belong">公告类别</div>-->
+        </div>
+        <div id="list_normal_all">
+            <!--<div class="list_normal">
+                <img src="@Url.Content("~/Images/main_right.png")" /><a id="2" class="list_title" href="#">list_topic_title</a><div class="list_date">2016-01-01</div><div class="list_belong">公告类别</div>
+            </div>-->
+        </div>
+    </div>
+    <div id="page_list">
+
+    </div>
 </div>
+<script>StartList();</script>
 

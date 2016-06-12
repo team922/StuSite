@@ -15,7 +15,7 @@ namespace StuSiteMVC.BLL
         {
             if (news.NState.NStateId==2)
             {
-                if (new NewsService().RemoveTopNews())
+                if (new NewsService().RemoveNewsTopic())
                 {
                     return new NewsService().AddNews(news);
                 }
@@ -45,7 +45,6 @@ namespace StuSiteMVC.BLL
             return new NewsService().GetNewsById(id);
         }
 
-
         //获取新闻（存储过程）
         public List<News> GetNewsByPage(int pagesize, int pageindex, ref int pagecount, int datacount)
         {
@@ -56,6 +55,31 @@ namespace StuSiteMVC.BLL
         public bool AddNewsHits(int id)
         {
             return new NewsService().AddNewsHits(id);
+        }
+
+        //设置置顶by id
+        public bool SetNewsTopic(int id)
+        {
+            if (RemoveNewsTopic())
+            {
+                return new NewsService().SetNewsTopic(id);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //取消置顶
+        public bool RemoveNewsTopic()
+        {
+            return new NewsService().RemoveNewsTopic();
+        }
+
+        //删除新闻by id（逻辑删除set nstate=0）
+        public bool DeleteNewsById(int id)
+        {
+            return new NewsService().DeleteNewsById(id);
         }
     }
 }

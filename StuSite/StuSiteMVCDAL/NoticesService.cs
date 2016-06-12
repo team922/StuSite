@@ -230,24 +230,24 @@ namespace StuSiteMVC.DAL
         }
 
         //设置置顶
-        public bool SetTopNotices(Notices notices)
+        public bool SetNoticeTopic(int id)
         {
             string sql = "update Notices set Nstate=2 where id=@id";
-            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", notices.id)) > 0;
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", id)) > 0;
         }
 
         //取消置顶
-        public bool RemoveTopNotices()
+        public bool RemoveNoticeTopic()
         {
             string sql = "update Notices set Nstate=1";
             return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql) > 0;
         }
 
         //删除News（逻辑删除）
-        public bool DeleteNotices(Notices notices)
+        public bool DeleteNoticeById(int id)
         {
             string sql = "update Notices set Nstate=0 where id=@id";
-            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", notices.id)) > 0;
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@id", id)) > 0;
         }
     }
 }

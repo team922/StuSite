@@ -23,8 +23,9 @@
     }
 
     function GetList(pageindex) {
+        var type = getQueryString("type");
         var pagesize = getQueryString("pagesize");
-        window.location.href = "/Home/ShowList?type=notice&pagesize=" + pagesize + "&pageindex=" + pageindex;
+        window.location.href = "/Home/ShowList?type=" + type + "&pagesize=" + pagesize + "&pageindex=" + pageindex;
     }
 
     function getQueryString(name) {

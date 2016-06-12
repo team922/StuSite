@@ -27,7 +27,7 @@ namespace StuSiteMVC.BLL
         {
             if (notice.NState.NStateId == 2)
             {
-                if (new NoticesService().RemoveTopNotices())
+                if (new NoticesService().RemoveNoticeTopic())
                 {
                     return new NoticesService().AddNotices(notice);
                 }
@@ -73,6 +73,31 @@ namespace StuSiteMVC.BLL
         public bool AddNoticeHits(int id)
         {
             return new NoticesService().AddNoticeHits(id);
+        }
+
+        //设置置顶by id
+        public bool SetNoticeTopic(int id)
+        {
+            if (RemoveNoticeTopic())
+            {
+                return new NoticesService().SetNoticeTopic(id);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //取消置顶
+        public bool RemoveNoticeTopic()
+        {
+            return new NoticesService().RemoveNoticeTopic();
+        }
+
+        //删除公告by id（逻辑删除set nstate=0）
+        public bool DeleteNoticeById(int id)
+        {
+            return new NoticesService().DeleteNoticeById(id);
         }
     }
 }

@@ -134,6 +134,86 @@ namespace StuSiteMVC.Controllers
             return View("NoticeManage1");
         }
 
+        public ActionResult DeleteNoticeAndNews(string type,int id)
+        {
+            if (type=="notice")
+            {
+                if (new NoticeManager().DeleteNoticeById(id))
+                {
+                    return Content("true");
+                }
+                else
+                {
+                    return Content("false");
+                }
+            }
+            else
+            {
+                if (new NewsManager().DeleteNewsById(id))
+                {
+                    return Content("true");
+                }
+                else
+                {
+                    return Content("false");
+                }
+            }
+        }
+
+        public ActionResult ChangeTopic(string type,string activity, int id)
+        {
+            if (type == "notice")
+            {
+                if (activity == "settopic")
+                {
+                    if (new NoticeManager().SetNoticeTopic(id))
+                    {
+                        return Content("true");
+                    }
+                    else
+                    {
+                        return Content("false");
+                    }
+                }
+                else
+                {
+                    if (new NoticeManager().RemoveNoticeTopic())
+                    {
+                        return Content("true");
+                    }
+                    else
+                    {
+                        return Content("false");
+                    }
+                }
+            }
+            else
+            {
+                if (activity == "settopic")
+                {
+                    if (new NewsManager().SetNewsTopic(id))
+                    {
+                        return Content("true");
+                    }
+                    else
+                    {
+                        return Content("false");
+                    }
+                }
+                else
+                {
+                    if (new NewsManager().RemoveNewsTopic())
+                    {
+                        return Content("true");
+                    }
+                    else
+                    {
+                        return Content("false");
+                    }
+                }
+            }
+        }
+
         public ActionResult ImageUpload(HttpPostedFileBase upload)
         {
             string name = System.IO.Path.GetFileName(upload.FileName);
