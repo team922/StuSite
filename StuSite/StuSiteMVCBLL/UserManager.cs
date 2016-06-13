@@ -55,7 +55,7 @@ namespace StuSiteMVC.BLL
         }
 
         //管理登录
-        public bool ALogin(string LoginId,string LoginPwd, out Admin A)
+        public bool ALogin(string LoginId, string LoginPwd, out Admin A)
         {
             Admin a = new AdminService().GetAdminByLoginId(LoginId);
 
@@ -73,6 +73,40 @@ namespace StuSiteMVC.BLL
             {
                 A = null;//登录失败
                 return false;
+            }
+        }
+
+        //获取院系列表
+        public List<College> GetCollege()
+        {
+            return new CollegeService().GetCollege();
+        }
+
+        //获取专业列表by collegeid
+        public List<Major> GetMajorByCollegeid(string id)
+        {
+            return new MajorService().GetMajorByCollegeid(id);
+        }
+
+        //获取某专业最新插入数据
+        public string SelectTheLatestData(string major, string year)
+        {
+            return new SBasicService().SelectTheLatestData(major, year);
+        }
+
+        //添加学生
+        public string AddStudent(SLogin slogin)
+        {
+            string number = "0";
+            if (!new SBasicService().SelectIDCardisLogin(slogin.SNumber.SIDNumber))
+            {
+                number = new SBasicService().AddStudent(slogin);
+                new SLoginService().AddStudent(slogin);
+                return number;
+            }
+            else
+            {
+                return number;
             }
         }
     }

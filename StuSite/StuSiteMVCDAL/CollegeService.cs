@@ -32,5 +32,28 @@ namespace StuSiteMVC.DAL
             }
             return college;
         }
+
+        //获取全部学院信息
+        public List<College> GetCollege()
+        {
+            List<College> collegelist = new List<College>();
+            //sql连接字符串
+            string sql = "select * from College";
+            //执行sql
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.Text, sql);
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                foreach (DataRow row in dt.Rows)
+                {
+                    College college = new College();
+                    college.CollegeId = (string)row["CollegeId"];
+                    college.CollegeName = (string)row["CollegeName"];
+
+                    collegelist.Add(college);
+                }
+            }
+            return collegelist;
+        }
     }
 }

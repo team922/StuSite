@@ -35,5 +35,33 @@ namespace StuSiteMVC.DAL
             }
             return major;
         }
+
+
+        //获取专业信息by collegeid
+        public List<Major> GetMajorByCollegeid(string id)
+        {
+            List<Major> majorlist = new List<Major>();
+            //sql连接字符串
+            string sql = "select * from Major where Belong=@collegeid";
+            //执行sql
+            SqlParameter[] para = new SqlParameter[]
+            {
+                new SqlParameter("@collegeid", id),
+            };
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.Text, sql,para);
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                foreach (DataRow row in dt.Rows)
+                {
+                    Major major = new Major();
+                    major.MajorId = (string)row["MajorId"];
+                    major.MajorName = (string)row["MajorName"];
+
+                    majorlist.Add(major);
+                }
+            }
+            return majorlist;
+        }
     }
 }

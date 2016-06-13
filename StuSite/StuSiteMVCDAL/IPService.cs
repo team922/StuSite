@@ -148,6 +148,32 @@ namespace StuSiteMVC.DAL
             //}
             //return html;
         }
+        
+        //获取身份证信息
+        public string GetIDCardMessage(string idcard)
+        {
+            string url = "http://apis.baidu.com/apistore/idservice/id";
+            string strURL = url + "?id=" + idcard;
+            HttpWebRequest request;
+            request = (HttpWebRequest)WebRequest.Create(strURL);
+            request.Method = "GET";
+            // 添加header
+            request.Headers.Add("apikey", apikey);
+            HttpWebResponse response;
+            response = (HttpWebResponse)request.GetResponse();
+            Stream s= response.GetResponseStream();
+            string message = "";
+            string StrDate = "";
+            string strValue = "";
+            StreamReader Reader = new StreamReader(s, Encoding.UTF8);
+            while ((StrDate = Reader.ReadLine()) != null)
+            {
+                message += strValue;
+                message += StrDate;
+                message += "\r\n";
+            }
+            return message;
+        }
 
         //生成验证码
         public string CreateRandomCode(int codeCount)

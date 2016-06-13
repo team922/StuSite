@@ -40,6 +40,12 @@ namespace StuSiteMVC.BLL
             return new IPService().GetDateTime();
         }
 
+        //获取身份证信息
+        public string GetIDCardMesage(string idcard)
+        {
+            return new IPService().GetIDCardMessage(idcard);
+        }
+
         //添加登录IP、时间（学生）
         public void AddSIP(string loginid)
         {

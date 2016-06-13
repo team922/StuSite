@@ -358,6 +358,7 @@
     <Content Include="Content\main_login.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\admin_top.jpg" />
+    <Content Include="Images\admin_validatesucess.png" />
     <Content Include="Images\app_1.jpg" />
     <Content Include="Images\app_2.jpg" />
     <Content Include="Images\app_4.jpg" />
@@ -378,6 +379,7 @@
     <Content Include="Images\randomcode.png" />
     <Content Include="Javascript\admin_home.js" />
     <Content Include="Javascript\admin_list.js" />
+    <Content Include="Javascript\admin_validate.js" />
     <Content Include="Javascript\jquery-2.1.4.js" />
     <Content Include="Javascript\jquery-2.1.4.min.js" />
     <Content Include="Javascript\main_index.js" />

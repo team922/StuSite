@@ -52,5 +52,28 @@ namespace StuSiteMVC.DAL
             };
             return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, para) > 0;
         }
+
+        //添加学生用户登录信息
+        public bool AddStudent(SLogin slogin)
+        { //1.sql语句
+            string sql = "insert into SLogin(SNumber,SPassword,State,LastIP,LastTime)"
+                         + " values(@SNumber,@SPassword,@State,@LastIP,@LastTime)";
+            //2.参数赋值
+            SBasic sbasic = new SBasic();
+            sbasic = slogin.SNumber;
+            State state = new State();
+            state = slogin.State;
+
+            SqlParameter[] para = new SqlParameter[]
+            {
+                new SqlParameter("@SNumber",sbasic.SNumber),
+                new SqlParameter("@SPassword",slogin.SPassword),
+                new SqlParameter("@State",state.StateId),
+                new SqlParameter("@LastIP","192.168.1.1"),
+                new SqlParameter("@LastTime","1900-01-01 08:00:00"),
+              };
+            //3、执行sql语句
+            return Convert.ToInt32(SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, para)) > 0;
+        }
     }
 }

@@ -76,6 +76,109 @@ namespace StuSiteMVC.Controllers
             return View();
         }
 
+        public ActionResult GetCollege()
+        {
+            List<College> collegelist = new List<College>();
+            collegelist = new UserManager().GetCollege();
+
+            int i = 0;
+            string json = "{\"collegelist\":[";
+            foreach (var college in collegelist)
+            {
+                i++;
+                json += "{";
+                json += "\"id\":\"" + college.CollegeId.Trim() + "\",";
+                json += "\"name\":\"" + college.CollegeName.Trim() + "\"";
+                json += "},";
+            }
+            json = json.Substring(0, json.Length - 1);
+            json += "],\"number\":\"" + i + "\"}";
+            return Content(json);
+        }
+
+        public ActionResult GetSelectMajor(string collegeid)
+        {
+            List<Major> majorlist = new List<Major>();
+            majorlist = new UserManager().GetMajorByCollegeid(collegeid);
+
+            int i = 0;
+            string json = "{\"majorlist\":[";
+            foreach (var major in majorlist)
+            {
+                i++;
+                json += "{";
+                json += "\"id\":\"" + major.MajorId + "\",";
+                json += "\"name\":\"" + major.MajorName + "\"";
+                json += "},";
+            }
+            json = json.Substring(0, json.Length - 1);
+            json += "],\"number\":\"" + i + "\"}";
+            return Content(json);
+        }
+
+        public ActionResult GetIDCardMessage(string idcard)
+        {
+            return Content(new IPManager().GetIDCardMesage(idcard));
+        }
+
+        public ActionResult AddStudent(string name, string phone, string idcard, string sex, DateTime birthday, string address, string college_id, string major_id)
+        {
+
+            DateTime datetime = new IPManager().GetDateTime();
+            string year = datetime.ToString("yyyy");
+            string date = datetime.ToString("yyyy-MM-dd");
+            string latestnumber = new UserManager().SelectTheLatestData(major_id, year);
+            string newnumber = "";
+            if (latestnumber=="0")
+            {
+                newnumber = year + major_id.Trim() + "001";
+            }
+            else
+            {
+                newnumber = Convert.ToString(Convert.ToInt32(latestnumber) + 1);
+            }
+
+            string password = phone.Substring(3, 8);
+
+            SLogin slogin = new SLogin();
+            SBasic sbasic = new SBasic();
+
+            College college = new College();
+            college.CollegeId = college_id;
+            Major major = new Major();
+            major.MajorId = major_id;
+            Status status = new Status();
+            status.StatusId = 0;
+            State state = new State();
+            state.StateId = 1;
+
+            sbasic.SNumber = newnumber;
+            sbasic.SName = name;
+            sbasic.SIDNumber = idcard;
+            sbasic.SCollege = college;
+            sbasic.SMajor = major;
+            sbasic.SEnrollment = Convert.ToDateTime(date);
+            sbasic.SStatus = status;
+            sbasic.SSex = sex;
+            sbasic.SPhone = phone;
+            sbasic.SBirthday = birthday;
+            sbasic.SAddress = address;
+            sbasic.SPicAddress = "default";
+
+            slogin.SNumber = sbasic;
+            slogin.SPassword = password;
+            slogin.State = state;
+
+            if(new UserManager().AddStudent(slogin)== newnumber)
+            {
+                return Content(newnumber);
+            }
+            else
+            {
+                return Content("0");
+            }
+        }
+
         public ActionResult AddNews()
         {
             string news_title = Request.Form["title"];//获取标题
@@ -134,9 +237,9 @@ namespace StuSiteMVC.Controllers
             return View("NoticeManage1");
         }
 
-        public ActionResult DeleteNoticeAndNews(string type,int id)
+        public ActionResult DeleteNoticeAndNews(string type, int id)
         {
-            if (type=="notice")
+            if (type == "notice")
             {
                 if (new NoticeManager().DeleteNoticeById(id))
                 {
@@ -160,7 +263,7 @@ namespace StuSiteMVC.Controllers
             }
         }
 
-        public ActionResult ChangeTopic(string type,string activity, int id)
+        public ActionResult ChangeTopic(string type, string activity, int id)
         {
             if (type == "notice")
             {
