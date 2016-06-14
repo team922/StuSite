@@ -66,6 +66,7 @@
     string number = "";
     string type = "";
     string college = "";
+    string major = "";
     DateTime dt;
     string lastdate = "";
     string lasttime = "";
@@ -88,6 +89,7 @@
             number = S.SNumber.SNumber;
             type = "学生";
             college = S.SNumber.SCollege.CollegeName;
+            major = S.SNumber.SMajor.MajorName;
             dt = Convert.ToDateTime(S.LastTime);
             lastdate = dt.ToShortDateString().ToString();
             lasttime = dt.ToShortTimeString().ToString();
@@ -124,13 +126,14 @@
             {
                 <div id="pi_pic"><img src="@url" /></div>
                 <div id="pi_detail">
+                    <text><b>个人信息</b></text><br />
                     <text>姓名：@name</text><br />
                     <text>工号：@number</text><br />
                     <text>身份：@type</text><br />
-                    <text>部门：@college</text><br />
-                    <text>上次登录信息</text><br />
-                    <text>日期：@lastdate</text><br />
-                    <text>时间：@lasttime</text><br />
+                    <text>院校：@college</text><br />
+                    <text>专业：@major</text><br /><br />
+                    <text><b>上次登录信息</b></text><br />
+                    <text>时间：@lastdate @lasttime</text><br />
                     <text>ＩＰ：@lastip</text><br />
                 </div>
             }

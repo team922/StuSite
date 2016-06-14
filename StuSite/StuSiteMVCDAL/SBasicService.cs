@@ -39,7 +39,7 @@ namespace StuSiteMVC.DAL
                 sBasic.SEnrollment = reader["SEnrollment"] != DBNull.Value ? (DateTime?)reader["SEnrollment"] : null;
                 sBasic.SStatus = status.GetStatusById((int)reader["SStatus"]);
                 sBasic.SPhone = (string)reader["SPhone"];
-                sBasic.SEmail = (string)reader["SEmail"];
+                sBasic.SEmail = reader["SEmail"].ToString();
                 sBasic.SBirthday = reader["SBirthday"] != DBNull.Value ? (DateTime?)reader["SBirthday"] : null;
                 sBasic.SAddress = (string)reader["SAddress"];
                 sBasic.SPicAddress = (string)reader["SPicAddress"];

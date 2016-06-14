@@ -107,8 +107,8 @@ namespace StuSiteMVC.Controllers
             {
                 i++;
                 json += "{";
-                json += "\"id\":\"" + major.MajorId + "\",";
-                json += "\"name\":\"" + major.MajorName + "\"";
+                json += "\"id\":\"" + major.MajorId.Trim() + "\",";
+                json += "\"name\":\"" + major.MajorName.Trim() + "\"";
                 json += "},";
             }
             json = json.Substring(0, json.Length - 1);
@@ -131,7 +131,7 @@ namespace StuSiteMVC.Controllers
             string newnumber = "";
             if (latestnumber=="0")
             {
-                newnumber = year + major_id.Trim() + "001";
+                newnumber = year + major_id + "001";
             }
             else
             {

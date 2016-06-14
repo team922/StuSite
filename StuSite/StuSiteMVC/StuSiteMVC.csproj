@@ -429,6 +429,7 @@
     <Content Include="Views\SendMessage\Index.cshtml" />
     <Content Include="Views\Home\ShowDetail.cshtml" />
     <Content Include="Views\Home\ShowList.cshtml" />
+    <Content Include="Views\Home\ShowInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

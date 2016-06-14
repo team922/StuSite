@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <link rel="shortcut icon" href="/logo.ico" /> 
+    <link rel="shortcut icon" href="/logo.ico" />
     <link href="@Url.Content("~/Content/main_global.css")" rel="stylesheet" />
     <script src="@Url.Content("~/Javascript/jquery-2.1.4.min.js")"></script>
     <meta name="viewport" content="width=device-width" />
@@ -12,10 +12,12 @@
 
 <body>
     @{
+        #region 获取用户个人信息！
         StuSiteMVC.Models.SLogin S = new StuSiteMVC.Models.SLogin();
         StuSiteMVC.Models.TLogin T = new StuSiteMVC.Models.TLogin();
         S = null;
         T = null;
+        string number = "";
         string college = "";
         string type = "";
         string name = "";
@@ -32,17 +34,20 @@
             }
             if (S != null)
             {
+                number = S.SNumber.SNumber;
                 college = S.SNumber.SCollege.CollegeName;
                 type = "学生";
                 name = S.SNumber.SName;
             }
             else if (T != null)
             {
+                number = T.TNumber.TNumber;
                 college = T.TNumber.TCollege.CollegeName;
                 type = T.Role.RoleName;
                 name = T.TNumber.TName;
             }
         }
+        #endregion
     }
     <div id="head">
         <div id="top_left">
@@ -68,7 +73,7 @@
                 else
                 {
                     <!--登录状态-->
-                    <li><a href="#">【个人信息】</a></li>
+                    <li><a href="@Url.Content("~/Home/ShowInfo?id="+number+"")">【个人信息】</a></li>
                     <li><a href="@Url.Content("~/Account/Logout")">【退出登录】</a></li>
                 }
             }
@@ -77,6 +82,7 @@
 
     <div id="nav">
         <ul id="mainnav">
+            <!--导航栏未使用-->
             <!--<li><a href="#">首页</a></li>
             <li><a href="#">首页</a></li>
             <li><a href="#">首页</a></li>

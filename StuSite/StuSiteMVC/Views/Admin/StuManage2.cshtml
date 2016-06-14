@@ -150,20 +150,22 @@
     </div>
     <form action="@Url.Action("AddStudent","Admin")" method="post" id="form2">
         <div class="form_control">
-            <input class="required" type="text" id="name" name="name" data-tip="请输入您的姓名" data-valid="isNonEmpty||onlyZh||between:2-7" data-error="姓名不能为空||姓名只能为中文||姓名长度为2-7位">
+            <text>学生姓名：</text><input class="required" type="text" id="name" name="name" data-tip="请输入您的姓名" data-valid="isNonEmpty||onlyZh||between:2-7" data-error="姓名不能为空||姓名只能为中文||姓名长度为2-7位">
         </div>
         <div class="form_control">
-            <input class="required" type="text" id="idcard" name="idcard" data-tip="请输入您的身份证号" data-valid="isNonEmpty||isIDCard" data-error="身份证号不能为空||身份证号格式不正确">
+            <text>身份证号：</text><input class="required" type="text" id="idcard" name="idcard" data-tip="请输入您的身份证号" data-valid="isNonEmpty||isIDCard" data-error="身份证号不能为空||身份证号格式不正确">
         </div>
         <div class="form_control">
-            <input class="required" type="text" id="phone" name="phone" data-tip="请输入手机号" data-valid="isNonEmpty||isMobile" data-error="手机号不能为空||手机号格式不正确">
+            <text>联系电话：</text><input class="required" type="text" id="phone" name="phone" data-tip="请输入手机号" data-valid="isNonEmpty||isMobile" data-error="手机号不能为空||手机号格式不正确">
         </div>
         <div class="form_control">
+            <text>所属院系：</text>
             <select class="required" id="select_college" data-valid="isNonEmpty" data-error="院系必填" onchange="getmajor()">
                 <option value="" id="college_loading">加载中！</option>
             </select>
         </div>
         <div class="form_control">
+            <text>就读专业：</text>
             <select class="required" id="select_major" data-valid="isNonEmpty" data-error="专业必填">
                 <option value="" id="major_loading">请先选择院系！</option>
             </select>
