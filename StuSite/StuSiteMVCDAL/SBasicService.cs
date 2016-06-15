@@ -38,6 +38,7 @@ namespace StuSiteMVC.DAL
                 sBasic.SMajor = majorService.GetMajorByMajorId((string)reader["SMajor"]);
                 sBasic.SEnrollment = reader["SEnrollment"] != DBNull.Value ? (DateTime?)reader["SEnrollment"] : null;
                 sBasic.SStatus = status.GetStatusById((int)reader["SStatus"]);
+                sBasic.SSex = (string)reader["SSex"];
                 sBasic.SPhone = (string)reader["SPhone"];
                 sBasic.SEmail = reader["SEmail"].ToString();
                 sBasic.SBirthday = reader["SBirthday"] != DBNull.Value ? (DateTime?)reader["SBirthday"] : null;
@@ -118,6 +119,37 @@ namespace StuSiteMVC.DAL
             //3、执行sql语句
             SqlHelper.ExecuteScalar(SqlHelper.ConnString, CommandType.Text, sql, para);
             return sbasic.SNumber;
+        }
+
+        //修改学生基本信息 （学生端-前台）
+        public bool UpdateStudentBasic(string number, string phone, string email)
+        {
+            string sql = "update SBasic set SPhone=@phone,SEmail=@email where SNumber=@number";
+            //参数赋值
+            SqlParameter[] para = new SqlParameter[]
+            {
+                new SqlParameter("@phone",phone),
+                new SqlParameter("@email",email),
+                new SqlParameter("@number",number),
+            };
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, para) == 1;
+        }
+        
+        //修改学生基本信息 （管理端-后台）
+        public bool UpdateStudentBasic(string number, string name, string idnumber, string sex, string birthday, string address)
+        {
+            string sql = "update SBasic set SName=@name,SIDNumber=@idnumber,SSex=@sex,SBirthday=@birthday,SAddress=@address where SNumber=@number";
+            //参数赋值
+            SqlParameter[] para = new SqlParameter[]
+            {
+                new SqlParameter("@name",name),
+                new SqlParameter("@idnumber",idnumber),
+                new SqlParameter("@sex",sex),
+                new SqlParameter("@birthday",birthday),
+                new SqlParameter("@address",address),
+                new SqlParameter("@number",number),
+            };
+            return SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, para) == 1;
         }
     }
 }

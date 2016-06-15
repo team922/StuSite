@@ -379,6 +379,7 @@
     <Content Include="Images\randomcode.png" />
     <Content Include="Javascript\admin_home.js" />
     <Content Include="Javascript\admin_list.js" />
+    <Content Include="Javascript\admin_student.js" />
     <Content Include="Javascript\admin_validate.js" />
     <Content Include="Javascript\jquery-2.1.4.js" />
     <Content Include="Javascript\jquery-2.1.4.min.js" />

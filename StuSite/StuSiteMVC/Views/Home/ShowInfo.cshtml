@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "个人信息";
+    Layout = "~/Views/Shares/_LayoutPage1.cshtml";
+}
+<link href="@Url.Content("~/Content/main_show.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Javascript/admin_validate.js")"></script>
+<script type="text/javascript">
+    function getmessage() {
+        var id = getQueryString("id");
+        $.ajax({
+            url: '/Admin/GetStudent',
+            data: { "id": id },
+            success: function (data) {
+                var message = $.parseJSON(data);
+                var number = message.number;
+                var name = message.name;
+                var idnumber = message.idnumber;
+                var sex = message.sex;
+                var phone = message.phone;
+                var email = message.email;
+                var enrollment = message.enrollment;
+                var college = message.college;
+                var major = message.major;
+
+                $("#number").val(number);
+                $("#name").val(name);
+                $("#idnumber").val(idnumber);
+                $("#sex").val(sex);
+                $("#phone").val(phone);
+                $("#email").val(email);
+                $("#enrollment").val(enrollment);
+                $("#college").val(college);
+                $("#major").val(major);
+
+                document.getElementById("info_loadling").style.display = "none";
+                document.getElementById("button").style.display = "";
+            }
+        });
+    }
+
+    function button_submit() {
+        var message = $("#form span[class=valid_message]");
+        var number = document.getElementById("number").value;
+        //alert(number);
+        var phone = document.getElementById("phone").value;
+        //alert(phone);
+        var email = document.getElementById("email").value;
+        //alert(email);
+
+        //alert(message.length);
+        if (message.length >= 1) {
+            if ((message.eq(0).text() == "")||(message.eq(0).text() == "" && message.eq(1).text() == "")) {
+                //alert("success");
+                updatestudent(number, phone, email);
+            }
+            else {
+                alert("信息不符合规范，请根据提示修改信息!")
+            }
+        }
+        else {
+            alert("未修改信息!");
+        }
+    }
+
+    function updatestudent(number, phone, email) {
+        $.ajax({
+            url: '/Home/UpdateStudentByUser',
+            data: { "number": number, "phone": phone, "email": email },
+            async: false,
+            success: function (data) {
+                if (data == "true") {
+                    alert("修改成功！");
+                    location = location;
+                }
+                else {
+                    alert("修改失败，如有问题请联系管理员！");
+                }
+            }
+        });
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
+</script>
+<div id="info_loadling">
+    <img src="~/Images/loading_1.gif" />
+</div>
+<div id="info_main">
+    <text>带*的为可修改项，如需修改其他信息请联系管理员。</text>
+    <form action="@Url.Action("UpdateStudent","Admin")" method="post" id="form">
+        <div class="form_normal">
+            <text>&nbsp;学　　号：</text><input class="required" type="text" readonly="readonly" id="number" name="number" />
+        </div>
+        <div class="form_normal">
+            <text>&nbsp;姓　　名：</text><input class="required" type="text" readonly="readonly" id="name" name="name" />
+        </div>
+        <div class="form_normal">
+            <text>&nbsp;身份证号：</text><input class="required" type="text" readonly="readonly" id="idnumber" name="idnumber" />
+        </div>
+        <div class="form_normal">
+            <text>&nbsp;性　　别：</text><input class="required" type="text" readonly="readonly" id="sex" name="sex" />
+        </div>
+        <div class="form_control">
+            <text>*电　　话：</text><input class="required" type="text" id="phone" name="phone" data-tip="请输入手机号" data-valid="isNonEmpty||isMobile" data-error="手机号不能为空||手机号格式不正确" />
+        </div>
+        <div class="form_control">
+            <text>*邮　　箱：</text><input class="required" type="text" id="email" name="email" data-tip="请输入邮箱" data-valid="isEmptyorEmail" data-error="邮箱格式不正确" />
+        </div>
+        <div class="form_normal">
+            <text>&nbsp;注册日期：</text><input class="required" type="text" readonly="readonly" id="enrollment" name="enrollment" />
+        </div>
+        <div class="form_normal">
+            <text>&nbsp;所属院系：</text><input class="required" type="text" readonly="readonly" id="college" name="college" />
+        </div>
+        <div class="form_normal">
+            <text>&nbsp;就读专业：</text><input class="required" type="text" readonly="readonly" id="major" name="major" />
+        </div>
+        <div>
+            <input id="button" type="button" value="提交信息" onclick="button_submit()" style="display:none" />
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $('form').validate({
+        onFocus: function () {
+            this.parent().addClass('active');
+            return false;
+        },
+        onBlur: function () {
+            var $parent = this.parent();
+            var _status = parseInt(this.attr('data-status'));
+            $parent.removeClass('active');
+            if (!_status) {
+                $parent.addClass('error');
+            }
+            return false;
+        }
+    });
+</script>
+<script>getmessage();</script>

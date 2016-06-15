@@ -76,6 +76,12 @@ namespace StuSiteMVC.BLL
             }
         }
 
+        //获取学生信息
+        public SBasic GetStudent(string id)
+        {
+            return new SBasicService().GetStudentBsaicBySNumber(id);
+        }
+
         //获取院系列表
         public List<College> GetCollege()
         {
@@ -108,6 +114,18 @@ namespace StuSiteMVC.BLL
             {
                 return number;
             }
+        }
+
+        //修改学生信息 （学生端-前台）
+        public bool UpdateStudentBasic(string number, string phone, string email)
+        {
+            return new SBasicService().UpdateStudentBasic(number, phone, email);
+        }
+
+        //修改学生信息 （管理端-后台）
+        public bool UpdateStudentBasic(string number, string name, string idnumber, string sex, string birthday, string address)
+        {
+            return new SBasicService().UpdateStudentBasic(number, name, idnumber, sex, birthday, address);
         }
     }
 }

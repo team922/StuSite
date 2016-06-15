@@ -3,9 +3,279 @@
     ViewBag.Title = "学生管理-信息管理";
     Layout = "~/Views/Shares/_LayoutPage2.cshtml";
 }
+<script src="@Url.Content("~/Javascript/admin_validate.js")"></script>
+<script src="@Url.Content("~/Javascript/admin_student.js")"></script>
+<script type="text/javascript">
+    function getmessage(type, id) {
+        document.getElementById("info_loading").style.display = "";
+        //alert(type + "---" + id);
+        $.ajax({
+            url: '/Admin/GetStudent',
+            data: { "id": id },
+            success: function (data) {
+                //alert("success");
+                //alert(type);
+                if (data == "false") {
+                    alert("未查找到该名学生，请检查输入信息是否准确！");
+                    document.getElementById("info_loading").style.display = "none";
+                }
+                else {
+                    document.getElementById("info_show").style.display = "none";
+                    document.getElementById("info_change").style.display = "none";
+                    //alert(data);
+
+                    var student = $.parseJSON(data);
+                    //alert(student);
+                    var number = student.number;
+                    var name = student.name;
+                    var idnumber = student.idnumber;
+                    var college = student.college;
+                    var major = student.major
+                    var enrollment = student.enrollment;
+                    var sex = student.sex;
+                    var phone = student.phone;
+                    var email = student.email;
+                    var birthday = student.birthday;
+                    var address = student.address;
+
+                    if (type == "1") {
+                        document.getElementById("info_show").style.display = "";
+                        getcollege();
+                        //alert("show");
+                        $("#number1").val(number);
+                        $("#name1").val(name);
+                        $("#idnumber1").val(idnumber);
+                        $("#birthday1").val(birthday);
+                        $("#sex1").val(sex);
+                        $("#phone1").val(phone);
+                        $("#email1").val(email);
+                        $("#address1").val(address);
+                        $("#enrollment1").val(enrollment);
+                        $("#college1").val(college);
+                        $("#major1").val(major);
+                    }
+                    else {
+                        document.getElementById("info_change").style.display = "";
+
+                        //alert("change")
+                        $("#number2").val(number);
+                        $("#name2").val(name);
+                        $("#idnumber2").val(idnumber);
+                        $("#birthday2").val(birthday);
+                        $("#sex2").val(sex);
+                        $("#address2").val(address);
+                        $("#enrollment2").val(enrollment);
+                        $("#college2").val(college);
+                        $("#major2").val(major);
+                    }
+                    document.getElementById("info_loading").style.display = "none";
+                }
+                document.getElementById("info_loading").style.display = "none";
+            }
+        });
+    }
+
+    function showinfo(type) {
+        var message = $("#info_nav span[class=valid_message]");
+        var id = document.getElementById("number_input").value;
+
+        //alert(message.length);
+        if (message.length == 1 && id != "") {
+            if (message.eq(0).text() == "") {
+                //alert("success");
+                getmessage(type, id);
+            }
+            else {
+                alert("信息不符合规范，请根据提示修改信息!")
+            }
+        }
+        else {
+            alert("未输入信息!");
+        }
+    }
+
+    function button_submit() {
+        var message = $("#form2 span[class=valid_message]");
+        var number = document.getElementById("number2").value;
+        var name = document.getElementById("name2").value;
+        var idnumber = document.getElementById("idnumber2").value;
+
+        //alert(message.length);
+        if (message.length >=1 ) {
+            if ((message.eq(0).text())=="" || (message.eq(0).text() == "" && message.eq(1).text())) {
+                //alert("success");
+                $.ajax({
+                    url: '/Admin/GetIDCardMessage',
+                    data: { "idcard": idnumber },
+                    async: false,
+                    success: function (data) {
+                        var message = $.parseJSON(data);
+                        if (message.retMsg == "success") {
+                            var Esex = message.retData.sex;
+                            var sex = "";
+                            if (Esex == "M") {
+                                sex = "男";
+                            }
+                            else if (Esex == "F") {
+                                sex = "女";
+                            }
+                            else {
+                                sex = "秀吉";//未知！！
+                            }
+                            //alert(sex);
+                            var birthday = message.retData.birthday;
+                            //alert(birthday);
+                            var address = message.retData.address;
+                            //alert(address);
+                            if (window.confirm(
+                                "将学号-" + number + "-的学生个人信息修改为" +
+                                "\n姓　　名：" + name +
+                                "\n身份证号：" + idnumber +
+                                "\n性　　别：" + sex +
+                                "\n出生日期：" + birthday +
+                                "\n地　　址：" + address))
+                            {
+                                //alert("确认");
+                                updatestudentbyadmin(number, name, idnumber, sex, birthday, address);
+                                return true;
+                            } else {
+                                //alert("取消");
+                                return false;
+                            }
+                        }
+                        else {
+                            alert("无法查询该身份证号信息，请联系管理员！")
+                        }
+                    }
+                });
+            }
+            else {
+                alert("信息不符合规范，请根据提示修改信息!")
+            }
+        }
+        else {
+            alert("未修改信息!");
+        }
+    }
+    
+    function updatestudentbyadmin(number, name, idnumber, sex, birthday, address) {
+        //alert("updatestudent");
+        $.ajax({
+            url: '/Admin/UpdateStudentByAdmin',
+            data: { "number": number, "name": name, "idnumber": idnumber, "sex": sex, "birthday": birthday, "address": address },
+            async: false,
+            success: function (data) {
+                if (data == "true") {
+                    alert("修改成功！");
+                    location = location;
+                }
+                else {
+                    alert("修改失败！");
+                }
+            }
+        });
+    }
+
+</script>
 
 <div id="main_right">
     <div id="top_link">
         <p>当前位置：<a href="@Url.Content("~/Admin/Index")">后台管理</a>>>学生信息</p>
     </div>
+    <div id="info_nav" class="form_control">
+        <text>请输入学生编号：</text><input class="required" type="text" id="number_input" name="number_input" data-tip="请输入要操作的学号" data-valid="isNonEmpty||between:11-11" data-error="学号不能为空||学号格式不正确" /><br />
+        <input type="button" onclick="showinfo(1)" value="查询信息" />
+        <input type="button" onclick="showinfo(2)" value="修改信息" />
+    </div>
+    <div id="info_loading" style="display:none">
+        <img src="~/Images/loading_1.gif" />
+    </div>
+
+    <div id="info_show" style="display:none">
+        <form action="" method="post" id="form1">
+            <div class="form_normal">
+                <text>学　　号：</text><input class="required" type="text" readonly="readonly" id="number1" name="number1" />
+            </div>
+            <div class="form_normal">
+                <text>姓　　名：</text><input class="required" type="text" readonly="readonly" id="name1" name="name1" />
+            </div>
+            <div class="form_normal">
+                <text>身份证号：</text><input class="required" type="text" readonly="readonly" id="idnumber1" name="idnumber1" />
+            </div>
+            <div class="form_normal">
+                <text>出生日期：</text><input class="required" type="text" readonly="readonly" id="birthday1" name="birthday1" />
+            </div>
+            <div class="form_normal">
+                <text>性　　别：</text><input class="required" type="text" readonly="readonly" id="sex1" name="sex1" />
+            </div>
+            <div class="form_normal">
+                <text>电　　话：</text><input class="required" type="text" readonly="readonly" id="phone1" name="phone1" />
+            </div>
+            <div class="form_normal">
+                <text>邮　　箱：</text><input class="required" type="text" readonly="readonly" id="email1" name="email1" />
+            </div>
+            <div class="form_normal">
+                <text>地　　址：</text><input class="required" type="text" readonly="readonly" id="address1" name="address1" />
+            </div>
+            <div class="form_normal">
+                <text>入学日期：</text><input class="required" type="text" readonly="readonly" id="enrollment1" name="enrollment1" />
+            </div>
+            <div class="form_normal">
+                <text>所属院系：</text><input class="required" type="text" readonly="readonly" id="college1" name="college1" />
+            </div>
+            <div class="form_normal">
+                <text>就读专业：</text><input class="required" type="text" readonly="readonly" id="major1" name="major1" />
+            </div>
+        </form>
+    </div>
+
+    <div id="info_change" style="display:none">
+        <form action="" method="post" id="form2">
+            <text>带*的为可修改项，其他信息由系统自动生成。</text>
+            <div class="form_normal">
+                <text>&nbsp;学　　号：</text><input class="required" type="text" readonly="readonly" id="number2" name="number2" />
+            </div>
+            <div class="form_control">
+                <text>*姓　　名：</text><input class="required" type="text" id="name2" name="name2" data-tip="请输入您的姓名" data-valid="isNonEmpty||onlyZh||between:2-7" data-error="姓名不能为空||姓名只能为中文||姓名长度为2-7位">
+            </div>
+            <div class="form_control">
+                <text>*身份证号：</text><input class="required" type="text" id="idnumber2" name="idnumber2" data-tip="请输入您的身份证号" data-valid="isNonEmpty||isIDCard" data-error="身份证号不能为空||身份证号格式不正确">
+            </div>
+            <div class="form_normal">
+                <text>&nbsp;出生日期：</text><input class="required" type="text" readonly="readonly" id="birthday2" name="birthday2" />
+            </div>
+            <div class="form_normal">
+                <text>&nbsp;性　　别：</text><input class="required" type="text" readonly="readonly" id="sex2" name="sex2" />
+            </div>
+            <div class="form_normal">
+                <text>&nbsp;地　　址：</text><input class="required" type="text" readonly="readonly" id="address2" name="address2" />
+            </div>
+            <div class="form_normal">
+                <text>&nbsp;所属院系：</text><input class="required" type="text" readonly="readonly" id="college2" name="college2" />
+            </div>
+            <div class="form_normal">
+                <text>&nbsp;就读专业：</text><input class="required" type="text" readonly="readonly" id="major2" name="major2" />
+            </div>
+            <div>
+                <input id="button" type="button" value="提交信息" onclick="button_submit()" />
+            </div>
+        </form>
+    </div>
 </div>
+<script type="text/javascript">
+    $('form').validate({
+        onFocus: function () {
+            this.parent().addClass('active');
+            return false;
+        },
+        onBlur: function () {
+            var $parent = this.parent();
+            var _status = parseInt(this.attr('data-status'));
+            $parent.removeClass('active');
+            if (!_status) {
+                $parent.addClass('error');
+            }
+            return false;
+        }
+    });
+</script>

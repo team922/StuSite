@@ -3,6 +3,7 @@
     ViewBag.Title = "学生管理-新生注册";
     Layout = "~/Views/Shares/_LayoutPage2.cshtml";
 }
+<script src="@Url.Content("~/Javascript/admin_student.js")"></script>
 <script type="text/javascript">
     function button_submit() {
         var message = $("#form2 span[class=valid_message]");
@@ -83,56 +84,13 @@
         }
     }
 
-    function getcollege() {
-        $.ajax({
-            url: '/Admin/GetCollege',
-            success: function (data) {
-                var college = $.parseJSON(data);
-                for (var i = 0; i < college.number ; i++) {
-                    addcollege(college.collegelist[i].id, college.collegelist[i].name);
-                }
-                document.getElementById("college_loading").text = "请选择院系！";
-            }
-        });
-    }
-
-    function getmajor() {
-        var div = document.getElementById("select_major");
-        while (div.hasChildNodes()) {
-            div.removeChild(div.firstChild);
-        }
-        $("#select_major").append("<option value='' id='major_loading'>请先选择院系！</option>");
-        var collegeid = document.getElementById("select_college").value;
-        $.ajax({
-            url: '/Admin/GetSelectMajor',
-            data: { "collegeid": collegeid },
-            success: function (data) {
-                var major = $.parseJSON(data);
-                for (var i = 0; i < major.number ; i++) {
-                    addmajor(major.majorlist[i].id, major.majorlist[i].name);
-                }
-                document.getElementById("major_loading").text = "请选择专业！";
-            }
-        });
-    }
-
-    function addcollege(id, name) {
-        var college = "<option value='" + id + "'>" + name + "</option>";
-        $("#select_college").append(college);
-    }
-
-    function addmajor(id, name) {
-        var major = "<option value='" + id + "' id='majorlist'>" + name + "</option>";
-        $("#select_major").append(major);
-    }
-
     function addstudent(name, phone, idcard, sex, birthday, address, college_id, major_id) {
         $.ajax({
             url: '/Admin/AddStudent',
             data: { "name": name, "phone": phone, "idcard": idcard, "sex": sex, "birthday": birthday, "address": address, "college_id": college_id, "major_id": major_id },
             success: function (data) {
-                alert("success");
-                alert(data);
+                //alert("success");
+                //alert(data);
                 if (data!="0") {
                     alert("添加成功\n该生学号为" + data + "\登录密码为手机号后8位");
                 }
@@ -144,11 +102,12 @@
     }
 
 </script>
+
 <div id="main_right">
     <div id="top_link">
         <p>当前位置：<a href="@Url.Content("~/Admin/Index")">后台管理</a>>>新生注册</p>
     </div>
-    <form action="@Url.Action("AddStudent","Admin")" method="post" id="form2">
+    <form action="" method="post" id="form2">
         <div class="form_control">
             <text>学生姓名：</text><input class="required" type="text" id="name" name="name" data-tip="请输入您的姓名" data-valid="isNonEmpty||onlyZh||between:2-7" data-error="姓名不能为空||姓名只能为中文||姓名长度为2-7位">
         </div>
@@ -169,7 +128,6 @@
             <select class="required" id="select_major" data-valid="isNonEmpty" data-error="专业必填">
                 <option value="" id="major_loading">请先选择院系！</option>
             </select>
-
         </div>
         <div>
             <input type="button" value="提交信息" onclick="button_submit()" />

@@ -94,7 +94,12 @@
 
 #page_list{width:600px;margin:0 auto;}
 
-/*StuManage2*/
+/*StuManage1,2*/
+#info_main{width:640px;margin:20px auto;}
+
+#info_loadling{width:640px;margin:0 auto;}
+
+.form_normal{width:300px;position:relative;margin:20px 0;padding:5px 10px;border:1px #ccc solid;}
 .form_control{width:300px;position:relative;margin:20px 0;padding:5px 10px;border:1px #ccc solid;}
 
 input[type="text"]{border:none;width:200px;}

@@ -76,6 +76,45 @@ namespace StuSiteMVC.Controllers
             return View();
         }
 
+        //ajax
+        public ActionResult GetStudent(string id)
+        {
+            SBasic sbasic = new SBasic();
+            try
+            {
+                sbasic = new UserManager().GetStudent(id);
+                string json = "{";
+
+                json += "\"number\":\"" + sbasic.SNumber + "\",";
+                json += "\"name\":\"" + sbasic.SName + "\",";
+                json += "\"idnumber\":\"" + sbasic.SIDNumber + "\",";
+                json += "\"college\":\"" + sbasic.SCollege.CollegeName + "\",";
+                json += "\"major\":\"" + sbasic.SMajor.MajorName + "\",";
+                json += "\"enrollment\":\"" + Convert.ToDateTime(sbasic.SEnrollment).ToString("yyyy-MM-dd") + "\",";
+                json += "\"sex\":\"" + sbasic.SSex.Trim() + "\",";
+                json += "\"phone\":\"" + sbasic.SPhone + "\",";
+                json += "\"email\":\"" + sbasic.SEmail + "\",";
+                json += "\"birthday\":\"" + Convert.ToDateTime(sbasic.SBirthday).ToString("yyyy-MM-dd") + "\",";
+                json += "\"address\":\"" + sbasic.SAddress + "\"";
+
+                json += "}";
+                return Content(json);
+            }
+            catch
+            {
+                return Content("false");
+            }
+        }
+
+        public ActionResult UpdateStudentByAdmin(string number, string name, string idnumber, string sex, string birthday, string address)
+        {
+            if (new UserManager().UpdateStudentBasic(number, name, idnumber,sex,birthday,address))
+            {
+                return Content("true");
+            }
+            return Content("false");
+        }
+
         public ActionResult GetCollege()
         {
             List<College> collegelist = new List<College>();

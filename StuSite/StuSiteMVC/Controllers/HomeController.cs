@@ -26,6 +26,11 @@ namespace StuSiteMVC.Controllers
             return View();
         }
 
+        public ActionResult ShowInfo()
+        {
+            return View();
+        }
+
         //ajax
         public ActionResult LoginChack()
         {
@@ -318,6 +323,15 @@ namespace StuSiteMVC.Controllers
             {
                 return JavaScript("alert('发生未知错误！！')");
             }
+        }
+        
+        public ActionResult UpdateStudentByUser(string number, string phone, string email)
+        {
+            if (new UserManager().UpdateStudentBasic(number, phone, email))
+            {
+                return Content("true");
+            }
+            return Content("false");
         }
     }
 }
