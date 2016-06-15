@@ -15,9 +15,15 @@
     /*************************策略对象*****************************/
 
     var RULES = {
-        isNonEmpty: function(value, errorMsg) {
+        isNonEmpty: function (value, errorMsg) {
             //不能为空
             if (!value.length) {
+                return errorMsg;
+            }
+        },
+        isEmpty: function (value, errorMsg) {
+            //不能为空
+            if (value.length) {
                 return errorMsg;
             }
         },
@@ -43,6 +49,17 @@
             //是否为邮箱
             if (!/(^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$)/.test(value)) {
                 return errorMsg;
+            }
+        },
+        isEmptyorEmail: function (value, errorMsg) {
+            //是否为邮箱(可为空)
+            if (!value.length) {
+
+            }
+            else {
+                if (!/(^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$)/.test(value)) {
+                    return errorMsg;
+                }
             }
         },
         isIDCard: function (value, errorMsg) {
