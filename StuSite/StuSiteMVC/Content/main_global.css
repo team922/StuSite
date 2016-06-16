@@ -14,8 +14,8 @@ a:hover{color:#f00;}
 /*母版页*/
 #head{height:200px;margin-bottom:2px;background:url(../Images/main_head.jpg) round;}
     #top_left{float:left;text-align:left;height:25px;width:600px;}
-    #top_right{float:right;height:25px;width:150px;}
-    #top_right li{float:left;height:25px;padding-left:0px;}
+    #top_right{float:right;height:25px;width:250px;}
+    #top_right li{float:left;height:25px;padding-left:5px;}
 
 #nav{height:35px;width:950px;padding-left:50px;background:url(../Images/main_nav.jpg) repeat-x;}
 	#mainnav li{float:left;font:20px/25px Tahoma;text-align:center;padding:5px;}

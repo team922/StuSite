@@ -431,6 +431,7 @@
     <Content Include="Views\Home\ShowDetail.cshtml" />
     <Content Include="Views\Home\ShowList.cshtml" />
     <Content Include="Views\Home\ShowInfo.cshtml" />
+    <Content Include="Views\Home\Password.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

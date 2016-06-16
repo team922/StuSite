@@ -127,5 +127,33 @@ namespace StuSiteMVC.BLL
         {
             return new SBasicService().UpdateStudentBasic(number, name, idnumber, sex, birthday, address);
         }
+
+        //修改用户密码（原密码）
+        public bool ChangePasswordByOldPassword(string number, string oldpassword, string newpassword)
+        {
+            SLogin slogin = new SLoginService().LoginBySNumber(number);
+            if (slogin.SPassword == oldpassword)
+            {
+                return new SLoginService().ChangePassword(number, newpassword);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //修改用户密码（邮箱）
+        public bool ChangePasswordByEmail(string number, string email, string newpassword)
+        {
+            SBasic sbasic = new SBasicService().GetStudentBsaicBySNumber(number);
+            if (sbasic.SEmail == email)
+            {
+                return new SLoginService().ChangePassword(number, newpassword);
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

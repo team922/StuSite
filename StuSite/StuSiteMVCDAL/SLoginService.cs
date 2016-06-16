@@ -41,7 +41,7 @@ namespace StuSiteMVC.DAL
         }
 
         //更新登录信息(IP and Time)
-        public bool UpsetSLoginIPandTime(string loginid,string IP ,DateTime datetime)
+        public bool UpsetSLoginIPandTime(string loginid, string IP, DateTime datetime)
         {
             string sql = "update SLogin set LastIP=@lastip,LastTime=@lasttime where SNumber=@loginid";
             SqlParameter[] para = new SqlParameter[]
@@ -74,6 +74,18 @@ namespace StuSiteMVC.DAL
               };
             //3、执行sql语句
             return Convert.ToInt32(SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, para)) > 0;
+        }
+
+        //修改学生用户登录信息
+        public bool ChangePassword(string number, string password)
+        {
+            string sql = "update SLogin set SPassword=@password where SNumber=@number";
+            SqlParameter[] para = new SqlParameter[]
+            {
+                new SqlParameter("password",password),
+                new SqlParameter("number",number),
+            };
+            return Convert.ToInt32(SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, para)) == 1;
         }
     }
 }

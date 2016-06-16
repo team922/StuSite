@@ -31,6 +31,11 @@ namespace StuSiteMVC.Controllers
             return View();
         }
 
+        public ActionResult Password()
+        {
+            return View();
+        }
+
         //ajax
         public ActionResult LoginChack()
         {
@@ -110,7 +115,7 @@ namespace StuSiteMVC.Controllers
         {
             int id = Convert.ToInt16(department);
             List<Notices> listnotice = new List<Notices>();
-            if (id==0)
+            if (id == 0)
             {
                 listnotice = new NoticeManager().GetTop10Notice();
             }
@@ -141,7 +146,7 @@ namespace StuSiteMVC.Controllers
                     json += "},";
                 }
                 json = json.Substring(0, json.Length - 1);
-                if (i==0)
+                if (i == 0)
                 {
                     json += "\"\",\"number\":\"" + i + "\"}";
                 }
@@ -173,7 +178,7 @@ namespace StuSiteMVC.Controllers
                 json += "\"date\":\"" + Convert.ToDateTime(news.NewsDate).ToString("yyyy-MM-dd") + "\",";
                 json += "\"publisher\":\"" + news.NewsPublisher.Name + "\",";
                 json += "\"hits\":\"" + news.NewsHits + "\"";
-                
+
                 json += "}";
                 return Content(json);
             }
@@ -280,7 +285,7 @@ namespace StuSiteMVC.Controllers
 
         public ActionResult ShowSelectMessage(string kind, int id)
         {
-            if (kind=="notice_title")
+            if (kind == "notice_title")
             {
                 Notices notice = new Notices();
                 notice = new NoticeManager().GetNoticeById(id);
@@ -300,7 +305,7 @@ namespace StuSiteMVC.Controllers
 
                 return Content(json);
             }
-            else if (kind=="news_title")
+            else if (kind == "news_title")
             {
                 News news = new News();
                 news = new NewsManager().GetNewsById(id);
@@ -324,7 +329,7 @@ namespace StuSiteMVC.Controllers
                 return JavaScript("alert('发生未知错误！！')");
             }
         }
-        
+
         public ActionResult UpdateStudentByUser(string number, string phone, string email)
         {
             if (new UserManager().UpdateStudentBasic(number, phone, email))
@@ -332,6 +337,30 @@ namespace StuSiteMVC.Controllers
                 return Content("true");
             }
             return Content("false");
+        }
+
+        public ActionResult ChangePassword1(string number, string oldpassword, string newpassword)
+        {
+            if (new UserManager().ChangePasswordByOldPassword(number, oldpassword, newpassword))
+            {
+                return Content("success");
+            }
+            else
+            {
+                return Content("error");
+            }
+        }
+
+        public ActionResult ChangePassword2(string number, string email, string newpassword)
+        {
+            if (new UserManager().ChangePasswordByEmail(number, email, newpassword))
+            {
+                return Content("success");
+            }
+            else
+            {
+                return Content("error");
+            }
         }
     }
 }

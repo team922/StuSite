@@ -68,12 +68,13 @@
                 if (S == null && T == null)
                 {
                     <!--未登录状态-->
-                    <li>【请<a href="@Url.Content("~/Account/Index")">登录</a>后再进行操作】</li>
+                    <li>【欢迎光临本网站！尚未登录】【<a href="@Url.Content("~/Account/Index")">点我登录</a>】</li>
                 }
                 else
                 {
                     <!--登录状态-->
                     <li><a href="@Url.Content("~/Home/ShowInfo?id="+number+"")">【个人信息】</a></li>
+                    <li><a href="@Url.Content("~/Home/Password?type=1")">【修改密码】</a></li>
                     <li><a href="@Url.Content("~/Account/Logout")">【退出登录】</a></li>
                 }
             }
