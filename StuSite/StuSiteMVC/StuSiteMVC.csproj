@@ -419,12 +419,10 @@
     <None Include="Properties\PublishProfiles\Web.config.pubxml" />
     <Content Include="Views\Shares\_LayoutPage2.cshtml" />
     <Content Include="Views\Admin\StuManage1.cshtml" />
-    <Content Include="Views\Admin\TeaManage1.cshtml" />
     <Content Include="Views\Admin\NoticeManage1.cshtml" />
     <Content Include="Views\Admin\NewsManage1.cshtml" />
     <Content Include="Views\Admin\StuManage2.cshtml" />
     <Content Include="Views\Admin\StuManage3.cshtml" />
-    <Content Include="Views\Admin\TeaManage2.cshtml" />
     <Content Include="Views\Admin\NoticeManage2.cshtml" />
     <Content Include="Views\Admin\NewsManage2.cshtml" />
     <Content Include="Views\SendMessage\Index.cshtml" />

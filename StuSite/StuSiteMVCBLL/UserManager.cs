@@ -155,5 +155,29 @@ namespace StuSiteMVC.BLL
                 return false;
             }
         }
+
+        //获取冻结账户
+        public List<SLogin> GetLocked()
+        {
+            return new SLoginService().GetLocked();
+        }
+
+        //冻结用户
+        public bool LockStudent(string number)
+        {
+            return new SLoginService().LockStudent(number);
+        }
+
+        //解冻账户
+        public bool UnlockStudent(string number)
+        {
+            return new SLoginService().UnlockStudent(number);
+        }
+
+        //冻结指定时间范围内未登录的用户
+        public bool LockStudentByMonth(string date)
+        {
+            return new SLoginService().LockStudentByMonth(date);
+        }
     }
 }

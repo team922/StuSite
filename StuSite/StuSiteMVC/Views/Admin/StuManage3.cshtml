@@ -3,9 +3,157 @@
     ViewBag.Title = "学生管理-状态管理";
     Layout = "~/Views/Shares/_LayoutPage2.cshtml";
 }
+<script type="text/javascript">
+    function change(type) {
+        if (type == 1) {
+            document.getElementById("unlock_main").style.display = "none";
+            document.getElementById("lock_main").style.display = "";
+            document.getElementById("state_unlock").disabled = false;
+            document.getElementById("state_unlock").style.color = "#000000";
+            document.getElementById("state_unlock").style.border = "";
+            document.getElementById("state_lock").disabled = true;
+            document.getElementById("state_lock").style.color = "#32BC61";
+            document.getElementById("state_lock").style.border = "2px #32BC61 solid";
+        }
+        else if (type == 2) {
+            document.getElementById("lock_main").style.display = "none";
+            document.getElementById("unlock_main").style.display = "";
+            getlocked();
+            document.getElementById("state_lock").disabled = false;
+            document.getElementById("state_lock").style.color = "#000000";
+            document.getElementById("state_lock").style.border = "";
+            document.getElementById("state_unlock").disabled = true;
+            document.getElementById("state_unlock").style.color = "#32BC61";
+            document.getElementById("state_unlock").style.border = "2px #32BC61 solid";
 
+        }
+    }
+
+    function lock_number() {
+        var number = document.getElementById("number1").value;
+        if (number.length == 11) {
+            $.ajax({
+                url: '/Admin/LockByNumber',
+                data: { "number": number },
+                ansyc: false,
+                success: function (data) {
+                    if (data == "success") {
+                        alert("冻结成功！");
+                        location = location;
+                    }
+                    else {
+                        alert("冻结失败！\n账号不存在或已是冻结状态");
+                    }
+                }
+            });
+        }
+        else {
+            alert("学号格式不正确！");
+        }
+    }
+
+    function lock_month(month) {
+        $.ajax({
+            url: '/Admin/LockByMonth',
+            data: { "month": month },
+            async: false,
+            success: function (data) {
+                //alert(data);
+                if (data == "success") {
+                    alert("冻结成功！");
+                    location = location;
+                }
+                else {
+                    alert("冻结账号失败！\n没有符合条件的账号或已被冻结！");
+                }
+            }
+        });
+    }
+
+    function unlock_number(number) {
+        if (number == 0) {
+            number = document.getElementById("number2").value;
+        }
+        $.ajax({
+            url: '/Admin/UnlockByNumber',
+            data: { "number": number },
+            ansyc: false,
+            success: function (data) {
+                if (data == "success") {
+                    alert("解冻成功！");
+                    location = location;
+                }
+                else {
+                    alert("解冻失败！\n账号不存在或已是激活状态");
+                }
+            }
+        });
+    }
+
+    function getlocked() {
+        var div = document.getElementById("locked_list");
+        while (div.hasChildNodes()) {
+            div.removeChild(div.firstChild);
+        }
+        $.ajax({
+            url: '/Admin/GetLocked',
+            success: function (data) {
+                //alert(data);
+                var message = $.parseJSON(data);
+                //alert(message);
+                //alert(message.number);
+
+                
+                $("#locked_list").append("<div class='locked'><text>学号　　　　 </text><text>姓名</text></div>");
+                for (var i = 0; i < message.number ; i++) {
+                    //alert(message.sloginlist[i].id);
+                    //alert(message.sloginlist[i].name);
+                    addlocked(message.sloginlist[i].id, message.sloginlist[i].name);
+                }
+            }
+        });
+    }
+
+    function addlocked(number, name) {
+        var message = "<div id='locked'><text>" + number + "</text><text>" + name + "</text><a href='javascript:unlock_number(" + number + ")' >解冻</a></div>";
+        $("#locked_list").append(message);
+    }
+
+</script>
 <div id="main_right">
     <div id="top_link">
         <p>当前位置：<a href="@Url.Content("~/Admin/Index")">后台管理</a>>>学生状态</p>
+    </div>
+    <div id="statecontrol">
+        <div id="state_nav">
+            <input type="button" id="state_lock" class="button_nav" value="冻结用户" onclick="change(1)" />
+            <input type="button" id="state_unlock" class="button_nav" value="解冻用户" onclick="change(2)" />
+        </div>
+        <div id="lock_main" style="display:none">
+            <input type="button" id="lock_month" value="一个月内未登录用户" onclick="lock_month(1)" />
+            <input type="button" id="lock_month" value="两个月内未登录用户" onclick="lock_month(2)" /><br />
+            <text>按学号冻结：</text><input type="text" maxlength="11" id="number1" class="number" />
+            <input type="button" id="lock_number" value="冻结" onclick="lock_number()" />
+        </div>
+        <div id="unlock_main" style="display:none">
+            <text>按学号解冻：</text><input type="text" maxlength="11" id="number2" class="number" />
+            <input type="button" id="unlock_number" value="解冻" onclick="unlock_number(0)" /><br />
+            <text>已冻结账号：</text>
+            <div id="locked_list">
+                <!--<div class="locked">
+                    <text>学号　　　　 </text><text>姓名</text>
+                </div>
+                <div id='locked'>
+                    <text>20160706001</text>
+                    <text>高天宇</text>
+                    <a href='javascript:notice_delete(20160706001)'>解冻</a>
+                </div>
+                <div id='locked'>
+                    <text>20160706001</text>
+                    <text>高天宇</text>
+                    <a href='javascript:notice_delete(20160706001)'>解冻</a>
+                </div>-->
+            </div>
+        </div>
     </div>
 </div>

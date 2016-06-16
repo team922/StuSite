@@ -87,5 +87,49 @@ namespace StuSiteMVC.DAL
             };
             return Convert.ToInt32(SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, para)) == 1;
         }
+
+        //获取冻结用户信息
+        public List<SLogin> GetLocked()
+        {
+            List<SLogin> sloginlist = new List<SLogin>();
+            string sql = "select * from SLogin,SBasic where SLogin.SNumber=SBasic.SNumber and SLogin.State=0";
+            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.ConnString, CommandType.Text, sql);
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                foreach (DataRow row in dt.Rows)
+                {
+                    SLogin slogin = new SLogin();
+                    SBasic sbasic = new SBasic();
+                    sbasic.SNumber= (string)row["SNumber"];
+                    slogin.SNumber = sbasic;
+                    slogin.SPassword = (string)row["SName"];
+                    /*此时spassword代表姓名数据*/
+                    sloginlist.Add(slogin);
+                }
+            }
+            return sloginlist;
+        }
+
+        //冻结用户账户
+        public bool LockStudent(string number)
+        {
+            string sql = "update SLogin set State=0 where Snumber=@number";
+            return Convert.ToInt32(SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("number", number))) > 0;
+        }
+
+        //解冻用户账户
+        public bool UnlockStudent(string number)
+        {
+            string sql = "update SLogin set State=1 where SNumber=@number";
+            return Convert.ToInt32(SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("number", number))) > 0;
+        }
+
+        //冻结用户（指定日期内未登录）
+        public bool LockStudentByMonth(string date)
+        {
+            string sql = "update SLogin set state=0  where LastTime <=@date";
+            return Convert.ToInt32(SqlHelper.ExecuteNonQuery(SqlHelper.ConnString, CommandType.Text, sql, new SqlParameter("@date", date))) > 0;
+        }
     }
 }

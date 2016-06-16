@@ -46,16 +46,6 @@ namespace StuSiteMVC.Controllers
             return View();
         }
 
-        public ActionResult TeaManage1()
-        {
-            return View();
-        }
-
-        public ActionResult TeaManage2()
-        {
-            return View();
-        }
-
         public ActionResult NoticeManage1()
         {
             return View();
@@ -215,6 +205,79 @@ namespace StuSiteMVC.Controllers
             else
             {
                 return Content("0");
+            }
+        }
+
+        public ActionResult GetLocked()
+        {
+            List<SLogin> sloginlist = new List<SLogin>();
+            sloginlist = new UserManager().GetLocked();
+            if (sloginlist == null)
+            {
+                return Content("false");
+            }
+            else
+            {
+                int i = 0;
+                string json = "{\"sloginlist\":[";
+                foreach (var slogin in sloginlist)
+                {
+                    i++;
+                    json += "{";
+                    json += "\"id\":\"" + slogin.SNumber.SNumber + "\",";
+                    json += "\"name\":\"" + slogin.SPassword + "\"";
+                    json += "},";
+                }
+                json = json.Substring(0, json.Length - 1);
+                if (i == 0)
+                {
+                    json += "\"\",\"number\":\"" + i + "\"}";
+                }
+                else
+                {
+                    json += "],\"number\":\"" + i + "\"}";
+                }
+                return Content(json);
+            }
+        }
+
+        public ActionResult LockByNumber(string number)
+        {
+            if (new UserManager().LockStudent(number))
+            {
+                return Content("success");
+            }
+            else
+            {
+                return Content("fail");
+            }
+        }
+
+        public ActionResult LockByMonth(string month)
+        {
+            DateTime datetime = new IPManager().GetDateTime();
+            datetime = datetime.AddMonths(-Convert.ToInt32(month));
+
+            string date = datetime.ToString("yyy-MM-dd");
+            if (new UserManager().LockStudentByMonth(date))
+            {
+                return Content("success");
+            }
+            else
+            {
+                return Content("fail");
+            }
+        }
+
+        public ActionResult UnlockByNumber(string number)
+        {
+            if (new UserManager().UnlockStudent(number))
+            {
+                return Content("success");
+            }
+            else
+            {
+                return Content("fail");
             }
         }
 
