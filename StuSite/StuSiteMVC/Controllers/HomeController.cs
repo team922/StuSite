@@ -16,27 +16,35 @@ namespace StuSiteMVC.Controllers
             return View();
         }
 
+        // Get: ShowDetail
         public ActionResult ShowDetail()
         {
             return View();
         }
 
+        // Get: ShowList
         public ActionResult ShowList()
         {
             return View();
         }
 
+        // Get: ShowInfo
         public ActionResult ShowInfo()
         {
             return View();
         }
 
+        // Get: Password（change）
         public ActionResult Password()
         {
             return View();
         }
 
         //ajax
+        /*Home/LoginChack
+        1、登录检测
+        1.1、成功-转到目标操作
+        1.2、失败-跳转到登录界面*/
         public ActionResult LoginChack()
         {
             if (Session["Admin"] == null)
@@ -49,21 +57,30 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Home/GetIPMessage
+        获取IP信息（api）*/
         public ActionResult GetIPMessage()
         {
             return Content(new IPManager().GetAddress());
         }
 
+        /*Home/GetAreaid
+        获取地区代码（api）*/
         public ActionResult GetAreaid(string district)
         {
             return Content(new IPManager().GetAreaid(district));
         }
 
+        /*Home/Getweather
+        获取天气信息（api）*/
         public ActionResult GetWeather(string id)
         {
             return Content(new IPManager().GetWeather(id));
         }
 
+        /*Home/GetDepartment
+        1、获取公告分类
+        2、返回信息*/
         public ActionResult GetDepartment()
         {
             List<Department> departmentlist = new List<Department>();
@@ -84,6 +101,10 @@ namespace StuSiteMVC.Controllers
             return Content(json);
         }
 
+        /*Home/GetTopNotice
+        1、获取置顶公告信息
+        2、不存在返回失败
+        3、存在返回信息（json）*/
         public ActionResult GetTopNotice()
         {
             //json += "\"name\":\"name\",";
@@ -111,6 +132,9 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Home/GetSelectNotice
+        1、获取被选中的分类信息
+        2、返回信息内容（json）*/
         public ActionResult GetSelectNotice(string department)
         {
             int id = Convert.ToInt16(department);
@@ -158,6 +182,9 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Home/GetTopNews
+        1、获取置顶新闻信息
+        2、返回新闻内容（json）*/
         public ActionResult GetTopNews()
         {
             //json += "\"name\":\"name\",";
@@ -184,6 +211,9 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Home/GetNews
+        1、获取新闻信息（top10）
+        2、返回信息（json）*/
         public ActionResult GetNews()
         {
             //json += "\"name\":\"name\",";
@@ -223,6 +253,10 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Home/ShowAddList
+        1、根据url获取分页的列表信息（存储过程）
+        2、获取指定分类、页数的信息
+        3、返回信息（json）*/
         public ActionResult ShowAllList(string type, int pagesize, int pageindex)
         {
             int pagecount = 0;
@@ -283,6 +317,9 @@ namespace StuSiteMVC.Controllers
             return Content(json);
         }
 
+        /*Home/ShowSelectMessage
+        1、获取要显示信息的类型、id
+        2、返回信息（json--内容为编码状态-encodeURIComponent）*/
         public ActionResult ShowSelectMessage(string kind, int id)
         {
             if (kind == "notice_title")
@@ -330,6 +367,10 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Home/UpdateStudentByUser
+        1、获取用户要修改的信息
+        2、提交信息
+        3、返回操作结果*/
         public ActionResult UpdateStudentByUser(string number, string phone, string email)
         {
             if (new UserManager().UpdateStudentBasic(number, phone, email))
@@ -339,6 +380,10 @@ namespace StuSiteMVC.Controllers
             return Content("false");
         }
 
+        /*Home/ChangePassword1
+        1、获取信息（学号、原密码、新密码）
+        2、执行UserManager-changepassword1
+        3、返回执行结果*/
         public ActionResult ChangePassword1(string number, string oldpassword, string newpassword)
         {
             if (new UserManager().ChangePasswordByOldPassword(number, oldpassword, newpassword))
@@ -351,6 +396,10 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Home/ChangePassword2
+        1、获取信息（学号、邮箱、新密码）
+        2、执行UserManager-changepassword2
+        3、返回执行结果*/
         public ActionResult ChangePassword2(string number, string email, string newpassword)
         {
             if (new UserManager().ChangePasswordByEmail(number, email, newpassword))

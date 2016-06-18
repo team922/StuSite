@@ -31,42 +31,54 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        //学生信息界面
         public ActionResult StuManage1()
         {
             return View();
         }
 
+        //学生注册界面
         public ActionResult StuManage2()
         {
             return View();
         }
 
+        //学生状态管理界面
         public ActionResult StuManage3()
         {
             return View();
         }
 
+        //公告发布界面
         public ActionResult NoticeManage1()
         {
             return View();
         }
 
+        //公告管理界面
         public ActionResult NoticeManage2()
         {
             return View();
         }
 
+        //新闻发布界面
         public ActionResult NewsManage1()
         {
             return View();
         }
 
+        //新闻管理界面
         public ActionResult NewsManage2()
         {
             return View();
         }
 
         //ajax
+        /*Admin/GetStudent
+        1、获取学生信息（参数为学号）
+        2、通过业务逻辑层UserManager-GetStudent获取学生信息
+        3、根据返回信息shengcJson字符串
+        4、返回Json*/
         public ActionResult GetStudent(string id)
         {
             SBasic sbasic = new SBasic();
@@ -96,6 +108,10 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Admin/UpdateStudentByAdmin
+        1、获取要修改的学生信息
+        2、通过业务逻辑层UserManager-UpdateStudentBasic修改学生信息
+        3、返回执行结果（json）*/
         public ActionResult UpdateStudentByAdmin(string number, string name, string idnumber, string sex, string birthday, string address)
         {
             if (new UserManager().UpdateStudentBasic(number, name, idnumber,sex,birthday,address))
@@ -105,6 +121,11 @@ namespace StuSiteMVC.Controllers
             return Content("false");
         }
 
+        /*Admin/GetCollege
+        1、通过业务逻辑层UserManager-GetCollege
+        2、获取院校信息
+        3、编写Json字符串
+        4、返回信息（Json）*/
         public ActionResult GetCollege()
         {
             List<College> collegelist = new List<College>();
@@ -125,6 +146,11 @@ namespace StuSiteMVC.Controllers
             return Content(json);
         }
 
+        /*Admin/GetSelectMajor
+        1、通过url接收院校id
+        2、通过UserManager-GetSelectMajor获取该院校专业列表（参数为学院id-string类型）
+        3、接受返回的专业信息
+        4、编写Json字符串并返回*/
         public ActionResult GetSelectMajor(string collegeid)
         {
             List<Major> majorlist = new List<Major>();
@@ -145,11 +171,19 @@ namespace StuSiteMVC.Controllers
             return Content(json);
         }
 
+        /*Admin/GetIDCardMessage
+        1、获取要查询的身份证号（URL参数idcard）
+        2、通过IPManager-GetIDCardMessages获取该身份证号信息（api）
+        3、返回Json字符串*/
         public ActionResult GetIDCardMessage(string idcard)
         {
             return Content(new IPManager().GetIDCardMesage(idcard));
         }
 
+        /*Admin/AddStudent
+        1、获取学生信息（url参数）
+        2、利用UserManager-AddStudent添加学生并返回学号、
+        2、返回添加结果*/
         public ActionResult AddStudent(string name, string phone, string idcard, string sex, DateTime birthday, string address, string college_id, string major_id)
         {
 
@@ -208,6 +242,9 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Admin/GetLocked
+        1、获取冻结的用户
+        2、返回冻结用户信息*/
         public ActionResult GetLocked()
         {
             List<SLogin> sloginlist = new List<SLogin>();
@@ -241,6 +278,10 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Admin.LockByNumber
+        1、获取要冻结的用户学号
+        2、通过UserManager-LockByNumber冻结指定用户
+        3、返回操作结果*/
         public ActionResult LockByNumber(string number)
         {
             if (new UserManager().LockStudent(number))
@@ -253,6 +294,10 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Admin/LockByMonth
+        1、获取按月份冻结用户的参数（月份 int or string）
+        2、通过UserManager-LockByMonth冻结指定条件的用户
+        3、返回操作结果*/
         public ActionResult LockByMonth(string month)
         {
             DateTime datetime = new IPManager().GetDateTime();
@@ -269,6 +314,10 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Admin/UnlockByNumber
+        1、获取要操作的用户学号
+        2、调用UserManager-UnlockByNumber
+        3、返回操作结果*/
         public ActionResult UnlockByNumber(string number)
         {
             if (new UserManager().UnlockStudent(number))
@@ -281,6 +330,10 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Admin/AddNews
+        1、通过request获取新闻信息
+        2、通过NewsManager-AddNews添加新闻信息
+        3、返回添加结果*/
         public ActionResult AddNews()
         {
             string news_title = Request.Form["title"];//获取标题
@@ -309,6 +362,10 @@ namespace StuSiteMVC.Controllers
             return View("NewsManage1");
         }
 
+        /*Admin/AddNotice
+        1、通过request获取公告信息
+        2、通过NewsManager-AddNotice添加公告信息
+        3、返回添加结果*/
         public ActionResult AddNotice()
         {
             string notice_title = Request.Form["title"];//获取标题
@@ -339,6 +396,10 @@ namespace StuSiteMVC.Controllers
             return View("NoticeManage1");
         }
 
+        /*Admin/DeleteNoticeAndNews
+        1、获取操作类型与数据id（url参数）
+        2、执行操作（type=notice  or  type=news）
+        3、返回操作结果*/
         public ActionResult DeleteNoticeAndNews(string type, int id)
         {
             if (type == "notice")
@@ -365,6 +426,10 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Admin/ChangeTopic
+        1、获取要修改状态的类型、操作、id
+        2、执行不同的方法完成操作
+        3、返回结果*/
         public ActionResult ChangeTopic(string type, string activity, int id)
         {
             if (type == "notice")
@@ -419,6 +484,8 @@ namespace StuSiteMVC.Controllers
             }
         }
 
+        /*Admin/ImageUpload
+        1、ckediter 图片上传方法*/
         public ActionResult ImageUpload(HttpPostedFileBase upload)
         {
             string name = System.IO.Path.GetFileName(upload.FileName);
