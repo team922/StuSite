@@ -192,13 +192,15 @@ namespace StuSiteMVC.Controllers
             string date = datetime.ToString("yyyy-MM-dd");
             string latestnumber = new UserManager().SelectTheLatestData(major_id, year);
             string newnumber = "";
-            if (latestnumber=="0")
+            if (latestnumber == "0")
             {
                 newnumber = year + major_id + "001";
             }
             else
             {
-                newnumber = Convert.ToString(Convert.ToInt32(latestnumber) + 1);
+                string start = latestnumber.Substring(0, 8);
+                string end = latestnumber.Remove(0, 8);
+                newnumber = start + Convert.ToString(string.Format("{0:d3}", Convert.ToInt32(end) + 1));
             }
 
             string password = phone.Substring(3, 8);
